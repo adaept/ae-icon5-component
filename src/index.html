@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>adaept Ionic Icons Component</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#005000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script type="module" src="/build/aeiconscomponent.esm.js"></script>
+  <script nomodule src="/build/aeiconscomponent.js"></script>
+
+  <link rel="apple-touch-icon" href="/assets/icon/icon.png">
+  <link rel="icon" type="image/x-icon" href="/assets/icon/favicon.ico?v=2">
+  <link rel="manifest" href="/manifest.json">
+
+  <!-- ae Styles -->
+  <link rel="stylesheet" href="assets/aestyles.css">
+
+</head>
+
+<body style="background-color: ivory">
+
+  <div>
+    <ion-row>
+      <br />
+      <a href="https://adaept.com/">
+        <img src="assets/logo.gif" width="150" />
+      </a>
+      <div>4.6.3/1.9.0-9/0.9.99</div>
+    </ion-row>
+    <!-- container is css grid and is using ion-icon with ionic theme -->
+    <div class="container" style="padding: 8px 0; display: inline-block;">
+      <ion-row>
+        <ae-icons-component id="1" aetype="round" aesize="ae40" name="remove-circle" color="danger"
+          arialabel="ae-remove-circle">
+        </ae-icons-component>
+        <span style="font-size:24px"><b>SIZE</b></span>
+        <ae-icons-component id="2" aetype="round" aesize="ae40" name="add-circle" color="success"
+          arialabel="ae-add-circle">
+        </ae-icons-component>
+        <span style="font-size:24px"><b>RESET</b></span>
+        <ion-button>
+          <ion-icon id="3" slot="icon-only" name="refresh-circle" shape="round" size="large" color="danger"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-icon id="4" slot="icon-only" name="globe" shape="round" size="large" color="success"></ion-icon>
+        </ion-button>
+        <!--
+        <ae-icons-component id="3" aetype="round" aesize="ae40" name="refresh-circle" color="aered"
+          arialabel="ae-refresh-circle">
+        </ae-icons-component>
+        <ae-icons-component id="4" aetype="round" aesize="ae40" name="globe" color="aegreen" arialabel="ae-globe">
+        </ae-icons-component>
+        -->
+      </ion-row>
+    </div>
+    <p id="containerPara"><br></p>
+    <hr>
+  </div>
+
+  <div class="aeicons-scroll">
+    <div style="background-color:lightyellow">
+      <h1>Ionicons - theme and named colors</h1>
+      <h2>ae-icons-component</h2>
+      <h3>
+        <a href="http://acronymsandslang.com/definition/184249/RGBY-meaning.html">RGBY</a>
+      </h3>
+      <ae-icons-component aesize="ae16" name="football" color="red"></ae-icons-component>
+      <ae-icons-component aesize="ae32" name="basketball" color="green"></ae-icons-component>
+      <ae-icons-component aesize="ae48" name="baseball" color="blue"></ae-icons-component>
+      <ae-icons-component aesize="ae64" name="add-circle" color="yellow"></ae-icons-component>
+    </div>
+    <div style="background-color:gainsboro">
+      <h3>
+        <a href="https://beta.ionicframework.com/docs/theming/color-generator">PSTSWDDML</a>
+      </h3>
+      <ae-icons-component name="tennisball" aesize="ae32" color="primary"></ae-icons-component>
+      <ae-icons-component name="car" aesize="ae32" color="secondary"></ae-icons-component>
+      <ae-icons-component name="train" aesize="ae32" color="tertiary"></ae-icons-component>
+      <ae-icons-component name="airplane" aesize="ae32" color="success"></ae-icons-component>
+      <ae-icons-component name="boat" aesize="ae32" color="warning"></ae-icons-component>
+      <ae-icons-component name="bus" aesize="ae32" color="danger"></ae-icons-component>
+      <ae-icons-component name="subway" aesize="ae32" color="dark"></ae-icons-component>
+      <ae-icons-component name="aperture" aesize="ae32" color="medium"></ae-icons-component>
+      <ae-icons-component name="cog" aesize="ae32" color="light"></ae-icons-component>
+    </div>
+    <div style="background-color:aliceblue">
+      <h3>
+        <a href="https://www.w3.org/TR/2018/REC-css-color-3-20180619/#html4">sRGB</a>
+      </h3>
+      <ae-icons-component name="construct" color="black"></ae-icons-component>
+      <ae-icons-component name="finger-print" color="silver"></ae-icons-component>
+      <ae-icons-component name="flask" color="gray"></ae-icons-component>
+      <ae-icons-component name="flower" color="white"></ae-icons-component>
+      <ae-icons-component name="heart" color="maroon"></ae-icons-component>
+      <ae-icons-component name="ice-cream" color="red"></ae-icons-component>
+      <ae-icons-component name="sunny" color="purple"></ae-icons-component>
+      <ae-icons-component name="moon" color="fuchsia"></ae-icons-component>
+      <ae-icons-component name="star" color="green"></ae-icons-component>
+      <ae-icons-component name="planet" color="lime"></ae-icons-component>
+      <ae-icons-component name="globe" color="olive"></ae-icons-component>
+      <ae-icons-component name="rocket" color="yellow"></ae-icons-component>
+      <ae-icons-component name="snow" color="navy"></ae-icons-component>
+      <ae-icons-component name="rainy" color="blue"></ae-icons-component>
+      <ae-icons-component name="umbrella" color="teal"></ae-icons-component>
+      <ae-icons-component name="rose" color="aqua"></ae-icons-component>
+      <div>
+        <ae-icons-component name="construct" aesize="ae16" color="black"></ae-icons-component>
+        <ae-icons-component name="finger-print" aesize="ae16" color="silver"></ae-icons-component>
+        <ae-icons-component name="flask" aesize="ae16" color="gray"></ae-icons-component>
+        <ae-icons-component name="flower" aesize="ae16" color="white"></ae-icons-component>
+        <ae-icons-component name="heart" aesize="ae16" color="maroon"></ae-icons-component>
+        <ae-icons-component name="ice-cream" aesize="ae16" color="red"></ae-icons-component>
+        <ae-icons-component name="sunny" aesize="ae16" color="purple"></ae-icons-component>
+        <ae-icons-component name="moon" aesize="ae16" color="fuchsia"></ae-icons-component>
+        <ae-icons-component name="star" aesize="ae16" color="green"></ae-icons-component>
+        <ae-icons-component name="planet" aesize="ae16" color="lime"></ae-icons-component>
+        <ae-icons-component name="globe" aesize="ae16" color="olive"></ae-icons-component>
+        <ae-icons-component name="rocket" aesize="ae16" color="yellow"></ae-icons-component>
+        <ae-icons-component name="snow" aesize="ae16" color="navy"></ae-icons-component>
+        <ae-icons-component name="rainy" aesize="ae16" color="blue"></ae-icons-component>
+        <ae-icons-component name="umbrella" aesize="ae16" color="teal"></ae-icons-component>
+        <ae-icons-component name="rose" aesize="ae16" color="aqua"></ae-icons-component>
+      </div>
+      <div>
+        <ae-icons-component name="construct" aesize="ae24" color="black"></ae-icons-component>
+        <ae-icons-component name="finger-print" aesize="ae24" color="silver"></ae-icons-component>
+        <ae-icons-component name="flask" aesize="ae24" color="gray"></ae-icons-component>
+        <ae-icons-component name="flower" aesize="ae24" color="white"></ae-icons-component>
+        <ae-icons-component name="heart" aesize="ae24" color="maroon"></ae-icons-component>
+        <ae-icons-component name="ice-cream" aesize="ae24" color="red"></ae-icons-component>
+        <ae-icons-component name="sunny" aesize="ae24" color="purple"></ae-icons-component>
+        <ae-icons-component name="moon" aesize="ae24" color="fuchsia"></ae-icons-component>
+        <ae-icons-component name="star" aesize="ae24" color="green"></ae-icons-component>
+        <ae-icons-component name="planet" aesize="ae24" color="lime"></ae-icons-component>
+        <ae-icons-component name="globe" aesize="ae24" color="olive"></ae-icons-component>
+        <ae-icons-component name="rocket" aesize="ae24" color="yellow"></ae-icons-component>
+        <ae-icons-component name="snow" aesize="ae24" color="navy"></ae-icons-component>
+        <ae-icons-component name="rainy" aesize="ae24" color="blue"></ae-icons-component>
+        <ae-icons-component name="umbrella" aesize="ae24" color="teal"></ae-icons-component>
+        <ae-icons-component name="rose" aesize="ae24" color="aqua"></ae-icons-component>
+      </div>
+      <div>
+        <ae-icons-component name="construct" aesize="ae32" color="black"></ae-icons-component>
+        <ae-icons-component name="finger-print" aesize="ae32" color="silver"></ae-icons-component>
+        <ae-icons-component name="flask" aesize="ae32" color="gray"></ae-icons-component>
+        <ae-icons-component name="flower" aesize="ae32" color="white"></ae-icons-component>
+        <ae-icons-component name="heart" aesize="ae32" color="maroon"></ae-icons-component>
+        <ae-icons-component name="ice-cream" aesize="ae32" color="red"></ae-icons-component>
+        <ae-icons-component name="sunny" aesize="ae32" color="purple"></ae-icons-component>
+        <ae-icons-component name="moon" aesize="ae32" color="fuchsia"></ae-icons-component>
+        <ae-icons-component name="star" aesize="ae32" color="green"></ae-icons-component>
+        <ae-icons-component name="planet" aesize="ae32" color="lime"></ae-icons-component>
+        <ae-icons-component name="globe" aesize="ae32" color="olive"></ae-icons-component>
+        <ae-icons-component name="rocket" aesize="ae32" color="yellow"></ae-icons-component>
+        <ae-icons-component name="snow" aesize="ae32" color="navy"></ae-icons-component>
+        <ae-icons-component name="rainy" aesize="ae32" color="blue"></ae-icons-component>
+        <ae-icons-component name="umbrella" aesize="ae32" color="teal"></ae-icons-component>
+        <ae-icons-component name="rose" aesize="ae32" color="aqua"></ae-icons-component>
+      </div>
+    </div>
+    <div style="background-color:aquamarine">
+      <h3>
+        <a href="https://en.wikipedia.org/wiki/Web_colors">Pink colors</a>
+      </h3>
+      <ae-icons-component name="pulse" aesize="ae32" color="pink"></ae-icons-component>
+      <ae-icons-component name="medal" aesize="ae32" color="lightpink"></ae-icons-component>
+      <ae-icons-component name="trophy" aesize="ae32" color="hotpink"></ae-icons-component>
+      <ae-icons-component name="wine" aesize="ae32" color="deeppink"></ae-icons-component>
+      <ae-icons-component name="cafe" aesize="ae32" color="palevioletred"></ae-icons-component>
+      <ae-icons-component name="basket" aesize="ae32" color="mediumvioletred"></ae-icons-component>
+    </div>
+    <div style="background-color:lavender">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Red colors</a>
+      </h3>
+      <ae-icons-component name="bed" aesize="ae32" color="lightsalmon"></ae-icons-component>
+      <ae-icons-component name="beer" aesize="ae32" color="salmon"></ae-icons-component>
+      <ae-icons-component name="bonfire" aesize="ae32" color="darksalmon"></ae-icons-component>
+      <ae-icons-component name="book" aesize="ae32" color="lightcoral"></ae-icons-component>
+      <ae-icons-component name="bookmark" aesize="ae32" color="indianred"></ae-icons-component>
+      <ae-icons-component name="bookmarks" aesize="ae32" color="crimson"></ae-icons-component>
+      <ae-icons-component name="bowtie" aesize="ae32" color="firebrick"></ae-icons-component>
+      <ae-icons-component name="briefcase" aesize="ae32" color="darkred"></ae-icons-component>
+      <ae-icons-component name="browsers" aesize="ae32" color="red"></ae-icons-component>
+    </div>
+    <div style="background-color:lemonchiffon">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Orange colors</a>
+      </h3>
+      <ae-icons-component name="brush" aesize="ae32" color="orangered"></ae-icons-component>
+      <ae-icons-component name="bug" aesize="ae32" color="tomato"></ae-icons-component>
+      <ae-icons-component name="build" aesize="ae32" color="coral"></ae-icons-component>
+      <ae-icons-component name="bulb" aesize="ae32" color="darkorange"></ae-icons-component>
+      <ae-icons-component name="bus" aesize="ae32" color="orange"></ae-icons-component>
+    </div>
+    <div style="background-color:powderblue">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Yellow colors</a>
+      </h3>
+      <ae-icons-component name="business" aesize="ae32" color="yellow"></ae-icons-component>
+      <ae-icons-component name="cafe" aesize="ae32" color="lightyellow"></ae-icons-component>
+      <ae-icons-component name="calculator" aesize="ae32" color="lemonchiffon"></ae-icons-component>
+      <ae-icons-component name="calendar" aesize="ae32" color="lightgoldenrodyellow"></ae-icons-component>
+      <ae-icons-component name="call" aesize="ae32" color="papayawhip"></ae-icons-component>
+      <ae-icons-component name="camera" aesize="ae32" color="moccasin"></ae-icons-component>
+      <ae-icons-component name="car" aesize="ae32" color="peachpuff"></ae-icons-component>
+      <ae-icons-component name="card" aesize="ae32" color="palegoldenrod"></ae-icons-component>
+      <ae-icons-component name="cart" aesize="ae32" color="khaki"></ae-icons-component>
+      <ae-icons-component name="cash" aesize="ae32" color="darkkhaki"></ae-icons-component>
+      <ae-icons-component name="cellular" aesize="ae32" color="gold"></ae-icons-component>
+    </div>
+    <div style="background-color:paleturquoise">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Brown colors</a>
+      </h3>
+      <ae-icons-component name="chatboxes" aesize="ae32" color="cornsilk"></ae-icons-component>
+      <ae-icons-component name="chatbubbles" aesize="ae32" color="blanchedalmond"></ae-icons-component>
+      <ae-icons-component name="checkbox" aesize="ae32" color="bisque"></ae-icons-component>
+      <ae-icons-component name="checkbox-outline" aesize="ae32" color="navajowhite"></ae-icons-component>
+      <ae-icons-component name="checkmark" aesize="ae32" color="wheat"></ae-icons-component>
+      <ae-icons-component name="checkmark-circle" aesize="ae32" color="burlywood"></ae-icons-component>
+      <ae-icons-component name="checkmark-circle-outline" aesize="ae32" color="tan"></ae-icons-component>
+      <ae-icons-component name="clipboard" aesize="ae32" color="rosybrown"></ae-icons-component>
+      <ae-icons-component name="clock" aesize="ae32" color="sandybrown"></ae-icons-component>
+      <ae-icons-component name="close" aesize="ae32" color="goldenrod"></ae-icons-component>
+      <ae-icons-component name="close-circle" aesize="ae32" color="darkgoldenrod"></ae-icons-component>
+      <ae-icons-component name="close-circle-outline" aesize="ae32" color="peru"></ae-icons-component>
+      <ae-icons-component name="cog" aesize="ae32" color="chocolate"></ae-icons-component>
+      <ae-icons-component name="cloud-circle" aesize="ae32" color="saddlebrown"></ae-icons-component>
+      <ae-icons-component name="cloud-done" aesize="ae32" color="sienna"></ae-icons-component>
+      <ae-icons-component name="cloud-download" aesize="ae32" color="brown"></ae-icons-component>
+      <ae-icons-component name="cloud-outline" aesize="ae32" color="maroon"></ae-icons-component>
+    </div>
+    <div style="background-color:lightpink">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Green colors</a>
+      </h3>
+      <ae-icons-component name="cloud-upload" aesize="ae32" color="darkolivegreen"></ae-icons-component>
+      <ae-icons-component name="cloudy" aesize="ae32" color="olive"></ae-icons-component>
+      <ae-icons-component name="cloudy-night" aesize="ae32" color="olivedrab"></ae-icons-component>
+      <ae-icons-component name="code" aesize="ae32" color="yellowgreen"></ae-icons-component>
+      <ae-icons-component name="code-download" aesize="ae32" color="limegreen"></ae-icons-component>
+      <ae-icons-component name="code-working" aesize="ae32" color="lime"></ae-icons-component>
+      <ae-icons-component name="cog" aesize="ae32" color="lawngreen"></ae-icons-component>
+      <ae-icons-component name="color-fill" aesize="ae32" color="chartreuse"></ae-icons-component>
+      <ae-icons-component name="color-filter" aesize="ae32" color="greenyellow"></ae-icons-component>
+      <ae-icons-component name="color-palette" aesize="ae32" color="springgreen"></ae-icons-component>
+      <ae-icons-component name="color-wand" aesize="ae32" color="mediumspringgreen"></ae-icons-component>
+      <ae-icons-component name="compass" aesize="ae32" color="lightgreen"></ae-icons-component>
+      <ae-icons-component name="construct" aesize="ae32" color="palegreen"></ae-icons-component>
+      <ae-icons-component name="contact" aesize="ae32" color="darkseagreen"></ae-icons-component>
+      <ae-icons-component name="contacts" aesize="ae32" color="mediumaquamarine"></ae-icons-component>
+      <ae-icons-component name="contract" aesize="ae32" color="mediumseagreen"></ae-icons-component>
+      <ae-icons-component name="contrast" aesize="ae32" color="seagreen"></ae-icons-component>
+      <ae-icons-component name="copy" aesize="ae32" color="forestgreen"></ae-icons-component>
+      <ae-icons-component name="create" aesize="ae32" color="green"></ae-icons-component>
+      <ae-icons-component name="crop" aesize="ae32" color="darkgreen"></ae-icons-component>
+    </div>
+    <div style="background-color:linen">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Cyan colors</a>
+      </h3>
+      <ae-icons-component name="cube" aesize="ae32" color="aqua"></ae-icons-component>
+      <ae-icons-component name="cut" aesize="ae32" color="cyan"></ae-icons-component>
+      <ae-icons-component name="desktop" aesize="ae32" color="lightcyan"></ae-icons-component>
+      <ae-icons-component name="disc" aesize="ae32" color="paleturquoise"></ae-icons-component>
+      <ae-icons-component name="document" aesize="ae32" color="aquamarine"></ae-icons-component>
+      <ae-icons-component name="done-all" aesize="ae32" color="turquoise"></ae-icons-component>
+      <ae-icons-component name="download" aesize="ae32" color="mediumturquoise"></ae-icons-component>
+      <ae-icons-component name="easel" aesize="ae32" color="darkturquoise"></ae-icons-component>
+      <ae-icons-component name="egg" aesize="ae32" color="lightseagreen"></ae-icons-component>
+      <ae-icons-component name="exit" aesize="ae32" color="cadetblue"></ae-icons-component>
+      <ae-icons-component name="expand" aesize="ae32" color="darkcyan"></ae-icons-component>
+      <ae-icons-component name="eye" aesize="ae32" color="teal"></ae-icons-component>
+    </div>
+    <div style="background-color:navajowhite">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Blue colors</a>
+      </h3>
+      <ae-icons-component name="eye-off" aesize="ae32" color="lightsteelblue"></ae-icons-component>
+      <ae-icons-component name="fastforward" aesize="ae32" color="powderblue"></ae-icons-component>
+      <ae-icons-component name="female" aesize="ae32" color="lightblue"></ae-icons-component>
+      <ae-icons-component name="filing" aesize="ae32" color="skyblue"></ae-icons-component>
+      <ae-icons-component name="film" aesize="ae32" color="lightskyblue"></ae-icons-component>
+      <ae-icons-component name="finger-print" aesize="ae32" color="deepskyblue"></ae-icons-component>
+      <ae-icons-component name="fitness" aesize="ae32" color="dodgerblue"></ae-icons-component>
+      <ae-icons-component name="flag" aesize="ae32" color="cornflowerblue"></ae-icons-component>
+      <ae-icons-component name="flame" aesize="ae32" color="steelblue"></ae-icons-component>
+      <ae-icons-component name="flash" aesize="ae32" color="royalblue"></ae-icons-component>
+      <ae-icons-component name="flash-off" aesize="ae32" color="blue"></ae-icons-component>
+      <ae-icons-component name="flashlight" aesize="ae32" color="mediumblue"></ae-icons-component>
+      <ae-icons-component name="flask" aesize="ae32" color="darkblue"></ae-icons-component>
+      <ae-icons-component name="flower" aesize="ae32" color="navy"></ae-icons-component>
+      <ae-icons-component name="folder" aesize="ae32" color="midnightblue"></ae-icons-component>
+    </div>
+    <div style="background-color:lightyellow">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Purple, Violet, and Magenta colors</a>
+      </h3>
+      <ae-icons-component name="folder-open" aesize="ae32" color="lavender"></ae-icons-component>
+      <ae-icons-component name="football" aesize="ae32" color="thistle"></ae-icons-component>
+      <ae-icons-component name="funnel" aesize="ae32" color="plum"></ae-icons-component>
+      <ae-icons-component name="gift" aesize="ae32" color="violet"></ae-icons-component>
+      <ae-icons-component name="git-branch" aesize="ae32" color="orchid"></ae-icons-component>
+      <ae-icons-component name="git-commit" aesize="ae32" color="fuchsia"></ae-icons-component>
+      <ae-icons-component name="git-compare" aesize="ae32" color="magenta"></ae-icons-component>
+      <ae-icons-component name="git-merge" aesize="ae32" color="mediumorchid"></ae-icons-component>
+      <ae-icons-component name="git-network" aesize="ae32" color="mediumpurple"></ae-icons-component>
+      <ae-icons-component name="git-pull-request" aesize="ae32" color="blueviolet"></ae-icons-component>
+      <ae-icons-component name="glasses" aesize="ae32" color="darkviolet"></ae-icons-component>
+      <ae-icons-component name="globe" aesize="ae32" color="darkorchid"></ae-icons-component>
+      <ae-icons-component name="grid" aesize="ae32" color="darkmagenta"></ae-icons-component>
+      <ae-icons-component name="hammer" aesize="ae32" color="purple"></ae-icons-component>
+      <ae-icons-component name="hand" aesize="ae32" color="rebeccapurple"></ae-icons-component>
+      <ae-icons-component name="happy" aesize="ae32" color="indigo"></ae-icons-component>
+      <ae-icons-component name="headset" aesize="ae32" color="darkslateblue"></ae-icons-component>
+      <ae-icons-component name="heart" aesize="ae32" color="slateblue"></ae-icons-component>
+      <ae-icons-component name="heart-dislike" aesize="ae32" color="mediumslateblue"></ae-icons-component>
+    </div>
+    <div style="background-color:khaki">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">White colors</a>
+      </h3>
+      <ae-icons-component name="heart-empty" aesize="ae32" color="white"></ae-icons-component>
+      <ae-icons-component name="heart-half" aesize="ae32" color="snow"></ae-icons-component>
+      <ae-icons-component name="help" aesize="ae32" color="honeydew"></ae-icons-component>
+      <ae-icons-component name="help-buoy" aesize="ae32" color="mintcream"></ae-icons-component>
+      <ae-icons-component name="help-circle" aesize="ae32" color="azure"></ae-icons-component>
+      <ae-icons-component name="help-circle-outline" aesize="ae32" color="aliceblue"></ae-icons-component>
+      <ae-icons-component name="home" aesize="ae32" color="ghostwhite"></ae-icons-component>
+      <ae-icons-component name="hourglass" aesize="ae32" color="whitesmoke"></ae-icons-component>
+      <ae-icons-component name="ice-cream" aesize="ae32" color="seashell"></ae-icons-component>
+      <ae-icons-component name="images" aesize="ae32" color="beige"></ae-icons-component>
+      <ae-icons-component name="infinite" aesize="ae32" color="oldlace"></ae-icons-component>
+      <ae-icons-component name="information" aesize="ae32" color="floralwhite"></ae-icons-component>
+      <ae-icons-component name="information-circle" aesize="ae32" color="ivory"></ae-icons-component>
+      <ae-icons-component name="information-circle-outline" aesize="ae32" color="antiquewhite"></ae-icons-component>
+      <ae-icons-component name="jet" aesize="ae32" color="linen"></ae-icons-component>
+      <ae-icons-component name="journal" aesize="ae32" color="lavenderblush"></ae-icons-component>
+      <ae-icons-component name="key" aesize="ae32" color="mistyrose"></ae-icons-component>
+    </div>
+    <div style="background-color:wheat">
+      <h3>
+        <a href="https://htmlcolorcodes.com/color-names/">Gray and Black colors</a>
+      </h3>
+      <ae-icons-component name="keypad" aesize="ae32" color="gainsboro"></ae-icons-component>
+      <ae-icons-component name="laptop" aesize="ae32" color="lightgray"></ae-icons-component>
+      <ae-icons-component name="leaf" aesize="ae32" color="silver"></ae-icons-component>
+      <ae-icons-component name="link" aesize="ae32" color="darkgray"></ae-icons-component>
+      <ae-icons-component name="list" aesize="ae32" color="gray"></ae-icons-component>
+      <ae-icons-component name="list-box" aesize="ae32" color="dimgray"></ae-icons-component>
+      <ae-icons-component name="locate" aesize="ae32" color="lightslategray"></ae-icons-component>
+      <ae-icons-component name="lock" aesize="ae32" color="slategray"></ae-icons-component>
+      <ae-icons-component name="log-in" aesize="ae32" color="darkslategray"></ae-icons-component>
+      <ae-icons-component name="log-out" aesize="ae32" color="black"></ae-icons-component>
+    </div>
+    <div>
+      <h1>Ionicons - alphabetic list (md)</h1>
+    </div>
+    <div>
+      <ae-icons-component name="md-add" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-add-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-add-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-airplane" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-alarm" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-albums" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-alert" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-american-football" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-analytics" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-aperture" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-apps" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-appstore" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-archive" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-back" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropdown-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropdown" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropleft-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropleft" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropright-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropright" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropup-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-dropup" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-forward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-round-back" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-round-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-round-forward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-round-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-arrow-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-at" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-attach" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-backspace" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-barcode" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-baseball" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-basket" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-basketball" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-battery-charging" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-battery-dead" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-battery-full" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-beaker" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bed" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-beer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bicycle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bluetooth" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-boat" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-body" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bonfire" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-book" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bookmark" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bookmarks" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bowtie" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-briefcase" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-browsers" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-brush" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bug" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-build" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bulb" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-bus" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-business" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cafe" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-calculator" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-calendar" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-call" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-camera" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-car" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-card" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cart" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cash" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cellular" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-chatboxes" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-chatbubbles" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-checkbox-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-checkbox" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-checkmark-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-checkmark-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-checkmark" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-clipboard" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-clock" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-close-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-close-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-close" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloud-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloud-done" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloud-download" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloud-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloud-upload" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloud" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloudy-night" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cloudy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-code-download" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-code-working" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-code" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cog" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-color-fill" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-color-filter" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-color-palette" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-color-wand" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-compass" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-construct" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-contact" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-contacts" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-contract" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-contrast" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-copy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-create" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-crop" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cube" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-cut" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-desktop" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-disc" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-document" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-done-all" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-download" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-easel" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-egg" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-exit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-expand" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-eye-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-eye" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-fastforward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-female" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-filing" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-film" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-finger-print" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-fitness" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flag" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flame" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flash-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flash" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flashlight" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flask" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-flower" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-folder-open" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-folder" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-football" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-funnel" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-gift" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-git-branch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-git-commit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-git-compare" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-git-merge" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-git-network" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-git-pull-request" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-glasses" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-globe" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-grid" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-hammer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-hand" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-happy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-headset" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-heart-dislike" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-heart-empty" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-heart-half" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-heart" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-help-buoy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-help-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-help-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-help" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-home" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-hourglass" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-ice-cream" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-image" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-images" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-infinite" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-information-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-information-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-information" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-jet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-journal" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-key" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-keypad" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-laptop" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-leaf" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-link" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-list-box" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-list" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-locate" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-lock" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-log-in" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-log-out" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-magnet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-mail-open" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-mail-unread" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-mail" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-male" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-man" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-map" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-medal" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-medical" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-medkit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-megaphone" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-menu" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-mic-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-mic" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-microphone" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-moon" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-more" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-move" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-musical-notes" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-musical-note" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-navigate" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-notifications-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-notifications-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-notifications" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-nuclear" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-nutrition" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-open" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-options" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-outlet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-paper-plane" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-paper" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-partly-sunny" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pause" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-paw" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-people" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-person-add" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-person" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-phone-landscape" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-phone-portrait" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-photos" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pie" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pin" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pint" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pizza" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-planet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-play-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-play" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-podium" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-power" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pricetag" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pricetags" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-print" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-pulse" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-qr-scanner" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-quote" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-radio-button-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-radio-button-on" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-radio" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-rainy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-recording" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-redo" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-refresh-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-refresh" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-remove-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-remove-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-remove" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-reorder" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-repeat" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-resize" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-restaurant" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-return-left" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-return-right" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-reverse-camera" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-rewind" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-ribbon" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-rocket" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-rose" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-sad" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-save" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-school" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-search" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-send" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-settings" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-share-alt" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-share" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-shirt" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-shuffle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-skip-backward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-skip-forward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-speedometer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-square" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-square-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-star-half" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-star-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-star" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-stats" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-stopwatch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-subway" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-sunny" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-swap" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-switch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-sync" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-tablet-landscape" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-tablet-portrait" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-tennisball" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-thermometer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-thumbs-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-thumbs-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-thunderstorm" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-time" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-timer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-today" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-train" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-transgender" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-trash" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-trending-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-trending-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-trophy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-tv" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-umbrella" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-undo" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-unlock" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-videocam" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-volume-high" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-volume-low" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-volume-mute" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-volume-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-walk" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-wallet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-warning" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-watch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-water" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-wifi" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-wine" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="md-woman" aesize="ae32"></ae-icons-component>
+    </div>
+    <div>
+      <h1>Ionicons - alphabetic list (ios)</h1>
+    </div>
+    <div>
+      <ae-icons-component name="ios-add" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-add-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-add-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-airplane" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-alarm" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-albums" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-alert" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-american-football" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-analytics" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-aperture" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-apps" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-appstore" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-archive" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-back" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropdown-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropdown" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropleft-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropleft" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropright-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropright" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropup-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-dropup" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-forward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-round-back" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-round-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-round-forward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-round-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-arrow-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-at" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-attach" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-backspace" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-barcode" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-baseball" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-basket" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-basketball" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-battery-charging" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-battery-dead" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-battery-full" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-beaker" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bed" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-beer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bicycle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bluetooth" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-boat" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-body" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bonfire" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-book" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bookmark" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bookmarks" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bowtie" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-briefcase" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-browsers" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-brush" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bug" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-build" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bulb" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-bus" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-business" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cafe" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-calculator" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-calendar" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-call" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-camera" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-car" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-card" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cart" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cash" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cellular" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-chatboxes" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-chatbubbles" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-checkbox-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-checkbox" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-checkmark-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-checkmark-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-checkmark" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-clipboard" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-clock" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-close-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-close-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-close" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloud-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloud-done" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloud-download" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloud-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloud-upload" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloud" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloudy-night" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cloudy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-code-download" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-code-working" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-code" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cog" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-color-fill" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-color-filter" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-color-palette" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-color-wand" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-compass" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-construct" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-contact" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-contacts" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-contract" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-contrast" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-copy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-create" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-crop" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cube" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-cut" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-desktop" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-disc" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-document" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-done-all" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-download" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-easel" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-egg" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-exit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-expand" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-eye-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-eye" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-fastforward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-female" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-filing" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-film" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-finger-print" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-fitness" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flag" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flame" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flash-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flash" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flashlight" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flask" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-flower" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-folder-open" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-folder" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-football" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-funnel" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-gift" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-git-branch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-git-commit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-git-compare" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-git-merge" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-git-network" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-git-pull-request" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-glasses" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-globe" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-grid" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-hammer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-hand" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-happy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-headset" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-heart-dislike" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-heart-empty" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-heart-half" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-heart" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-help-buoy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-help-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-help-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-help" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-home" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-hourglass" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-ice-cream" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-image" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-images" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-infinite" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-information-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-information-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-information" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-jet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-journal" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-key" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-keypad" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-laptop" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-leaf" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-link" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-list-box" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-list" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-locate" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-lock" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-log-in" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-log-out" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-magnet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-mail-open" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-mail-unread" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-mail" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-male" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-man" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-map" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-medal" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-medical" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-medkit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-megaphone" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-menu" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-mic-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-mic" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-microphone" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-moon" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-more" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-move" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-musical-notes" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-musical-note" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-navigate" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-notifications-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-notifications-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-notifications" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-nuclear" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-nutrition" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-open" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-options" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-outlet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-paper-plane" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-paper" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-partly-sunny" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pause" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-paw" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-people" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-person-add" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-person" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-phone-landscape" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-phone-portrait" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-photos" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pie" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pin" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pint" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pizza" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-planet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-play-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-play" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-podium" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-power" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pricetag" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pricetags" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-print" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-pulse" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-qr-scanner" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-quote" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-radio-button-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-radio-button-on" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-radio" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-rainy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-recording" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-redo" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-refresh-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-refresh" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-remove-circle-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-remove-circle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-remove" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-reorder" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-repeat" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-resize" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-restaurant" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-return-left" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-return-right" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-reverse-camera" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-rewind" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-ribbon" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-rocket" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-rose" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-sad" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-save" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-school" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-search" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-send" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-settings" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-share-alt" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-share" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-shirt" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-shuffle" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-skip-backward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-skip-forward" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-speedometer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-square" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-square-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-star-half" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-star-outline" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-star" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-stats" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-stopwatch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-subway" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-sunny" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-swap" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-switch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-sync" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-tablet-landscape" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-tablet-portrait" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-tennisball" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-thermometer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-thumbs-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-thumbs-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-thunderstorm" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-time" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-timer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-today" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-train" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-transgender" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-trash" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-trending-down" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-trending-up" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-trophy" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-tv" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-umbrella" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-undo" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-unlock" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-videocam" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-volume-high" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-volume-low" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-volume-mute" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-volume-off" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-walk" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-wallet" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-warning" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-watch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-water" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-wifi" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-wine" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="ios-woman" aesize="ae32"></ae-icons-component>
+    </div>
+    <div>
+      <h1>Ionicons - alphabetic logos</h1>
+    </div>
+    <div>
+      <ae-icons-component name="logo-android" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-angular" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-apple" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-bitbucket" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-bitcoin" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-buffer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-chrome" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-closed-captioning" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-codepen" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-css3" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-designernews" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-dribbble" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-dropbox" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-euro" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-facebook" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-flickr" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-foursquare" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-freebsd-devil" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-game-controller-a" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-game-controller-b" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-github" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-google" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-googleplus" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-hackernews" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-html5" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-instagram" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-ionic" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-ionitron" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-javascript" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-linkedin" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-markdown" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-model-s" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-no-smoking" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-nodejs" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-npm" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-octocat" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-pinterest" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-playstation" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-polymer" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-python" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-reddit" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-rss" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-sass" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-skype" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-slack" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-snapchat" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-steam" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-tumblr" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-tux" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-twitch" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-twitter" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-usd" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-vimeo" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-vk" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-whatsapp" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-windows" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-wordpress" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-xbox" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-xing" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-yahoo" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-yen" aesize="ae32"></ae-icons-component>
+      <ae-icons-component name="logo-youtube" aesize="ae32"></ae-icons-component>
+    </div>
+
+    <div>
+      <br />
+      <ae-icons-component name="cloud-upload" color="darkolivegreen"></ae-icons-component>
+      <ae-icons-component aesize="ae16" name="cloudy" color="olive"></ae-icons-component>
+      <ae-icons-component aesize="ae24" name="cloudy-night" color="olivedrab"></ae-icons-component>
+      <ae-icons-component aesize="ae32" name="code" color="yellowgreen"></ae-icons-component>
+      <ae-icons-component aesize="ae40" name="code-download" color="limegreen"></ae-icons-component>
+      <ae-icons-component aesize="ae48" name="code-working" color="lime"></ae-icons-component>
+      <ae-icons-component aesize="ae56" name="cog" color="lawngreen"></ae-icons-component>
+      <ae-icons-component aesize="ae64" name="color-fill" color="chartreuse"></ae-icons-component>
+      <ae-icons-component aesize="ae72" name="color-filter" color="greenyellow"></ae-icons-component>
+      <ae-icons-component aesize="ae80" name="color-palette" color="springgreen"></ae-icons-component>
+      <ae-icons-component aesize="ae88" name="color-wand" color="mediumspringgreen"></ae-icons-component>
+      <ae-icons-component aesize="ae96" name="compass" color="mediumspringgreen"></ae-icons-component>
+      <ae-icons-component aesize="ae104" name="construct" color="lightgreen"></ae-icons-component>
+      <ae-icons-component aesize="ae112" name="contact" color="palegreen"></ae-icons-component>
+      <ae-icons-component aesize="ae120" name="contacts" color="darkseagreen"></ae-icons-component>
+      <ae-icons-component aesize="ae128" name="contract" color="mediumaquamarine"></ae-icons-component>
+      <br />
+      <ae-icons-component aesize="ae192" name="contrast" color="mediumseagreen"></ae-icons-component>
+      <ae-icons-component aesize="ae256" name="copy" color="seagreen"></ae-icons-component>
+      <ae-icons-component aesize="ae320" name="create" color="forestgreen"></ae-icons-component>
+      <ae-icons-component aesize="ae320" name="crop" color="green"></ae-icons-component>
+      <ae-icons-component aesize="ae320" name="cloud-upload" color="darkolivegreen"></ae-icons-component>
+      <ae-icons-component aesize="ae320" name="logo-ionic"></ae-icons-component>
+      <ae-icons-component aesize="ae320" name="logo-ionitron"></ae-icons-component>
+      <br />
+      <!--
+      <ae-icons-component aesize="ae384" name="crop" color="green"></ae-icons-component>
+      <ae-icons-component aesize="ae384" name="cloud-upload" color="darkolivegreen"></ae-icons-component>
+      <ae-icons-component aesize="ae448" name="cloud-upload" color="darkolivegreen"></ae-icons-component>
+      <ae-icons-component aesize="ae512" name="logo-ionic"></ae-icons-component>
+      <br />
+      <ae-icons-component aesize="ae1024" name="logo-ionitron"></ae-icons-component>
+      -->
+    </div>
+
+    <div class="footer">
+      <br />
+      <p>&copy;
+        <a href="https://adaept.com" target="_blank">adaept</a>
+      </p>
+    </div>
+  </div>
+
+</body>
+
+</html>
