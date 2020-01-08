@@ -1,9 +1,9 @@
 {
-  "name": "@adaept/ae-icons-component",
+  "name": "@adaept/ae-icon5-component",
   "version": "0.9.99",
   "private": false,
-  "description": "adaept Icons Component",
-  "homepage": "https://aeicons.adaept.com",
+  "description": "adaept Icon5 Component",
+  "homepage": "https://aeicon5.adaept.com",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "es2015": "dist/esm/index.mjs",
@@ -35,11 +35,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adaept/ae-icons-component.git"
+    "url": "git+https://github.com/adaept/ae-icon5-component.git"
   },
   "author": "adaept",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adaept/ae-icons-component"
+    "url": "https://github.com/adaept/ae-icon5-component"
   }
 }

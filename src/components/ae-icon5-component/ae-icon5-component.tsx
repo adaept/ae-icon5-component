@@ -1,5 +1,4 @@
-//import { Component, h, Element, Prop } from "@stencil/core";
-import { Component, ComponentInterface, Element, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
+import { Component, h, Element, Prop } from "@stencil/core";
 import "ionicons";
 
 let maxsize: number = 128;
@@ -10,11 +9,11 @@ let currsizeplus: number = 8;
 let currsizeminus: number = 8;
 
 @Component({
-  tag: "ae-icons-component",
-  styleUrl: "ae-icons-component.css",
+  tag: "ae-icon5-component",
+  styleUrl: "ae-icon5-component.css",
   shadow: true
 })
-export class AeIconsComponent {
+export class AeIcon5Component {
 
   @Element() el: HTMLElement;
 
@@ -35,7 +34,7 @@ export class AeIconsComponent {
    * componentWillLoad will only be called once.
    */
   componentWillLoad() {
-    //console.log('Component ae-icons-component is about to be rendered');
+    //console.log('Component ae-icon5-component is about to be rendered');
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);
     //console.log('aetype=' + this.aetype);

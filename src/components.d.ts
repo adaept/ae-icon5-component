@@ -10,7 +10,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface AeIconsComponent {
+  interface AeIcon5Component {
     'aesize': string;
     'aetype': string;
     'arialabel': string;
@@ -22,18 +22,18 @@ export namespace Components {
 declare global {
 
 
-  interface HTMLAeIconsComponentElement extends Components.AeIconsComponent, HTMLStencilElement {}
-  var HTMLAeIconsComponentElement: {
-    prototype: HTMLAeIconsComponentElement;
-    new (): HTMLAeIconsComponentElement;
+  interface HTMLAeIcon5ComponentElement extends Components.AeIcon5Component, HTMLStencilElement {}
+  var HTMLAeIcon5ComponentElement: {
+    prototype: HTMLAeIcon5ComponentElement;
+    new (): HTMLAeIcon5ComponentElement;
   };
   interface HTMLElementTagNameMap {
-    'ae-icons-component': HTMLAeIconsComponentElement;
+    'ae-icon5-component': HTMLAeIcon5ComponentElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface AeIconsComponent {
+  interface AeIcon5Component {
     'aesize'?: string;
     'aetype'?: string;
     'arialabel'?: string;
@@ -42,7 +42,7 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
-    'ae-icons-component': AeIconsComponent;
+    'ae-icon5-component': AeIcon5Component;
   }
 }
 
@@ -52,7 +52,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'ae-icons-component': LocalJSX.AeIconsComponent & JSXBase.HTMLAttributes<HTMLAeIconsComponentElement>;
+      'ae-icon5-component': LocalJSX.AeIcon5Component & JSXBase.HTMLAttributes<HTMLAeIcon5ComponentElement>;
     }
   }
 }
