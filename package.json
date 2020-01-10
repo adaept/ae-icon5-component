@@ -1,6 +1,6 @@
 {
   "name": "@adaept/ae-icon5-component",
-  "version": "0.9.992",
+  "version": "0.9.993",
   "private": false,
   "description": "adaept Icon5 Component",
   "homepage": "https://aeicon5.adaept.com",
@@ -22,10 +22,10 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
-    "ionicons": "4.6.4-1"
+    "ionicons": "5.0.0-15"
   },
   "devDependencies": {
-    "@stencil/core": "1.9.0-10",
+    "@stencil/core": "1.9.0-11",
     "@types/jest": "24.0.25",
     "@types/puppeteer": "2.0.0",
     "jest": "24.9.0",
