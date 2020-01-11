@@ -32,6 +32,8 @@ ion-icon.ae24 {
 ion-icon.ae32 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 4);
+  position: relative;
+  z-index: 2;
 }
 
 ion-icon.ae40 {
@@ -132,7 +134,8 @@ ion-icon.ae1024 {
 ion-icon:hover {
   background-color: rebeccapurple;
   box-shadow: inset 0px 0px 0px 2px red;
-  transform: scale(1.5);
+  transform: scale(2);
+  z-index: 10;
 }
 
 /* --adaept custom colors/names-- */
