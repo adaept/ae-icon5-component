@@ -94,7 +94,8 @@ export class AeIcon5Component {
           this.aesize = "ae" + currsizeminus
           //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
           document.getElementById("containerPara").innerHTML = "<br>" + "name:" + this.name +
-            " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype
+            " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype +
+            " arialabel:" + this.arialabel
           break;
         }
         case "ae-add-circle": {
@@ -102,7 +103,8 @@ export class AeIcon5Component {
           this.aesize = "ae" + currsizeplus
           //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
           document.getElementById("containerPara").innerHTML = "<br>" + "name:" + this.name +
-            " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype
+            " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype +
+            " arialabel:" + this.arialabel
           break;
         }
         case "ae-refresh-circle": {
@@ -125,7 +127,8 @@ export class AeIcon5Component {
       }
     } else {
       document.getElementById("containerPara").innerHTML = "<br>" + "name:" + this.name +
-        " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype
+        " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype +
+        " arialabel:" + this.arialabel
     }
   }
 
