@@ -93,18 +93,18 @@ export class AeIcon5Component {
           this.getIconSizeMinus();
           this.aesize = "ae" + currsizeminus
           //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-          document.getElementById("containerPara").innerHTML = "<br>" + "name:" + this.name +
-            " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype +
-            " arialabel:" + this.arialabel
+          document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+            " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+            " <b>arialabel:</b>" + this.arialabel
           break;
         }
         case "ae-add-circle": {
           this.getIconSizePlus();
           this.aesize = "ae" + currsizeplus
           //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-          document.getElementById("containerPara").innerHTML = "<br>" + "name:" + this.name +
-            " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype +
-            " arialabel:" + this.arialabel
+          document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+            " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+            " <b>arialabel:</b>" + this.arialabel
           break;
         }
         case "ae-refresh-circle": {
@@ -126,9 +126,9 @@ export class AeIcon5Component {
         }
       }
     } else {
-      document.getElementById("containerPara").innerHTML = "<br>" + "name:" + this.name +
-        " color:" + this.color + " aesize:" + this.aesize + " aetype:" + this.aetype +
-        " arialabel:" + this.arialabel
+      document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+        " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+        " <b>arialabel:</b>" + this.arialabel
     }
   }
 
