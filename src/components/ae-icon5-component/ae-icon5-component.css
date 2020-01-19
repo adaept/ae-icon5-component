@@ -9,9 +9,17 @@
 
 * {
   --color: pink;
-  --ae-red: #ED2939 ;   /* Imperial Red  */
-  --ae-green: #009E60;   /* Shamrock Green  */
+  --ae-red: #ED2939 ;   /* Imperial Red   */
+  --ae-green: #009E60;  /* Shamrock Green */
   --ae-icon-size: 8px;
+}
+
+.img {
+  width: 100%;
+  max-width: 500px;
+  display: block;
+  margin: auto;
+  justify-content: left;
 }
 
 ion-icon {

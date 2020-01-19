@@ -1,6 +1,22 @@
 import { Component, h, Element, Prop } from "@stencil/core";
 import "ionicons";
 
+import { createAnimation } from "@ionic/core";
+
+const animation = createAnimation()
+  .addElement(document.querySelector(".img"))
+  .easing("ease-in-out")
+  .duration(1000)
+  .direction("alternate")
+  .iterations(2)
+  .keyframes([
+    { offset: 0, transform: "scale(.5)", opacity: "1" },
+    { offset: 1, transform: "scale(.75)", opacity: "0.5" }
+  ]);
+
+animation.play();
+
+
 let maxsize: number = 128;
 let initsize: number = 40;
 //let prevsizeplus: number = 8;
