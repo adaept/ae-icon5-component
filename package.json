@@ -25,7 +25,6 @@
     "ionicons": "5.0.0-16"
   },
   "devDependencies": {
-    "@ionic/core": "5.0.0-beta.5",
     "@stencil/core": "1.9.0-12",
     "@types/jest": "24.9.0",
     "@types/puppeteer": "2.0.0",
