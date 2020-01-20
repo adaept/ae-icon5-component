@@ -1,6 +1,7 @@
 import { Component, h, Element, Prop } from "@stencil/core";
 import "ionicons";
 
+/*
 import { createAnimation } from "@ionic/core";
 
 const animation = createAnimation()
@@ -15,10 +16,10 @@ const animation = createAnimation()
   ]);
 
 animation.play();
-
+*/
 
 let maxsize: number = 128;
-let initsize: number = 40;
+let initsize: number = 48;
 //let prevsizeplus: number = 8;
 //let prevsizeminus: number = 8;
 let currsizeplus: number = 8;
