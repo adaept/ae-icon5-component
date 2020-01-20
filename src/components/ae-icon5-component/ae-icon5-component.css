@@ -14,14 +14,6 @@
   --ae-icon-size: 8px;
 }
 
-.img {
-  width: 100%;
-  max-width: 500px;
-  display: block;
-  margin: auto;
-  justify-content: left;
-}
-
 ion-icon {
   color: var(--color);
   font-size: var(--ae-icon-size);
