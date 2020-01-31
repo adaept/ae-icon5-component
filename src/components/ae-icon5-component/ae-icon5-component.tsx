@@ -104,48 +104,51 @@ export class AeIcon5Component {
   iconClicked(evt) {
     console.log('iconClicked evt = ' + evt.currentTarget);
     console.log('iconClicked this.arialabel = ' + this.arialabel);
-    if (this.arialabel) {
-      switch (this.arialabel) {
-        case "ae-remove-circle": {
-          this.getIconSizeMinus();
-          this.aesize = "ae" + currsizeminus
-          //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-          document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
-            " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-            " <b>arialabel:</b>" + this.arialabel
-          break;
-        }
-        case "ae-add-circle": {
-          this.getIconSizePlus();
-          this.aesize = "ae" + currsizeplus
-          //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-          document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
-            " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-            " <b>arialabel:</b>" + this.arialabel
-          break;
-        }
-        case "ae-refresh-circle": {
-          /*
-          this.aesize = "ae" + initsize;
+    // Only output icon info for the component website
+    if (document.getElementById("containerPara")) {
+      if (this.arialabel) {
+        switch (this.arialabel) {
+          case "ae-remove-circle": {
+            this.getIconSizeMinus();
+            this.aesize = "ae" + currsizeminus
+            //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
+            document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+              " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+              " <b>arialabel:</b>" + this.arialabel
+            break;
+          }
+          case "ae-add-circle": {
+            this.getIconSizePlus();
+            this.aesize = "ae" + currsizeplus
+            //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
+            document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+              " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+              " <b>arialabel:</b>" + this.arialabel
+            break;
+          }
+          case "ae-refresh-circle": {
+            /*
+            this.aesize = "ae" + initsize;
 
-          // list all element style properties
-          //  this.getElementStyleProps("3");
-          //  console.log('My Computed Style = ' + this.getMyComputedStyle('--color', 'orange'));
-          //
+            // list all element style properties
+            //  this.getElementStyleProps("3");
+            //  console.log('My Computed Style = ' + this.getMyComputedStyle('--color', 'orange'));
+            //
 
-          console.log('ae-refresh-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-          */
-          break;
+            console.log('ae-refresh-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
+            */
+            break;
+          }
+          default: {
+            //statements;
+            break;
+          }
         }
-        default: {
-          //statements;
-          break;
-        }
+      } else {
+        document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+          " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+          " <b>arialabel:</b>" + this.arialabel
       }
-    } else {
-      document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
-        " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-        " <b>arialabel:</b>" + this.arialabel
     }
   }
 
