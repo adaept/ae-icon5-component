@@ -36,8 +36,8 @@ export class AeIcon5Component {
 
   @Prop() aetype: string
   @Prop() aesize: string;
-  @Prop() name: string;
-  @Prop() color: string;
+  @Prop({ mutable: true }) name: string;
+  @Prop({ mutable: true }) color: string;
   @Prop() arialabel: string;
 
   constructor() {
@@ -112,30 +112,35 @@ export class AeIcon5Component {
             this.getIconSizeMinus();
             this.aesize = "ae" + currsizeminus
             //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-            document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+            document.getElementById("containerDetail").innerHTML = "<b>name:</b>" + this.name +
               " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
               " <b>arialabel:</b>" + this.arialabel
+
+            document.getElementById("containerPara").innerHTML =
+              '<ae-icon5-component aesize="ae32" ' +
+              ' name=' + this.name +
+              ' color=' + this.color +
+              ' arialabel=' + this.arialabel + '>';
             break;
           }
           case "ae-add-circle": {
             this.getIconSizePlus();
             this.aesize = "ae" + currsizeplus
             //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-            document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
+            document.getElementById("containerDetail").innerHTML = "<b>name:</b>" + this.name +
               " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
               " <b>arialabel:</b>" + this.arialabel
+
+            document.getElementById("containerPara").innerHTML =
+              '<ae-icon5-component aesize="ae32" ' +
+              ' name=' + this.name +
+              ' color=' + this.color +
+              ' arialabel=' + this.arialabel + '>';
             break;
           }
           case "ae-refresh-circle": {
             /*
-            this.aesize = "ae" + initsize;
-
-            // list all element style properties
-            //  this.getElementStyleProps("3");
-            //  console.log('My Computed Style = ' + this.getMyComputedStyle('--color', 'orange'));
-            //
-
-            console.log('ae-refresh-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
+            FIXME
             */
             break;
           }
@@ -145,9 +150,19 @@ export class AeIcon5Component {
           }
         }
       } else {
-        document.getElementById("containerPara").innerHTML = "<b>name:</b>" + this.name +
-          " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-          " <b>arialabel:</b>" + this.arialabel
+        if (document.getElementById("containerDetail")) {
+          document.getElementById("containerDetail").innerHTML =
+            "<b>name:</b>" + this.name +
+            " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
+            " <b>arialabel:</b>" + this.arialabel;
+          //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
+
+          document.getElementById("containerPara").innerHTML =
+            '<ae-icon5-component aesize="ae32" ' +
+            ' name=' + this.name +
+            ' color=' + this.color +
+            ' arialabel=' + this.arialabel + '>';
+        }
       }
     }
   }
