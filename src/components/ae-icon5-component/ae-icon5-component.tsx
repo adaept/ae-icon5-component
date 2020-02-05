@@ -1,5 +1,5 @@
-import { Component, h, Element, Prop } from "@stencil/core";
-import "ionicons";
+import { Component, h, Element, Prop } from '@stencil/core'
+import 'ionicons'
 
 /*
 import { createAnimation } from "@ionic/core";
@@ -18,16 +18,16 @@ const animation = createAnimation()
 animation.play();
 */
 
-let maxsize: number = 128;
-let initsize: number = 48;
-//let prevsizeplus: number = 8;
-//let prevsizeminus: number = 8;
-let currsizeplus: number = 8;
-let currsizeminus: number = 8;
+const maxsize: number = 128
+const initsize: number = 48
+// let prevsizeplus: number = 8;
+// let prevsizeminus: number = 8;
+let currsizeplus: number = 8
+let currsizeminus: number = 8
 
 @Component({
-  tag: "ae-icon5-component",
-  styleUrl: "ae-icon5-component.css",
+  tag: 'ae-icon5-component',
+  styleUrl: 'ae-icon5-component.css',
   shadow: true
 })
 export class AeIcon5Component {
@@ -41,7 +41,7 @@ export class AeIcon5Component {
   @Prop() arialabel: string;
 
   constructor() {
-    this.iconClicked = this.iconClicked.bind(this);
+    this.iconClicked = this.iconClicked.bind(this)
   }
 
   /**
@@ -58,7 +58,7 @@ export class AeIcon5Component {
   }
 
   resetMinusPlusSize() {
-    console.log('resetMinusPlusSize');
+    console.log('resetMinusPlusSize')
   }
 
   getMyComputedStyle(cssVarName: string, propValue: string) {
@@ -66,20 +66,20 @@ export class AeIcon5Component {
       document.documentElement.style.setProperty(cssVarName, propValue)
       console.log('A. getMyComputedStyle ' + cssVarName + ' = ' + propValue)
     }
-    console.log('B. getMyComputedStyle DONE');
-    return getComputedStyle(document.documentElement).getPropertyValue(cssVarName);
+    console.log('B. getMyComputedStyle DONE')
+    return getComputedStyle(document.documentElement).getPropertyValue(cssVarName)
   }
 
   getElementStyleProps(myElement: string) {
     // Ref: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
-    let element = document.getElementById(myElement);
-    let out = "";
-    let elementStyle = element.style;
-    let computedStyle = window.getComputedStyle(element, null);
+    let element = document.getElementById(myElement)
+    let out = ''
+    let elementStyle = element.style
+    let computedStyle = window.getComputedStyle(element, null)
 
     for (const prop in elementStyle) {
       if (elementStyle.hasOwnProperty(prop)) {
-        out += "  " + prop + " = '" + elementStyle[prop] + "' > '" + computedStyle[prop] + "'\n";
+        out += '  ' + prop + " = '" + elementStyle[prop] + "' > '" + computedStyle[prop] + "'\n"
       }
     }
     console.log(out)
@@ -88,80 +88,80 @@ export class AeIcon5Component {
   getIconSizeMinus() {
     //console.log('getIconSizeMinus prevsizeminus = ' + prevsizeminus);
     //console.log('getIconSizeMinus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
-    currsizeminus = +this.aesize.substr(2) - 8;
-    currsizeminus < 8 ? currsizeminus = initsize : currsizeminus;
+    currsizeminus = +this.aesize.substr(2) - 8
+    currsizeminus < 8 ? currsizeminus = initsize : currsizeminus
     //console.log(currsizeminus);
   }
 
   getIconSizePlus() {
     //console.log('getIconSizePlus prevsizeplus = ' + prevsizeplus);
     //console.log('getIconSizePlus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
-    currsizeplus = +this.aesize.substr(2) + 8;
-    currsizeplus > maxsize ? currsizeplus = 8 : currsizeplus;
+    currsizeplus = +this.aesize.substr(2) + 8
+    currsizeplus > maxsize ? currsizeplus = 8 : currsizeplus
     //console.log(currsizeplus);
   }
 
   iconClicked(evt) {
-    console.log('iconClicked evt = ' + evt.currentTarget);
-    console.log('iconClicked this.arialabel = ' + this.arialabel);
+    console.log('iconClicked evt = ' + evt.currentTarget)
+    console.log('iconClicked this.arialabel = ' + this.arialabel)
     // Only output icon info for the component website
-    if (document.getElementById("containerPara")) {
+    if (document.getElementById('containerPara')) {
       if (this.arialabel) {
         switch (this.arialabel) {
-          case "ae-remove-circle": {
-            this.getIconSizeMinus();
-            this.aesize = "ae" + currsizeminus
+          case 'ae-remove-circle': {
+            this.getIconSizeMinus()
+            this.aesize = 'ae' + currsizeminus
             //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-            document.getElementById("containerDetail").innerHTML = "<b>name:</b>" + this.name +
-              " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-              " <b>arialabel:</b>" + this.arialabel
+            document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
+              ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+              ' <b>arialabel:</b>' + this.arialabel
 
-            document.getElementById("containerPara").innerHTML =
+            document.getElementById('containerPara').innerHTML =
               '<ae-icon5-component aesize="ae32" ' +
               ' name=' + this.name +
               ' color=' + this.color +
-              ' arialabel=' + this.arialabel + '>';
+              ' arialabel=' + this.arialabel + '>'
             break;
           }
-          case "ae-add-circle": {
-            this.getIconSizePlus();
-            this.aesize = "ae" + currsizeplus
+          case 'ae-add-circle': {
+            this.getIconSizePlus()
+            this.aesize = 'ae' + currsizeplus
             //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-            document.getElementById("containerDetail").innerHTML = "<b>name:</b>" + this.name +
-              " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-              " <b>arialabel:</b>" + this.arialabel
+            document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
+              ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+              ' <b>arialabel:</b>' + this.arialabel
 
-            document.getElementById("containerPara").innerHTML =
+            document.getElementById('containerPara').innerHTML =
               '<ae-icon5-component aesize="ae32" ' +
               ' name=' + this.name +
               ' color=' + this.color +
-              ' arialabel=' + this.arialabel + '>';
+              ' arialabel=' + this.arialabel + '>'
             break;
           }
-          case "ae-refresh-circle": {
+          case 'ae-refresh-circle': {
             /*
             FIXME
             */
-            break;
+            break
           }
           default: {
             //statements;
-            break;
+            break
           }
         }
       } else {
-        if (document.getElementById("containerDetail")) {
-          document.getElementById("containerDetail").innerHTML =
-            "<b>name:</b>" + this.name +
-            " <b>color:</b>" + this.color + " <b>aesize:</b>" + this.aesize + " <b>aetype:</b>" + this.aetype +
-            " <b>arialabel:</b>" + this.arialabel;
+        if (document.getElementById('containerDetail')) {
+          document.getElementById('containerDetail').innerHTML =
+            '<b>name:</b>' + this.name +
+            ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+            ' <b>arialabel:</b>' + this.arialabel
           //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
 
-          document.getElementById("containerPara").innerHTML =
+          document.getElementById('containerPara').innerHTML =
             '<ae-icon5-component aesize="ae32" ' +
             ' name=' + this.name +
             ' color=' + this.color +
-            ' arialabel=' + this.arialabel + '>';
+            ' arialabel=' + this.arialabel + '>'
         }
       }
     }
@@ -170,7 +170,7 @@ export class AeIcon5Component {
   render() {
     return (
       <ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>
-    );
+    )
   }
 }
 

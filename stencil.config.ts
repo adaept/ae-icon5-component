@@ -1,14 +1,15 @@
-import { Config } from "@stencil/core";
+// eslint-disable-next-line no-unused-vars
+import { Config } from '@stencil/core'
 
 export const config: Config = {
-  namespace: "aeicon5component",
+  namespace: 'aeicon5component',
   outputTargets: [
     {
-      type: "dist"
+      type: 'dist'
     },
     {
-      type: "www",
+      type: 'www',
       serviceWorker: null
     }
   ]
-};
+}
