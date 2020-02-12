@@ -12,7 +12,7 @@
   --ae-red: #ED2939 ;   /* Imperial Red   */
   --ae-green: #009E60;  /* Shamrock Green */
   --ae-icon-size: 8px;
-  /* --ionicon-stroke-width: 8px; */
+  --ionicon-stroke-width: 16px;
 }
 
 ion-icon {
@@ -41,6 +41,11 @@ ion-icon.ae32 {
 ion-icon.ae40 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 5);
+}
+
+ion-icon.sw40 {
+  color: var(--color);
+  stroke-width: calc(var(--ionicon-stroke-width) * 3);
 }
 
 ion-icon.ae48 {

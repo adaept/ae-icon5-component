@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import { Component, h, Element, Prop } from '@stencil/core'
 import 'ionicons'
 
@@ -31,7 +32,6 @@ let currsizeminus: number = 8
   shadow: true
 })
 export class AeIcon5Component {
-
   @Element() el: HTMLElement;
 
   @Prop() aetype: string
@@ -72,12 +72,13 @@ export class AeIcon5Component {
 
   getElementStyleProps(myElement: string) {
     // Ref: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
-    let element = document.getElementById(myElement)
+    const element = document.getElementById(myElement)
     let out = ''
-    let elementStyle = element.style
-    let computedStyle = window.getComputedStyle(element, null)
+    const elementStyle = element.style
+    const computedStyle = window.getComputedStyle(element, null)
 
     for (const prop in elementStyle) {
+      // eslint-disable-next-line no-prototype-builtins
       if (elementStyle.hasOwnProperty(prop)) {
         out += '  ' + prop + " = '" + elementStyle[prop] + "' > '" + computedStyle[prop] + "'\n"
       }
@@ -89,6 +90,7 @@ export class AeIcon5Component {
     //console.log('getIconSizeMinus prevsizeminus = ' + prevsizeminus);
     //console.log('getIconSizeMinus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
     currsizeminus = +this.aesize.substr(2) - 8
+    // eslint-disable-next-line no-unused-expressions
     currsizeminus < 8 ? currsizeminus = initsize : currsizeminus
     //console.log(currsizeminus);
   }
@@ -97,6 +99,7 @@ export class AeIcon5Component {
     //console.log('getIconSizePlus prevsizeplus = ' + prevsizeplus);
     //console.log('getIconSizePlus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
     currsizeplus = +this.aesize.substr(2) + 8
+    // eslint-disable-next-line no-unused-expressions
     currsizeplus > maxsize ? currsizeplus = 8 : currsizeplus
     //console.log(currsizeplus);
   }
@@ -121,7 +124,7 @@ export class AeIcon5Component {
               ' name=' + this.name +
               ' color=' + this.color +
               ' arialabel=' + this.arialabel + '>'
-            break;
+            break
           }
           case 'ae-add-circle': {
             this.getIconSizePlus()
@@ -136,7 +139,7 @@ export class AeIcon5Component {
               ' name=' + this.name +
               ' color=' + this.color +
               ' arialabel=' + this.arialabel + '>'
-            break;
+            break
           }
           case 'ae-refresh-circle': {
             /*
@@ -173,4 +176,3 @@ export class AeIcon5Component {
     )
   }
 }
-

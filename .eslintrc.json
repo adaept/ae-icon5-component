@@ -17,5 +17,9 @@
   "plugins": [
     "@typescript-eslint"
   ],
-  "rules": {}
+  "rules": {
+    // disable rule of space before function parentheses
+    "space-before-function-paren": "off",
+    "spaced-comment": "off"
+  }
 }
