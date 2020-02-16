@@ -12,13 +12,17 @@
   --ae-red: #ED2939 ;   /* Imperial Red   */
   --ae-green: #009E60;  /* Shamrock Green */
   --ae-icon-size: 8px;
-  --ionicon-stroke-width: 16px;
+  --ionicon-stroke-width: 32px;
 }
+
+/* .ionicon-stroke-width {
+  stroke-width: 32px;
+  stroke-width: var(--ionicon-stroke-width, 32px);
+} */
 
 ion-icon {
   color: var(--color);
   font-size: var(--ae-icon-size);
-  /* stroke-width: var(--ionicon-stroke-width); */
 }
 
 ion-icon.ae16 {
@@ -43,9 +47,10 @@ ion-icon.ae40 {
   font-size: calc(var(--ae-icon-size) * 5);
 }
 
-ion-icon.sw40 {
+ion-icon.aesw40 {
   color: var(--color);
-  stroke-width: calc(var(--ionicon-stroke-width) * 3);
+  font-size: calc(var(--ae-icon-size) * 5);
+  stroke-width: calc(var(--ionicon-stroke-width) * 2);
 }
 
 ion-icon.ae48 {
@@ -139,7 +144,8 @@ ion-icon.ae1024 {
 }
 
 ion-icon:hover {
-  background-color: rebeccapurple;
+  /* background-color: rebeccapurple; */
+  background-color: var(--ion-color-contrast);
   box-shadow: inset 0px 0px 0px 2px red;
   transform: scale(2);
   z-index: 10;
