@@ -145,7 +145,7 @@ ion-icon.ae1024 {
 
 ion-icon:hover {
   /* background-color: rebeccapurple; */
-  background-color: var(--ion-color-contrast);
+  background-color: var(--ion-color-contrast, rebeccapurple);
   box-shadow: inset 0px 0px 0px 2px red;
   transform: scale(2);
   z-index: 10;
