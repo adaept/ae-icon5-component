@@ -34,11 +34,12 @@ let currsizeminus: number = 8
 export class AeIcon5Component {
   @Element() el: HTMLElement;
 
-  @Prop() aetype: string
   @Prop() aesize: string;
-  @Prop({ mutable: true }) name: string;
-  @Prop({ mutable: true }) color: string;
+  @Prop() aetype: string
   @Prop() arialabel: string;
+  @Prop({ mutable: true }) color: string;
+  @Prop({ mutable: true }) name: string;
+  @Prop({ mutable: true }) src: string;
 
   constructor() {
     this.iconClicked = this.iconClicked.bind(this)
@@ -171,8 +172,10 @@ export class AeIcon5Component {
   }
 
   render() {
-    return (
-      <ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>
-    )
+    if (this.name) {
+      return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
+    } else {
+      return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
+    }
   }
 }

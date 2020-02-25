@@ -12,6 +12,7 @@ export namespace Components {
         "arialabel": string;
         "color": string;
         "name": string;
+        "src": string;
     }
 }
 declare global {
@@ -32,6 +33,7 @@ declare namespace LocalJSX {
         "arialabel"?: string;
         "color"?: string;
         "name"?: string;
+        "src"?: string;
     }
     interface IntrinsicElements {
         "ae-icon5-component": AeIcon5Component;
