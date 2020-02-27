@@ -12,3 +12,31 @@ div.container {
   align-items: center;
   justify-items: center;
 }
+
+/* #fixed1 {
+  position: fixed;
+  top: 30px;
+  left: 200px;
+  width: 250px;
+  height: 40px;
+  background-color: pink;
+} */
+
+#fixedGithub {
+  position: fixed;
+  top: 30px;
+  left: 200px;
+  width: 32px;
+  height: 32px;
+  /* background-color: pink; */
+}
+
+#circleGithub {
+  position: fixed;
+  top: 32px;
+  left: 202px;
+  width: 28px;
+  height: 29px;
+  background: pink;
+  border-radius: 50%
+}
