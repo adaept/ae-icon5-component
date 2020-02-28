@@ -49,37 +49,14 @@
       <div><a href="https://adaept.com/">
           <img src="assets/logo.gif" width="150" /></a>
       </div>
-      <div>
-        <!-- Ref: https://ionicframework.com/blog/introducing-ionic-animations/
-          Ref: https://codesandbox.io/s/bitter-firefly-4sjrn?from-embed -->
+      <!-- <div>
+        Ref: https://ionicframework.com/blog/introducing-ionic-animations/
+          Ref: https://codesandbox.io/s/bitter-firefly-4sjrn?from-embed
         <img src="assets/ae_512x512_adaept_tpeada_mirror_new_omg.svg" width="150" class="img" alt="" />
-      </div>
+      </div> -->
     </ion-row>
     <div>5.0.0/1.9.0-19/0.9.9998</div>
 
-  </div>
-
-  <!-- container is css grid and is using ion-icon with ionic theme -->
-  <div class="container" style="padding: 8px 0; display: inline-block;">
-    <ion-row>
-      <ae-icon5-component id="1" aetype="round" aesize="ae48" name="remove-circle" color="danger"
-        arialabel="ae-remove-circle">
-      </ae-icon5-component>
-      <span style="font-size:24px"><b>SIZE</b></span>
-      <ae-icon5-component id="2" aetype="round" aesize="ae48" name="add-circle" color="success"
-        arialabel="ae-add-circle">
-      </ae-icon5-component>
-      <span style="font-size:24px"><b>RESET</b></span>
-      <ion-icon id="3" slot="icon-only" name="refresh-circle" shape="round" size="large" color="danger"></ion-icon>
-      <!--<ion-icon id="4" slot="icon-only" name="globe" shape="round" size="large" color="success"></ion-icon>-->
-      <!--
-        <ae-icon5-component id="3" aetype="round" aesize="ae40" name="refresh-circle" color="aered"
-          arialabel="ae-refresh-circle">
-        </ae-icon5-component>
-        <ae-icon5-component id="4" aetype="round" aesize="ae40" name="globe" color="aegreen" arialabel="ae-globe">
-        </ae-icon5-component>
-        -->
-    </ion-row>
   </div>
 
   <ion-row>
@@ -106,6 +83,29 @@
       </div>
       <hr>
     </ion-row>
+
+    <!-- container is css grid and is using ion-icon with ionic theme -->
+    <div class="container" style="padding: 8px 0; display: inline-block;">
+      <ion-row>
+        <ae-icon5-component id="1" aetype="round" aesize="ae48" name="remove-circle" color="danger"
+          arialabel="ae-remove-circle">
+        </ae-icon5-component>
+        <span style="font-size:24px"><b>SIZE</b></span>
+        <ae-icon5-component id="2" aetype="round" aesize="ae48" name="add-circle" color="success"
+          arialabel="ae-add-circle">
+        </ae-icon5-component>
+        <span style="font-size:24px"><b>RESET</b></span>
+        <ion-icon id="3" slot="icon-only" name="refresh-circle" shape="round" size="large" color="danger"></ion-icon>
+        <!--<ion-icon id="4" slot="icon-only" name="globe" shape="round" size="large" color="success"></ion-icon>-->
+        <!--
+        <ae-icon5-component id="3" aetype="round" aesize="ae40" name="refresh-circle" color="aered"
+          arialabel="ae-refresh-circle">
+        </ae-icon5-component>
+        <ae-icon5-component id="4" aetype="round" aesize="ae40" name="globe" color="aegreen" arialabel="ae-globe">
+        </ae-icon5-component>
+        -->
+      </ion-row>
+    </div>
 
     <div style="background-color:lightyellow">
       <h1>Ionicons 5 - theme and named colors</h1>
@@ -1659,66 +1659,66 @@
       -->
     </div>
 
-  </div><!-- aeicon5-scroll -->
+    <style type="text/css">
+      /* initial state Ref: https://www.the-art-of-web.com/css/css-animation/ */
+      #adaeptZone {
+        position: relative;
+        height: 60px;
+        background: limegreen;
+        color: #fff;
+      }
 
-  <style type="text/css">
-    /* initial state Ref: https://www.the-art-of-web.com/css/css-animation/ */
-    #adaeptZone {
-      position: relative;
-      height: 60px;
-      background: limegreen;
-      color: #fff;
-    }
+      div.adaept {
+        position: absolute;
+        bottom: 10px;
+        left: 5px;
+        transition: 3s ease-in;
+      }
 
-    div.adaept {
-      position: absolute;
-      bottom: 10px;
-      left: 5px;
-      transition: 3s ease-in;
-    }
+      div.adaept div {
+        width: 217px;
+        height: 40px;
+        background: hotpink;
+        transition: 3s ease-in-out;
+      }
 
-    div.adaept div {
-      width: 216px;
-      height: 40px;
-      background: hotpink;
-      transition: 3s ease-in-out;
-    }
+      /* hover final state */
+      #adaeptZone:hover div.adaept {
+        transform: translate(200px, -200px);
+      }
 
-    /* hover final state */
-    #adaeptZone:hover div.adaept {
-      transform: translate(200px, -200px);
-    }
-
-    #adaeptZone:hover div.adaept div {
-      transform: rotate(360deg);
-      /* Ref: https://stackoverflow.com/questions/50659284/how-do-i-make-a-css-rotating-animation
+      #adaeptZone:hover div.adaept div {
+        transform: rotate(360deg);
+        /* Ref: https://stackoverflow.com/questions/50659284/how-do-i-make-a-css-rotating-animation
       animation: rotate 3s;
       animation-timing-function: cubic-bezier(1, 0, .5, 1); */
-    }
-  </style>
+      }
+    </style>
 
-  <div id="adaeptZone">
-    <div class="adaept">
-      <div>
-        <ion-row>
-          <!-- adaept -->
-          <ae-icon5-component aesize="ae40" src="assets/custom-icons/at.svg"></ae-icon5-component>
-          <ae-icon5-component aesize="ae40" src="assets/custom-icons/dp.svg"></ae-icon5-component>
-          <ae-icon5-component aesize="ae40" src="assets/custom-icons/ae.svg"></ae-icon5-component>
-          <ae-icon5-component aesize="ae40" src="assets/custom-icons/pd.svg"></ae-icon5-component>
-          <ae-icon5-component aesize="ae40" src="assets/custom-icons/ta.svg"></ae-icon5-component>
-        </ion-row>
-      </div>
-      <!-- .adaept -->
-    </div><!-- #adaeptZone -->
-  </div>
+    <div id="adaeptZone">
+      <div class="adaept">
+        <div>
+          <ion-row>
+            <!-- adaept -->
+            <ae-icon5-component aesize="ae40" src="assets/custom-icons/at.svg"></ae-icon5-component>
+            <ae-icon5-component aesize="ae40" src="assets/custom-icons/dp.svg"></ae-icon5-component>
+            <ae-icon5-component aesize="ae40" src="assets/custom-icons/ae.svg"></ae-icon5-component>
+            <ae-icon5-component aesize="ae40" src="assets/custom-icons/pd.svg"></ae-icon5-component>
+            <ae-icon5-component aesize="ae40" src="assets/custom-icons/ta.svg"></ae-icon5-component>
+          </ion-row>
+        </div>
+        <!-- .adaept -->
+      </div><!-- #adaeptZone -->
+    </div>
 
-  <div class="footer">
-    <p>&copy;
-      <a href="https://adaept.com" target="_blank">adaept</a>
-    </p>
-    <br />
-  </div>
+    <div class="footer">
+      <p>&copy;
+        <a href="https://adaept.com" target="_blank">adaept</a>
+      </p>
+      <br />
+    </div>
+
+  </div><!-- aeicon5-scroll -->
 
 </body>
 
