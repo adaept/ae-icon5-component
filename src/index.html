@@ -1648,6 +1648,7 @@
       <ae-icon5-component aesize="ae120" name="people" color="darkseagreen"></ae-icon5-component>
       <ae-icon5-component aesize="ae128" name="contract" color="mediumaquamarine"></ae-icon5-component>
       <br />
+      <!--
       <ae-icon5-component aesize="ae192" name="contrast" color="mediumseagreen"></ae-icon5-component>
       <ae-icon5-component aesize="ae256" name="copy" color="seagreen"></ae-icon5-component>
       <ae-icon5-component aesize="ae320" name="create" color="forestgreen"></ae-icon5-component>
@@ -1656,7 +1657,6 @@
       <ae-icon5-component aesize="ae320" name="logo-ionic"></ae-icon5-component>
       <ae-icon5-component aesize="ae320" name="logo-ionitron"></ae-icon5-component>
       <br />
-      <!--
       <ae-icon5-component aesize="ae384" name="crop" color="green"></ae-icon5-component>
       <ae-icon5-component aesize="ae384" name="cloud-upload" color="darkolivegreen"></ae-icon5-component>
       <ae-icon5-component aesize="ae448" name="cloud-upload" color="darkolivegreen"></ae-icon5-component>
@@ -1666,12 +1666,68 @@
       -->
     </div>
 
-    <div class="footer">
-      <br />
-      <p>&copy;
-        <a href="https://adaept.com" target="_blank">adaept</a>
-      </p>
-    </div>
+  </div><!-- aeicon5-scroll -->
+
+  <div id="spinme">
+    <ion-row>
+      <ae-icon5-component aesize="ae40" src="assets/custom-icons/at.svg"></ae-icon5-component>
+      <ae-icon5-component aesize="ae40" src="assets/custom-icons/dp.svg"></ae-icon5-component>
+      <ae-icon5-component aesize="ae40" src="assets/custom-icons/pd.svg"></ae-icon5-component>
+      <ae-icon5-component aesize="ae40" src="assets/custom-icons/ta.svg"></ae-icon5-component>
+      <hr>
+    </ion-row>
+  </div>
+
+  <style type="text/css">
+    /* initial state Ref: https://www.the-art-of-web.com/css/css-animation/ */
+    #adaeptZone {
+      position: relative;
+      height: 300px;
+      background: limegreen;
+      color: #fff;
+    }
+
+    div.adaept {
+      position: absolute;
+      bottom: 20px;
+      left: 0px;
+      transition: 3s ease-in;
+    }
+
+    div.adaept div {
+      width: 100vw;
+      height: 210px;
+      background: pink;
+      transition: 3s ease-in-out;
+    }
+
+    /* hover final state */
+    #adaeptZone:hover div.adaept {
+      transform: translate(200px, -200px);
+    }
+
+    #adaeptZone:hover div.adaept div {
+      transform: rotate(360deg);
+      /* Ref: https://stackoverflow.com/questions/50659284/how-do-i-make-a-css-rotating-animation
+      animation: rotate 3s;
+      animation-timing-function: cubic-bezier(1, 0, .5, 1); */
+    }
+  </style>
+
+  <div id="adaeptZone">
+    <div class="adaept">
+      <div>
+        <!-- adaept -->
+      </div>
+      .adaept
+    </div>#adaeptZone
+  </div>
+
+  <div class="footer">
+    <br />
+    <p>&copy;
+      <a href="https://adaept.com" target="_blank">adaept</a>
+    </p>
   </div>
 
 </body>
