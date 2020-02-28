@@ -38,15 +38,16 @@
   </div>
   -->
 
+  <div id="fixedGithub">
+    <ae-icon5-component name="logo-github" aesize="ae32" color="black"></ae-icon5-component>
+    <div id="circleGithub"></div>
+  </div>
+
   <div>
     <ion-row>
       <br />
       <div><a href="https://adaept.com/">
           <img src="assets/logo.gif" width="150" /></a>
-        <!--
-        <ae-icon5-component name="logo-stencil" color="black" aesize="ae32"></ae-icon5-component>
-        <ae-icon5-component name="logo-github" color="black" aesize="ae32"></ae-icon5-component>
-        -->
       </div>
       <div>
         <!-- Ref: https://ionicframework.com/blog/introducing-ionic-animations/
@@ -55,6 +56,7 @@
       </div>
     </ion-row>
     <div>5.0.0/1.9.0-19/0.9.9998</div>
+
   </div>
 
   <!-- container is css grid and is using ion-icon with ionic theme -->
@@ -90,15 +92,6 @@
     </div>
   </ion-row>
   <hr>
-  </div>
-
-  <!-- <div id="fixed1">
-    position: fixed; top: 30px; left: 200px; width: 300px; height: 40px;
-  </div> -->
-
-  <div id="fixedGithub">
-    <ae-icon5-component name="logo-github" aesize="ae32" color="black"></ae-icon5-component>
-    <div id="circleGithub"></div>
   </div>
 
   <div class="aeicon5-scroll">
@@ -1668,36 +1661,26 @@
 
   </div><!-- aeicon5-scroll -->
 
-  <div id="spinme">
-    <ion-row>
-      <ae-icon5-component aesize="ae40" src="assets/custom-icons/at.svg"></ae-icon5-component>
-      <ae-icon5-component aesize="ae40" src="assets/custom-icons/dp.svg"></ae-icon5-component>
-      <ae-icon5-component aesize="ae40" src="assets/custom-icons/pd.svg"></ae-icon5-component>
-      <ae-icon5-component aesize="ae40" src="assets/custom-icons/ta.svg"></ae-icon5-component>
-      <hr>
-    </ion-row>
-  </div>
-
   <style type="text/css">
     /* initial state Ref: https://www.the-art-of-web.com/css/css-animation/ */
     #adaeptZone {
       position: relative;
-      height: 300px;
+      height: 60px;
       background: limegreen;
       color: #fff;
     }
 
     div.adaept {
       position: absolute;
-      bottom: 20px;
+      bottom: 10px;
       left: 0px;
       transition: 3s ease-in;
     }
 
     div.adaept div {
-      width: 100vw;
-      height: 210px;
-      background: pink;
+      width: 200px;
+      height: 40px;
+      background: hotpink;
       transition: 3s ease-in-out;
     }
 
@@ -1718,9 +1701,13 @@
     <div class="adaept">
       <div>
         <!-- adaept -->
+        <ae-icon5-component aesize="ae40" src="assets/custom-icons/at.svg"></ae-icon5-component>
+        <ae-icon5-component aesize="ae40" src="assets/custom-icons/dp.svg"></ae-icon5-component>
+        <ae-icon5-component aesize="ae40" src="assets/custom-icons/pd.svg"></ae-icon5-component>
+        <ae-icon5-component aesize="ae40" src="assets/custom-icons/ta.svg"></ae-icon5-component>
       </div>
-      .adaept
-    </div>#adaeptZone
+      <!-- .adaept -->
+    </div><!-- #adaeptZone -->
   </div>
 
   <div class="footer">

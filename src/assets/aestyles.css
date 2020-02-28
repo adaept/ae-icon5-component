@@ -13,15 +13,6 @@ div.container {
   justify-items: center;
 }
 
-/* #fixed1 {
-  position: fixed;
-  top: 30px;
-  left: 200px;
-  width: 250px;
-  height: 40px;
-  background-color: pink;
-} */
-
 #fixedGithub {
   position: fixed;
   top: 30px;
@@ -39,14 +30,4 @@ div.container {
   height: 29px;
   background: pink;
   border-radius: 50%
-}
-
-#spinme {
-  position: relative;
-  bottom: 40px;
-  margin-bottom: 100px;
-  left: 0px;
-  width: 200px;
-  height: 40px;
-  background: gold;
 }
