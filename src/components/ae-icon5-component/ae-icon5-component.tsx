@@ -34,6 +34,7 @@ let currsizeminus: number = 8
 export class AeIcon5Component {
   @Element() el: HTMLElement;
 
+  @Prop() adaept: boolean;
   @Prop() aesize: string;
   @Prop() aetype: string
   @Prop() arialabel: string;
@@ -171,11 +172,14 @@ export class AeIcon5Component {
     }
   }
 
+  // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
+
   render() {
-    if (this.name) {
-      return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
-    } else {
+    if (Boolean(this.src) && this.adaept) {
       return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
+    } else {
+      // return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
+      return (null)
     }
   }
 }
