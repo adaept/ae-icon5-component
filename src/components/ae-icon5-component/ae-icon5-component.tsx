@@ -178,8 +178,8 @@ export class AeIcon5Component {
     if (Boolean(this.src) && this.adaept) {
       return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else {
-      // return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
-      return (null)
+      return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
+      //return (null)
     }
   }
 }
