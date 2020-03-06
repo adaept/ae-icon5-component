@@ -199,11 +199,9 @@ export class AeIcon5Component {
           </ion-row>
         </div>
       ]
-      //{
-      //this.aeicons.map((aeicon, index) =>)
-      //return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
+    } else if (this.name) {
+      return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else {
-      // return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
       return (null)
     }
   }
