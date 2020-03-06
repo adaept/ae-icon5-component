@@ -32,6 +32,7 @@ let currsizeminus: number = 8
   shadow: true
 })
 export class AeIcon5Component {
+  public aeicons: string[] = [];
   @Element() el: HTMLElement;
 
   @Prop() adaept: boolean;
@@ -57,6 +58,20 @@ export class AeIcon5Component {
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);
     //console.log('aetype=' + this.aetype);
+    this.aeicons = [
+      'assets/aeicons/ae-outline.svg', //'one',
+      'assets/aeicons/ae-red-green.svg', //'two',
+      'assets/aeicons/ae-yellow.svg', //'three',
+      'assets/aeicons/ae-red.svg', //'four',
+      'assets/aeicons/ae-green.svg', //'five',
+      'assets/aeicons/ae-blue.svg', //'six',
+      //'seven',
+      //'eight',
+      //'nine',
+      //'ten',
+      //'eleven',
+      //'twelve'
+    ]
   }
 
   resetMinusPlusSize() {
@@ -173,10 +188,20 @@ export class AeIcon5Component {
   }
 
   // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
-
   render() {
     if (Boolean(this.src) && this.adaept) {
-      return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
+      return [
+        <div>
+          <ion-row >
+            {this.aeicons.map((aeicon, index) => (
+              <ion-icon style={{ '--animation-timimg': index } as any} class={this.aesize} src={aeicon} color={this.color} onClick={this.iconClicked}></ion-icon>
+            ))}
+          </ion-row>
+        </div>
+      ]
+      //{
+      //this.aeicons.map((aeicon, index) =>)
+      //return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else {
       // return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
       return (null)

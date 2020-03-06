@@ -23,6 +23,19 @@
 ion-icon {
   color: var(--color);
   font-size: var(--ae-icon-size);
+  animation: amimae .2s calc(var(--animation-timing) *70ms) both ease-in;
+}
+
+@keyframes animae {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(-8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 ion-icon.ae16 {
