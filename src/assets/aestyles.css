@@ -1,3 +1,36 @@
+/*##################### aeicons hover #####################*/
+#ambiZone {
+  position: relative;
+  height: 65px;
+  background: lightpink;
+  color: #fff;
+}
+
+div.aeicons {
+  position: absolute;
+  bottom: 0px;
+  left: 5px;
+  transition: 3s ease-in;
+}
+
+div.aeicons div {
+  width: 360px;
+  height: 60px;
+  background:lightpink;
+  transition: 3s ease-in-out;
+}
+
+/* hover final state */
+#ambiZone:hover div.aeicons {
+  transform: translate(60px, -5px);
+}
+
+#ambiZone:hover div.aeicons div {
+  transform: rotate(360deg);
+}
+/*#####################>aeicons hover<#####################*/
+
+
 div.aeicon5-scroll, body {
   background-color: lightyellow;
   width: 100vw;
@@ -19,7 +52,6 @@ div.container {
   left: 200px;
   width: 32px;
   height: 32px;
-  /* background-color: pink; */
 }
 
 #circleGithub {

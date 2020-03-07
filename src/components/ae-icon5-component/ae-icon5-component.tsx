@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Component, h, Element, Prop } from '@stencil/core'
+import { Component, Element, h, Prop } from '@stencil/core'
 import 'ionicons'
 
 /*
