@@ -35,7 +35,7 @@ export class AeIcon5Component {
   public aeicons: string[] = [];
   @Element() el: HTMLElement;
 
-  @Prop() adaept: boolean;
+  @Prop() adaept: string;
   @Prop() aesize: string;
   @Prop() aetype: string
   @Prop() arialabel: string;
@@ -189,7 +189,7 @@ export class AeIcon5Component {
 
   // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
   render() {
-    if (Boolean(this.src) && this.adaept) {
+    if (Boolean(this.src) && Boolean(this.adaept === 'icons')) {
       return [
         <div>
           <ion-row >
@@ -199,6 +199,8 @@ export class AeIcon5Component {
           </ion-row>
         </div>
       ]
+    } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
+      return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else if (this.name) {
       return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else {

@@ -7,7 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AeIcon5Component {
-        "adaept": boolean;
+        "adaept": string;
         "aesize": string;
         "aetype": string;
         "arialabel": string;
@@ -29,7 +29,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AeIcon5Component {
-        "adaept"?: boolean;
+        "adaept"?: string;
         "aesize"?: string;
         "aetype"?: string;
         "arialabel"?: string;
