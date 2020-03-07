@@ -196,7 +196,7 @@ export class AeIcon5Component {
             <ion-list>
               {this.aeicons.map((aeicon, index) => (
                 <ion-item style={{ '--animation-timimg': index } as any} >
-                  <ion-label>{index}</ion-label>
+                  {/* <ion-label>{index}</ion-label> */}
                   <ion-icon class={this.aesize} src={aeicon} color={this.color} onClick={this.iconClicked}>
                   </ion-icon>
                 </ion-item>
