@@ -12,7 +12,7 @@
   --ae-red: #ED2939 ;   /* Imperial Red   */
   --ae-green: #009E60;  /* Shamrock Green */
   --ae-icon-size: 8px;
-  --animation-spacing: 5;
+  --animation-spacing: 0;
   --animation-timing: 5;
   --ionicon-stroke-width: 32px;
 }
@@ -29,7 +29,7 @@ ion-icon {
 
 ion-item {
   margin: calc(var(--animation-spacing) *2px);
-  animation: animae 2s calc(var(--animation-timing) *70ms) both ease-in;
+  animation: animae 1s calc(var(--animation-timing) *100ms) both ease-in;
 }
 
 @keyframes animae {
