@@ -192,11 +192,17 @@ export class AeIcon5Component {
     if (Boolean(this.src) && Boolean(this.adaept === 'icons')) {
       return [
         <div>
-          <ion-row >
-            {this.aeicons.map((aeicon, index) => (
-              <ion-icon style={{ '--animation-timimg': index } as any} class={this.aesize} src={aeicon} color={this.color} onClick={this.iconClicked}></ion-icon>
-            ))}
-          </ion-row>
+          <ion-content>
+            <ion-list>
+              {this.aeicons.map((aeicon, index) => (
+                <ion-item style={{ '--animation-timimg': index } as any} >
+                  <ion-label>{index}</ion-label>
+                  <ion-icon class={this.aesize} src={aeicon} color={this.color} onClick={this.iconClicked}>
+                  </ion-icon>
+                </ion-item>
+              ))}
+            </ion-list>
+          </ion-content>
         </div>
       ]
     } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
