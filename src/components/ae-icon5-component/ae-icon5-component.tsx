@@ -1,5 +1,28 @@
+/*
+@Component({
+  tag: 'my-name',
+  styleUrl: 'my-name.css'
+})
+export class MyName {
+
+
+
+  render() {
+    return (
+      <form onSubmit={(e) => this.handleSubmit(e)}>
+        <label>
+          Name:
+          <input type="text" value={this.value} onInput={(event) => this.handleChange(event)} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+*/
+
 // eslint-disable-next-line no-unused-vars
-import { Component, Element, h, Prop } from '@stencil/core'
+import { Component, Element, h, Prop, State } from '@stencil/core'
 import 'ionicons'
 
 /*
@@ -43,6 +66,8 @@ export class AeIcon5Component {
   @Prop({ mutable: true }) name: string;
   @Prop({ mutable: true }) src: string;
 
+  @State() aevalue: string; // result from form submit
+
   constructor() {
     this.iconClicked = this.iconClicked.bind(this)
   }
@@ -64,7 +89,7 @@ export class AeIcon5Component {
       'assets/aeicons/ae-yellow.svg', //'three',
       'assets/aeicons/ae-red.svg', //'four',
       'assets/aeicons/ae-green.svg', //'five',
-      'assets/aeicons/ae-blue.svg', //'six',
+      'assets/aeicons/ae-blue.svg' //'six',
       //'seven',
       //'eight',
       //'nine',
@@ -74,9 +99,54 @@ export class AeIcon5Component {
     ]
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+    console.log('handleSubmit: ' + this.aevalue)
+    // send data to the backend
+    this.getNamigram()
+  }
+
+  handleChange(event) {
+    this.aevalue = event.target.value
+  }
+
   getNamigram() {
-    console.log('namigram test');
+    console.log('getNamigram: ' + this.aevalue)
+
+    /*
+    console.log('namigram test')
     console.log(this.src)
+
+    const iconarray = (
+      [
+        { 1: 'one' },
+        { 2: 'two' },
+        { 3: 'three' },
+        { 4: 'four' },
+        { 5: 'five' },
+        { 6: 'six' },
+        { 7: 'seven' },
+        { 8: 'eight' },
+        { 9: 'nine' },
+        { 10: 'ten' },
+        { 11: 'eleven' },
+        { 12: 'twelve' }
+      ])
+
+    console.log(iconarray[0])
+    console.log(iconarray[1])
+    console.log(iconarray[2])
+    console.log(iconarray[3])
+    console.log(iconarray[4])
+    console.log(iconarray[5])
+    console.log(iconarray[6])
+    console.log(iconarray[7])
+    console.log(iconarray[8])
+    console.log(iconarray[9])
+    console.log(iconarray[10])
+    console.log(iconarray[11])
+    console.log(iconarray[12])
+    */
   }
 
   resetMinusPlusSize() {
@@ -192,6 +262,26 @@ export class AeIcon5Component {
     }
   }
 
+  /* Render Label Test example
+  [
+    <div>
+      <ion-content>
+        <ion-list>
+          <ion-label>Label Test</ion-label>
+  { / * {this.aeicons.map((aeicon, index) => ( * / }
+            <ion-item>
+              <ion-label>{index}</ion-label>
+              <ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}>
+              </ion-icon>
+            </ion-item>
+          ))}
+
+          </ion-list>
+          </ion-content>
+        </div>
+      ]
+*/
+
   // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
   render() {
     if (Boolean(this.src) && Boolean(this.adaept === 'icons')) {
@@ -211,24 +301,15 @@ export class AeIcon5Component {
         </div>
       ]
     } else if (Boolean(this.src) && Boolean(this.adaept === 'mydata')) {
-      this.getNamigram()
-      return [
-        <div>
-          <ion-content>
-            <ion-list>
-              <ion-label>Label Test</ion-label>
-              {/* {this.aeicons.map((aeicon, index) => (
-                <ion-item>
-                  <ion-label>{index}</ion-label>
-                  <ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}>
-                  </ion-icon>
-                </ion-item>
-              ))}
-              */}
-            </ion-list>
-          </ion-content>
-        </div>
-      ]
+      return (
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <label>
+            Name:&nbsp;
+            <input type="text" value={this.aevalue} onInput={(event) => this.handleChange(event)} />
+          </label>
+          <input type="submit" value="Submit" />
+        </form>
+      )
     } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
       return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else if (this.name) {
