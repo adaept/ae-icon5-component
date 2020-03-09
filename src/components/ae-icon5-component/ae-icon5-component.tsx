@@ -74,6 +74,10 @@ export class AeIcon5Component {
     ]
   }
 
+  getNamigram() {
+    console.log('namigram test')
+  }
+
   resetMinusPlusSize() {
     console.log('resetMinusPlusSize')
   }
@@ -201,6 +205,25 @@ export class AeIcon5Component {
                   </ion-icon>
                 </ion-item>
               ))}
+            </ion-list>
+          </ion-content>
+        </div>
+      ]
+    } else if (Boolean(this.src) && Boolean(this.adaept === 'mydata')) {
+      this.getNamigram()
+      return [
+        <div>
+          <ion-content>
+            <ion-list>
+              <ion-label>Label Test</ion-label>
+              {/* {this.aeicons.map((aeicon, index) => (
+                <ion-item>
+                  <ion-label>{index}</ion-label>
+                  <ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}>
+                  </ion-icon>
+                </ion-item>
+              ))}
+              */}
             </ion-list>
           </ion-content>
         </div>
