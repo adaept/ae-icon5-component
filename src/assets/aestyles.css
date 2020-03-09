@@ -27,7 +27,7 @@ div.aeicons div {
 }
 
 #ambiZone:hover div.aeicons div {
-  transform: rotate(360deg);
+  transform: rotate(180deg);
 }
 /*#####################>aeicons hover<#####################*/
 
