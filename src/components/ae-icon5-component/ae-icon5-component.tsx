@@ -75,7 +75,8 @@ export class AeIcon5Component {
   }
 
   getNamigram() {
-    console.log('namigram test')
+    console.log('namigram test');
+    console.log(this.src)
   }
 
   resetMinusPlusSize() {
