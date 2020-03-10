@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Component, Element, h, Prop, State, Watch } from '@stencil/core'
+import { Component, Element, h, Method, Prop, State, Watch } from '@stencil/core'
 import 'ionicons'
 
 /*
@@ -32,22 +32,83 @@ let currsizeminus: number = 8
   shadow: true
 })
 export class AeIcon5Component {
+  /**
+   * ae logo icons
+   */
   public aeicons: string[] = [];
+
+  /**
+   * namigram icons
+   */
+  public namigram: string[] = [];
+
   @Element() el: HTMLElement;
 
+  /**
+   * Identifier for render options
+   */
   @Prop() adaept: string;
+
+  /**
+   * Size of the icon
+   */
   @Prop() aesize: string;
+
+  /**
+   * Type of the icon (WIP - identify round)
+   */
   @Prop() aetype: string
+
+  /**
+   * Aaria label of the icon
+   */
   @Prop() arialabel: string;
+
+  /**
+   * Color of the icon
+   */
   @Prop({ mutable: true }) color: string;
+
+  /**
+   * Name of the icon
+   */
   @Prop({ mutable: true }) name: string;
+
+  /**
+   * Url of the icon
+   */
   @Prop({ mutable: true }) src: string;
+
   @Watch('src')
   watchHandler(newValue: string) {
     console.log('The new value of src is: ', newValue);
   }
 
-  @State() aevalue: string; // result from form submit
+  /**
+   * Title for the panel - visible or hidden
+   */
+  @Prop() aetitle: string;
+
+  /**
+   * State of the panel - visible or hidden
+   */
+  @State() collapsed: boolean;
+
+  /**
+   * Show/Hide the panel
+   */
+  @Method() async toggle() {
+    this.collapsed = !this.collapsed;
+  }
+
+  /**
+   * Result of form submit
+   */
+  @State() aevalue: string;
+
+  /**
+   * Force page render
+   */
   @State() tick = {}
 
   constructor() {
@@ -105,19 +166,15 @@ export class AeIcon5Component {
     console.log('getNamigram: ' + this.aevalue)
     this.aevalue = null
 
-    this.adaept = 'adaept'
+    this.adaept = 'mydatapanel'
     this.aesize = 'ae64'
     this.aeicons = [
       'assets/aeicons/ae-outline.svg', //'one',
       'assets/aeicons/ae-red-green.svg', //'two',
     ]
-    this.name = 'testit'
 
     this.aeUpdateMethod()
     console.log('this.name = ' + this.name)
-
-    ///////this.render()
-    ///////return <div>Text</div>
 
     /*
     console.log('namigram test')
@@ -315,6 +372,17 @@ export class AeIcon5Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
+      )
+    } else if (this.adaept === 'mydatapanel') {
+      return (
+        <div>
+          <div id="aeheader" onClick={this.toggle.bind(this)}>
+            <span>{this.aetitle}</span>
+          </div>
+          <div id="aecontent" hidden={this.collapsed}>
+            <slot />
+          </div>
+        </div>
       )
     } else if (this.name === 'testit') {
       return (
