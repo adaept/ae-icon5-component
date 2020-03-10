@@ -40,7 +40,7 @@ export class AeIcon5Component {
   /**
    * namigram icons
    */
-  public namigram: string[] = [];
+  public namigrams: string[] = [];
 
   @Element() el: HTMLElement;
 
@@ -98,7 +98,7 @@ export class AeIcon5Component {
    * Show/Hide the panel
    */
   @Method() async toggle() {
-    this.collapsed = !this.collapsed;
+    this.collapsed = !this.collapsed
   }
 
   /**
@@ -166,11 +166,11 @@ export class AeIcon5Component {
     console.log('getNamigram: ' + this.aevalue)
     this.aevalue = null
 
-    this.adaept = 'mydatapanel'
+    this.adaept = 'namigram'
     this.aesize = 'ae64'
-    this.namigram = [
+    this.namigrams = [
       'assets/aeicons/ae-outline.svg', //'one',
-      'assets/aeicons/ae-red-green.svg', //'two',
+      'assets/aeicons/ae-red-green.svg' //'two',
     ]
 
     this.aeUpdateMethod()
@@ -350,12 +350,49 @@ export class AeIcon5Component {
     if (Boolean(this.src) && Boolean(this.adaept === 'aelogos')) {
       return [
         <div>
+          <ion-list>
+            {this.aelogos.map((aelogo, index) => (
+              <ion-item style={{ '--animation-timimg': index } as any} >
+                {/* <ion-label>{index}</ion-label> */}
+                <ion-icon class={this.aesize} src={aelogo} color={this.color} onClick={this.iconClicked}>
+                </ion-icon>
+              </ion-item>
+            ))}
+          </ion-list>
+        </div>
+      ]
+    } else if (this.adaept === 'mydataform' || this.adaept === 'mydatapanel') {
+      return (
+        [
+          <div>
+            <div id="aeheader" onClick={this.toggle.bind(this)}>
+              <span>{this.aetitle}</span>
+            </div>
+            <div id="aecontent" hidden={this.collapsed}>
+              <slot />
+            </div>
+          </div>,
+
+          <form onSubmit={(e) => this.handleSubmit(e)}>
+            <label>
+              Name:&nbsp;
+              <input type="text" value={this.aevalue} onInput={(event) => this.handleChange(event)} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        ]
+      )
+    } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
+      return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
+    } else if (this.adaept === 'namigram' || this.adaept === 'mydatapanel') {
+      return [
+        <div>
           <ion-content>
             <ion-list>
-              {this.aelogos.map((aelogo, index) => (
+              {this.namigrams.map((namigram, index) => (
                 <ion-item style={{ '--animation-timimg': index } as any} >
                   {/* <ion-label>{index}</ion-label> */}
-                  <ion-icon class={this.aesize} src={aelogo} color={this.color} onClick={this.iconClicked}>
+                  <ion-icon class={this.aesize} src={namigram} color={this.color} onClick={this.iconClicked}>
                   </ion-icon>
                 </ion-item>
               ))}
@@ -363,36 +400,6 @@ export class AeIcon5Component {
           </ion-content>
         </div>
       ]
-    } else if (this.adaept === 'mydataform') {
-      return (
-        <form onSubmit={(e) => this.handleSubmit(e)}>
-          <label>
-            Name:&nbsp;
-            <input type="text" value={this.aevalue} onInput={(event) => this.handleChange(event)} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      )
-    } else if (this.adaept === 'mydatapanel') {
-      return (
-        <div>
-          <div id="aeheader" onClick={this.toggle.bind(this)}>
-            <span>{this.aetitle}</span>
-          </div>
-          <div id="aecontent" hidden={this.collapsed}>
-            <slot />
-          </div>
-        </div>
-      )
-    } else if (this.name === 'testit') {
-      return (
-        <div>
-          {this.getNamigram()}
-          {this.getNamigram()}
-        </div>
-      )
-    } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
-      return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else if (this.name) {
       return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
     } else {
