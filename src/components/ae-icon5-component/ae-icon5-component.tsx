@@ -169,8 +169,8 @@ export class AeIcon5Component {
     this.adaept = 'namigram'
     this.aesize = 'ae64'
     this.namigrams = [
-      'assets/aeicons/ae-outline.svg', //'one',
-      'assets/aeicons/ae-red-green.svg' //'two',
+      'assets/aeicons/at.svg', //'one',
+      'assets/aeicons/ta.svg' //'two',
     ]
 
     this.aeUpdateMethod()
