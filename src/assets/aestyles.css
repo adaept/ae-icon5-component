@@ -1,4 +1,4 @@
-/*##################### aeicons hover #####################*/
+/*##################### aelogos hover #####################*/
 #ambiZone {
   position: relative;
   height: 65px;
@@ -6,14 +6,14 @@
   color: #fff;
 }
 
-div.aeicons {
+div.aelogos {
   position: absolute;
   bottom: 0px;
   left: 5px;
   transition: 3s ease-in;
 }
 
-div.aeicons div {
+div.aelogos div {
   width: 360px;
   height: 60px;
   background:lightpink;
@@ -22,14 +22,14 @@ div.aeicons div {
 }
 
 /* hover final state */
-#ambiZone:hover div.aeicons {
+#ambiZone:hover div.aelogos {
   transform: translate(60px, -5px);
 }
 
-#ambiZone:hover div.aeicons div {
+#ambiZone:hover div.aelogos div {
   transform: rotate(180deg);
 }
-/*#####################>aeicons hover<#####################*/
+/*#####################>aelogos hover<#####################*/
 
 
 div.aeicon5-scroll, body {

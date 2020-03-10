@@ -35,7 +35,7 @@ export class AeIcon5Component {
   /**
    * ae logo icons
    */
-  public aeicons: string[] = [];
+  public aelogos: string[] = [];
 
   /**
    * namigram icons
@@ -133,7 +133,7 @@ export class AeIcon5Component {
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);
     //console.log('aetype=' + this.aetype);
-    this.aeicons = [
+    this.aelogos = [
       'assets/aeicons/ae-outline.svg', //'one',
       'assets/aeicons/ae-red-green.svg', //'two',
       'assets/aeicons/ae-yellow.svg', //'three',
@@ -168,7 +168,7 @@ export class AeIcon5Component {
 
     this.adaept = 'mydatapanel'
     this.aesize = 'ae64'
-    this.aeicons = [
+    this.namigram = [
       'assets/aeicons/ae-outline.svg', //'one',
       'assets/aeicons/ae-red-green.svg', //'two',
     ]
@@ -331,7 +331,7 @@ export class AeIcon5Component {
       <ion-content>
         <ion-list>
           <ion-label>Label Test</ion-label>
-  { / * {this.aeicons.map((aeicon, index) => ( * / }
+  { / * {this.aelogos.map((aelogo, index) => ( * / }
             <ion-item>
               <ion-label>{index}</ion-label>
               <ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}>
@@ -347,15 +347,15 @@ export class AeIcon5Component {
 
   // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
   render() {
-    if (Boolean(this.src) && Boolean(this.adaept === 'icons')) {
+    if (Boolean(this.src) && Boolean(this.adaept === 'aelogos')) {
       return [
         <div>
           <ion-content>
             <ion-list>
-              {this.aeicons.map((aeicon, index) => (
+              {this.aelogos.map((aelogo, index) => (
                 <ion-item style={{ '--animation-timimg': index } as any} >
                   {/* <ion-label>{index}</ion-label> */}
-                  <ion-icon class={this.aesize} src={aeicon} color={this.color} onClick={this.iconClicked}>
+                  <ion-icon class={this.aesize} src={aelogo} color={this.color} onClick={this.iconClicked}>
                   </ion-icon>
                 </ion-item>
               ))}
