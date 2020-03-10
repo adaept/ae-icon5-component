@@ -1,28 +1,5 @@
-/*
-@Component({
-  tag: 'my-name',
-  styleUrl: 'my-name.css'
-})
-export class MyName {
-
-
-
-  render() {
-    return (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
-        <label>
-          Name:
-          <input type="text" value={this.value} onInput={(event) => this.handleChange(event)} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
-}
-*/
-
 // eslint-disable-next-line no-unused-vars
-import { Component, Element, h, Prop, State } from '@stencil/core'
+import { Component, Element, h, Prop, State, Watch } from '@stencil/core'
 import 'ionicons'
 
 /*
@@ -65,11 +42,23 @@ export class AeIcon5Component {
   @Prop({ mutable: true }) color: string;
   @Prop({ mutable: true }) name: string;
   @Prop({ mutable: true }) src: string;
+  @Watch('src')
+  watchHandler(newValue: string) {
+    console.log('The new value of src is: ', newValue);
+  }
 
   @State() aevalue: string; // result from form submit
+  @State() tick = {}
 
   constructor() {
     this.iconClicked = this.iconClicked.bind(this)
+    // the update can be triggered anytime
+    setInterval(() => this.aeUpdateMethod(), 4000)
+  }
+
+  aeUpdateMethod() {
+    // Ref: https://github.com/ionic-team/stencil/issues/185
+    this.tick = {} // will trigger re-render
   }
 
   /**
@@ -101,7 +90,7 @@ export class AeIcon5Component {
 
   handleSubmit(e) {
     e.preventDefault()
-    console.log('handleSubmit: ' + this.aevalue)
+    //console.log('handleSubmit: ' + this.aevalue)
     // send data to the backend
     this.getNamigram()
   }
@@ -111,7 +100,24 @@ export class AeIcon5Component {
   }
 
   getNamigram() {
+    if (this.aevalue == null) return
+
     console.log('getNamigram: ' + this.aevalue)
+    this.aevalue = null
+
+    this.adaept = 'adaept'
+    this.aesize = 'ae64'
+    this.aeicons = [
+      'assets/aeicons/ae-outline.svg', //'one',
+      'assets/aeicons/ae-red-green.svg', //'two',
+    ]
+    this.name = 'testit'
+
+    this.aeUpdateMethod()
+    console.log('this.name = ' + this.name)
+
+    ///////this.render()
+    ///////return <div>Text</div>
 
     /*
     console.log('namigram test')
@@ -300,7 +306,7 @@ export class AeIcon5Component {
           </ion-content>
         </div>
       ]
-    } else if (Boolean(this.src) && Boolean(this.adaept === 'mydata')) {
+    } else if (this.adaept === 'mydataform') {
       return (
         <form onSubmit={(e) => this.handleSubmit(e)}>
           <label>
@@ -309,6 +315,13 @@ export class AeIcon5Component {
           </label>
           <input type="submit" value="Submit" />
         </form>
+      )
+    } else if (this.name === 'testit') {
+      return (
+        <div>
+          {this.getNamigram()}
+          {this.getNamigram()}
+        </div>
       )
     } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
       return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
