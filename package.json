@@ -1,6 +1,6 @@
 {
   "name": "@adaept/ae-icon5-component",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": false,
   "description": "adaept Icon5 Component",
   "homepage": "https://aeicon5.adaept.com",
@@ -22,18 +22,18 @@
     "test.watch": "stencil test --spec --e2e --watchAll"
   },
   "dependencies": {
-    "ionicons": "5.0.1"
+    "ionicons": "5.1.2"
   },
   "devDependencies": {
-    "@stencil/core": "1.9.0-23",
+    "@stencil/core": "1.17.1",
     "@types/jest": "25.1.4",
     "@types/puppeteer": "~2.0.1",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
     "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "25.1.0",
