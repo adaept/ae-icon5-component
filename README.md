@@ -1,3 +1,3 @@
-# ae-icon5-component
+# ae-icon5
 
 aeicons using ionicons 5

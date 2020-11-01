@@ -1,5 +1,5 @@
 {
-  "name": "@adaept/ae-icon5-component",
+  "name": "@adaept/ae-icon5",
   "version": "1.1.1",
   "private": false,
   "description": "adaept Icon5 Component",
@@ -42,11 +42,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adaept/ae-icon5-component.git"
+    "url": "git+https://github.com/adaept/ae-icon5.git"
   },
   "author": "adaept",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/adaept/ae-icon5-component"
+    "url": "https://github.com/adaept/ae-icon5"
   }
 }

@@ -27,8 +27,8 @@ let currsizeplus: number = 8
 let currsizeminus: number = 8
 
 @Component({
-  tag: 'ae-icon5-component',
-  styleUrl: 'ae-icon5-component.css',
+  tag: 'ae-icon5',
+  styleUrl: 'ae-icon5.css',
   shadow: true
 })
 export class AeIcon5Component {
@@ -129,7 +129,7 @@ export class AeIcon5Component {
    * componentWillLoad will only be called once.
    */
   componentWillLoad() {
-    //console.log('Component ae-icon5-component is about to be rendered');
+    //console.log('Component ae-icon5 is about to be rendered');
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);
     //console.log('aetype=' + this.aetype);
@@ -275,7 +275,7 @@ export class AeIcon5Component {
               ' <b>arialabel:</b>' + this.arialabel
 
             document.getElementById('containerPara').innerHTML =
-              '<ae-icon5-component aesize="ae32" ' +
+              '<ae-icon5 aesize="ae32" ' +
               ' name=' + this.name +
               ' color=' + this.color +
               ' arialabel=' + this.arialabel + '>'
@@ -290,7 +290,7 @@ export class AeIcon5Component {
               ' <b>arialabel:</b>' + this.arialabel
 
             document.getElementById('containerPara').innerHTML =
-              '<ae-icon5-component aesize="ae32" ' +
+              '<ae-icon5 aesize="ae32" ' +
               ' name=' + this.name +
               ' color=' + this.color +
               ' arialabel=' + this.arialabel + '>'
@@ -316,7 +316,7 @@ export class AeIcon5Component {
           //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
 
           document.getElementById('containerPara').innerHTML =
-            '<ae-icon5-component aesize="ae32" ' +
+            '<ae-icon5 aesize="ae32" ' +
             ' name=' + this.name +
             ' color=' + this.color +
             ' arialabel=' + this.arialabel + '>'
