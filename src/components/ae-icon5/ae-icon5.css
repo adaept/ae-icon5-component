@@ -9,12 +9,11 @@
 
 * {
   --color: pink;
-  --ae-red: #ED2939 ;   /* Imperial Red   */
-  --ae-green: #009E60;  /* Shamrock Green */
+  --ae-red: #ed2939; /* Imperial Red   */
+  --ae-green: #009e60; /* Shamrock Green */
   --ae-icon-size: 8px;
   --animation-spacing: 0;
   --animation-timing: 5;
-  --ionicon-stroke-width: 32px;
 }
 
 /* .ionicon-stroke-width {
@@ -25,11 +24,12 @@
 ion-icon {
   color: var(--color);
   font-size: var(--ae-icon-size);
+  --ionicon-stroke-width: 16px;
 }
 
 ion-item {
-  margin: calc(var(--animation-spacing) *2px);
-  animation: animae 1s calc(var(--animation-timing) *100ms) both ease-in;
+  margin: calc(var(--animation-spacing) * 2px);
+  animation: animae 1s calc(var(--animation-timing) * 100ms) both ease-in;
 }
 
 @keyframes animae {
@@ -61,6 +61,14 @@ ion-icon.ae32 {
   z-index: 2;
 }
 
+ion-icon.aesw32 {
+  color: var(--color);
+  font-size: calc(var(--ae-icon-size) * 4);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 16px;
+}
+
 ion-icon.ae40 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 5);
@@ -69,7 +77,9 @@ ion-icon.ae40 {
 ion-icon.aesw40 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 5);
-  stroke-width: calc(var(--ionicon-stroke-width) * 2);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 24px;
 }
 
 ion-icon.ae48 {
@@ -77,9 +87,25 @@ ion-icon.ae48 {
   font-size: calc(var(--ae-icon-size) * 6);
 }
 
+ion-icon.aesw48 {
+  color: var(--color);
+  font-size: calc(var(--ae-icon-size) * 6);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 32px;
+}
+
 ion-icon.ae56 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 7);
+}
+
+ion-icon.aesw56 {
+  color: var(--color);
+  font-size: calc(var(--ae-icon-size) * 7);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 40px;
 }
 
 ion-icon.ae64 {
@@ -87,14 +113,38 @@ ion-icon.ae64 {
   font-size: calc(var(--ae-icon-size) * 8);
 }
 
+ion-icon.aesw64 {
+  color: var(--color);
+  font-size: calc(var(--ae-icon-size) * 8);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 40px;
+}
+
 ion-icon.ae72 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 9);
 }
 
+ion-icon.aesw72 {
+  color: var(--color);
+  font-size: calc(var(--ae-icon-size) * 9);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 48px;
+}
+
 ion-icon.ae80 {
   color: var(--color);
   font-size: calc(var(--ae-icon-size) * 10);
+}
+
+ion-icon.aesw80 {
+  color: var(--color);
+  font-size: calc(var(--ae-icon-size) * 10);
+  position: relative;
+  z-index: 2;
+  --ionicon-stroke-width: 56px;
 }
 
 ion-icon.ae88 {
@@ -173,7 +223,7 @@ ion-icon:hover {
 /* --adaept custom colors/names-- */
 
 .ion-color-aered {
-  --ion-color-base: #ED2939;
+  --ion-color-base: #ed2939;
   --ion-color-rgb: 237, 41, 57;
   --ion-color-contrast: #ffffff;
   --ion-color-contrast-rgb: 255, 255, 255;
@@ -188,7 +238,7 @@ ion-icon.ae40red {
 */
 
 .ion-color-aegreen {
-  --ion-color-base: #009E60;
+  --ion-color-base: #009e60;
   --ion-color-rgb: 0, 158, 96;
   --ion-color-contrast: #ffffff;
   --ion-color-contrast-rgb: 255, 255, 255;
