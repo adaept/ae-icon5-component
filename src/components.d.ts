@@ -6,7 +6,7 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface AeIcon5Component {
+    interface AeIcon5 {
         /**
           * Identifier for render options
          */
@@ -46,18 +46,18 @@ export namespace Components {
     }
 }
 declare global {
-    interface HTMLAeIcon5ComponentElement extends Components.AeIcon5Component, HTMLStencilElement {
+    interface HTMLAeIcon5Element extends Components.AeIcon5, HTMLStencilElement {
     }
-    var HTMLAeIcon5ComponentElement: {
-        prototype: HTMLAeIcon5ComponentElement;
-        new (): HTMLAeIcon5ComponentElement;
+    var HTMLAeIcon5Element: {
+        prototype: HTMLAeIcon5Element;
+        new (): HTMLAeIcon5Element;
     };
     interface HTMLElementTagNameMap {
-        "ae-icon5-component": HTMLAeIcon5ComponentElement;
+        "ae-icon5": HTMLAeIcon5Element;
     }
 }
 declare namespace LocalJSX {
-    interface AeIcon5Component {
+    interface AeIcon5 {
         /**
           * Identifier for render options
          */
@@ -92,14 +92,14 @@ declare namespace LocalJSX {
         "src"?: string;
     }
     interface IntrinsicElements {
-        "ae-icon5-component": AeIcon5Component;
+        "ae-icon5": AeIcon5;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ae-icon5-component": LocalJSX.AeIcon5Component & JSXBase.HTMLAttributes<HTMLAeIcon5ComponentElement>;
+            "ae-icon5": LocalJSX.AeIcon5 & JSXBase.HTMLAttributes<HTMLAeIcon5Element>;
         }
     }
 }

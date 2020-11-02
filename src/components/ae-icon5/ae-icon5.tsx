@@ -31,7 +31,7 @@ let currsizeminus: number = 8
   styleUrl: 'ae-icon5.css',
   shadow: true
 })
-export class AeIcon5Component {
+export class AeIcon5 {
   /**
    * ae logo icons
    */

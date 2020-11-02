@@ -2,7 +2,7 @@
 import { Config } from '@stencil/core'
 
 export const config: Config = {
-  namespace: 'aeicon5component',
+  namespace: 'aeicon5',
   outputTargets: [
     {
       type: 'dist'
