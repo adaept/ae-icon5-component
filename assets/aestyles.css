@@ -1,0 +1,33 @@
+div.aeicon5-scroll, body {
+  background-color: lightyellow;
+  width: 100vw;
+  height: 800px;
+  overflow: scroll;
+}
+
+div.container {
+  display: grid;
+  grid-template-columns: 40px 75px 40px;
+  grid-template-rows: 40px;
+  align-items: center;
+  justify-items: center;
+}
+
+#fixedGithub {
+  position: fixed;
+  top: 30px;
+  left: 200px;
+  width: 32px;
+  height: 32px;
+  /* background-color: pink; */
+}
+
+#circleGithub {
+  position: fixed;
+  top: 32px;
+  left: 202px;
+  width: 28px;
+  height: 29px;
+  background: pink;
+  border-radius: 50%
+}
