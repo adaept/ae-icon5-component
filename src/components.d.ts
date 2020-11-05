@@ -7,13 +7,42 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AeIcon5Component {
-        "adaept": boolean;
+        /**
+          * Identifier for render options
+         */
+        "adaept": string;
+        /**
+          * Size of the icon
+         */
         "aesize": string;
+        /**
+          * Title for the panel - visible or hidden
+         */
+        "aetitle": string;
+        /**
+          * Type of the icon (WIP - identify round)
+         */
         "aetype": string;
+        /**
+          * Aaria label of the icon
+         */
         "arialabel": string;
+        /**
+          * Color of the icon
+         */
         "color": string;
+        /**
+          * Name of the icon
+         */
         "name": string;
+        /**
+          * Url of the icon
+         */
         "src": string;
+        /**
+          * Show/Hide the panel
+         */
+        "toggle": () => Promise<void>;
     }
 }
 declare global {
@@ -29,12 +58,37 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AeIcon5Component {
-        "adaept"?: boolean;
+        /**
+          * Identifier for render options
+         */
+        "adaept"?: string;
+        /**
+          * Size of the icon
+         */
         "aesize"?: string;
+        /**
+          * Title for the panel - visible or hidden
+         */
+        "aetitle"?: string;
+        /**
+          * Type of the icon (WIP - identify round)
+         */
         "aetype"?: string;
+        /**
+          * Aaria label of the icon
+         */
         "arialabel"?: string;
+        /**
+          * Color of the icon
+         */
         "color"?: string;
+        /**
+          * Name of the icon
+         */
         "name"?: string;
+        /**
+          * Url of the icon
+         */
         "src"?: string;
     }
     interface IntrinsicElements {

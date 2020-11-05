@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import { Component, h, Element, Prop } from '@stencil/core'
+import { Component, Element, h, Method, Prop, State, Watch } from '@stencil/core'
 import 'ionicons'
 
 /*
@@ -31,19 +31,95 @@ let currsizeminus: number = 8
   styleUrl: 'ae-icon5-component.css',
   shadow: true
 })
-export class AeIcon5Component {
+export class AeIcon5 {
+  /**
+   * ae logo icons
+   */
+  public aelogos: string[] = [];
+
+  /**
+   * namigram icons
+   */
+  public namigrams: string[] = [];
+
   @Element() el: HTMLElement;
 
-  @Prop() adaept: boolean;
+  /**
+   * Identifier for render options
+   */
+  @Prop() adaept: string;
+
+  /**
+   * Size of the icon
+   */
   @Prop() aesize: string;
+
+  /**
+   * Type of the icon (WIP - identify round)
+   */
   @Prop() aetype: string
+
+  /**
+   * Aaria label of the icon
+   */
   @Prop() arialabel: string;
+
+  /**
+   * Color of the icon
+   */
   @Prop({ mutable: true }) color: string;
+
+  /**
+   * Name of the icon
+   */
   @Prop({ mutable: true }) name: string;
+
+  /**
+   * Url of the icon
+   */
   @Prop({ mutable: true }) src: string;
+
+  @Watch('src')
+  watchHandler(newValue: string) {
+    console.log('The new value of src is: ', newValue);
+  }
+
+  /**
+   * Title for the panel - visible or hidden
+   */
+  @Prop() aetitle: string;
+
+  /**
+   * State of the panel - visible or hidden
+   */
+  @State() collapsed: boolean;
+
+  /**
+   * Show/Hide the panel
+   */
+  @Method() async toggle() {
+    this.collapsed = !this.collapsed
+  }
+
+  /**
+   * Result of form submit
+   */
+  @State() aevalue: string;
+
+  /**
+   * Force page render
+   */
+  @State() tick = {}
 
   constructor() {
     this.iconClicked = this.iconClicked.bind(this)
+    // the update can be triggered anytime
+    setInterval(() => this.aeUpdateMethod(), 4000)
+  }
+
+  aeUpdateMethod() {
+    // Ref: https://github.com/ionic-team/stencil/issues/185
+    this.tick = {} // will trigger re-render
   }
 
   /**
@@ -57,6 +133,83 @@ export class AeIcon5Component {
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);
     //console.log('aetype=' + this.aetype);
+    this.aelogos = [
+      'assets/aeicons/ae-outline.svg', //'one',
+      'assets/aeicons/ae-red-green.svg', //'two',
+      'assets/aeicons/ae-yellow.svg', //'three',
+      'assets/aeicons/ae-red.svg', //'four',
+      'assets/aeicons/ae-green.svg', //'five',
+      'assets/aeicons/ae-blue.svg' //'six',
+      //'seven',
+      //'eight',
+      //'nine',
+      //'ten',
+      //'eleven',
+      //'twelve'
+    ]
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    //console.log('handleSubmit: ' + this.aevalue)
+    // send data to the backend
+    this.getNamigram()
+  }
+
+  handleChange(event) {
+    this.aevalue = event.target.value
+  }
+
+  getNamigram() {
+    if (this.aevalue == null) return
+
+    console.log('getNamigram: ' + this.aevalue)
+    this.aevalue = null
+
+    this.adaept = 'namigram'
+    this.aesize = 'ae64'
+    this.namigrams = [
+      'assets/aeicons/at.svg', //'one',
+      'assets/aeicons/ta.svg' //'two',
+    ]
+
+    this.aeUpdateMethod()
+    console.log('this.name = ' + this.name)
+
+    /*
+    console.log('namigram test')
+    console.log(this.src)
+
+    const iconarray = (
+      [
+        { 1: 'one' },
+        { 2: 'two' },
+        { 3: 'three' },
+        { 4: 'four' },
+        { 5: 'five' },
+        { 6: 'six' },
+        { 7: 'seven' },
+        { 8: 'eight' },
+        { 9: 'nine' },
+        { 10: 'ten' },
+        { 11: 'eleven' },
+        { 12: 'twelve' }
+      ])
+
+    console.log(iconarray[0])
+    console.log(iconarray[1])
+    console.log(iconarray[2])
+    console.log(iconarray[3])
+    console.log(iconarray[4])
+    console.log(iconarray[5])
+    console.log(iconarray[6])
+    console.log(iconarray[7])
+    console.log(iconarray[8])
+    console.log(iconarray[9])
+    console.log(iconarray[10])
+    console.log(iconarray[11])
+    console.log(iconarray[12])
+    */
   }
 
   resetMinusPlusSize() {
@@ -172,14 +325,85 @@ export class AeIcon5Component {
     }
   }
 
-  // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
+  /* Render Label Test example
+  [
+    <div>
+      <ion-content>
+        <ion-list>
+          <ion-label>Label Test</ion-label>
+  { / * {this.aelogos.map((aelogo, index) => ( * / }
+            <ion-item>
+              <ion-label>{index}</ion-label>
+              <ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}>
+              </ion-icon>
+            </ion-item>
+          ))}
 
+          </ion-list>
+          </ion-content>
+        </div>
+      ]
+*/
+
+  // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
   render() {
-    if (Boolean(this.src) && this.adaept) {
+    if (Boolean(this.src) && Boolean(this.adaept === 'aelogos')) {
+      return [
+        <div>
+          <ion-list>
+            {this.aelogos.map((aelogo, index) => (
+              <ion-item style={{ '--animation-timimg': index } as any} >
+                {/* <ion-label>{index}</ion-label> */}
+                <ion-icon class={this.aesize} src={aelogo} color={this.color} onClick={this.iconClicked}>
+                </ion-icon>
+              </ion-item>
+            ))}
+          </ion-list>
+        </div>
+      ]
+    } else if (this.adaept === 'mydataform' || this.adaept === 'mydatapanel') {
+      return (
+        [
+          <div>
+            <div id="aeheader" onClick={this.toggle.bind(this)}>
+              <span>{this.aetitle}</span>
+            </div>
+            <div id="aecontent" hidden={this.collapsed}>
+              <slot />
+            </div>
+          </div>,
+
+          <form onSubmit={(e) => this.handleSubmit(e)}>
+            <label>
+              Name:&nbsp;
+              <input type="text" value={this.aevalue} onInput={(event) => this.handleChange(event)} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        ]
+      )
+    } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
       return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
-    } else {
+    } else if (this.adaept === 'namigram' || this.adaept === 'mydatapanel') {
+      return [
+        <div>
+          <ion-content>
+            <ion-list>
+              {this.namigrams.map((namigram, index) => (
+                <ion-item style={{ '--animation-timimg': index } as any} >
+                  {/* <ion-label>{index}</ion-label> */}
+                  <ion-icon class={this.aesize} src={namigram} color={this.color} onClick={this.iconClicked}>
+                  </ion-icon>
+                </ion-item>
+              ))}
+            </ion-list>
+          </ion-content>
+        </div>
+      ]
+    } else if (this.name) {
       return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
-      //return (null)
+    } else {
+      return (null)
     }
   }
 }
