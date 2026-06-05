@@ -256,6 +256,82 @@ npm run build             # produce www/
 firebase deploy           # → https://aeicon5.web.app  (project: aeicon5)
 ```
 
+## Build your own icon component package (recipe)
+
+A bullet-proof, reproducible procedure to create a package like this one — a Stencil web
+component that wraps an icon set, ships tree-shakable + lazy builds, themeable styling, a
+build-stamped demo, and a publish/deploy pipeline. Each step names the **canonical file in
+this repo** to copy from. A fuller, version-pinned procedural guide is maintained separately
+(see the carry-forward note at the end).
+
+> **Pinned toolchain** (keep these in sync): Node **22**, `@stencil/core` **^4.43**,
+> `ionicons` **^8**, `typescript` **~5.9**, `eslint` **9** flat + `typescript-eslint` **8**,
+> `jest` **29**, `puppeteer` **24**, `vitest` **4** + `jsdom`.
+
+**1. Scaffold + pin the toolchain.**
+- `npm init stencil@latest component my-icons` (choose the *component* starter), then `cd my-icons`.
+- Set `"engines": { "node": ">=22" }` and pin the versions above in `package.json`
+  (copy the `dependencies` / `devDependencies` blocks from this repo's [`package.json`](package.json)).
+- `npm install`.
+
+**2. Output targets** — edit [`stencil.config.ts`](stencil.config.ts):
+- `dist-custom-elements` with `customElementsExportBehavior: 'auto-define-custom-elements'` (primary, tree-shakable),
+- `dist` (lazy loader, back-compat), and `www` (demo). Keep `shadow: true` on the component.
+
+**3. Component + themeable CSS** — model on
+[`src/components/ae-icon5-component/`](src/components/ae-icon5-component):
+- Render an inner `<ion-icon>`; forward `name`/`color`.
+- Theme through **CSS custom properties** (they pierce shadow DOM): a `--xx-color` for arbitrary
+  colors (theme colors stay on the `color=` attribute) and `--xx-hover-*` for the hover ring.
+  **Do not** bundle a big named-color palette in the component (it bloats every consumer).
+- Start timers in `connectedCallback` and clear them in `disconnectedCallback` (never in the constructor).
+
+**4. Scoped icons (the important bit)** — model on [`src/icons/`](src/icons):
+- `manifest.ts` maps kebab `name` → **named ES imports** from `ionicons/icons` (NOT
+  `import * as` — that defeats tree-shaking). Register them with `addIcons` on
+  `componentWillLoad`.
+- Re-export `addIcons` + a `registerIcons(map)` helper from a package-root
+  [`src/index.ts`](src/index.ts) so consumers bundle their own icons (no runtime SVG fetch).
+- Add an icon-source *seam* (a `set` prop) even if you only implement one source, so others slot
+  in later without API churn.
+
+**5. Build stamp + demo** — copy [`scripts/gen-build-stamp.mjs`](scripts/gen-build-stamp.mjs):
+- Generate `src/assets/build-stamp.js` (git sha/branch/time + the `iconset/Stencil/component`
+  version triple) via `prebuild` / `prestart` npm hooks; show it in the demo footer. Gitignore it.
+
+**6. Tests + a rename guard** — copy [`scripts/check-icon-manifest.mjs`](scripts/check-icon-manifest.mjs),
+[`testing/smoke.mjs`](testing/smoke.mjs), [`vitest.config.ts`](vitest.config.ts):
+- Spec tests on Stencil/Jest (`*.spec.ts`); a Vitest POC under `test/**/*.vitest.ts`; a
+  Puppeteer smoke that self-serves `./www`.
+- `check.icons` validates every manifest name against the **installed** icon set — so a renamed
+  icon fails the build instead of silently 404-ing.
+
+**7. CI + release** — copy [`.github/workflows/ci.yml`](.github/workflows/ci.yml) and
+[`release.yml`](.github/workflows/release.yml):
+- CI: install → lint → `check.icons` → build → Jest → Vitest → smoke.
+- Release (on `v*` tag): publish to npm `--provenance` + deploy the demo + GitHub Release.
+- Add repo secrets **`NPM_TOKEN`** and **`FIREBASE_SERVICE_ACCOUNT`** before tagging.
+
+**8. Package hygiene (don't ship the demo to consumers).** In `package.json`:
+- Entry fields: `main` (cjs), `module` (esm), `unpkg`, `types` → `dist/types/index.d.ts`,
+  `customElements` → `dist/components/index.js`. Remove any stale `es2015`/`es2017` entries.
+- `files`: ship `dist/` but **negate the runtime-fetch SVG copy and demo assets** so they
+  don't bloat consumers:
+  ```jsonc
+  "files": ["dist/", "!dist/<namespace>/svg", "!dist/<namespace>/svg/**",
+            "!dist/collection/assets", "!dist/collection/assets/**"]
+  ```
+- Add `"prepublishOnly": "npm run build"`. Verify with **`npm publish --dry-run`** (check the
+  file list — no demo svgs / no build-stamp leak).
+- Set `homepage` to the deployed demo URL.
+
+**9. Publish.** Bump `version`, commit, then `git tag vX.Y.Z && git push origin vX.Y.Z` — the
+release workflow does the rest.
+
+> **Maintainers:** a dedicated, version-pinned **third-party procedural guide** is to be kept in
+> sync with each release (review §8, CF-10). When the toolchain versions above change, update
+> both this recipe and that guide.
+
 ## License
 
 MIT © adaept

@@ -229,5 +229,6 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
 | **CF-7** | **`codeql-analysis.yml`** uses `actions/checkout@v2` → bump to `@v4` | this repo | LOW |
 | **CF-8** | **Click-info panel cosmetic** — `iconClicked` builds display HTML with `color=` + `this.color`, now empty for `--ae-color` icons (demo only) | this repo | LOW |
 | **CF-9** | **Default icon set coverage** — confirm aedh's ~20 names are either in the default manifest or registered by aedh when item C lands | this repo / aedh | LOW |
+| **CF-10** | **Third-party procedural guide** — maintain a dedicated, version-pinned `docs/THIRD-PARTY-GUIDE.md` for authors creating their own icon-component package (expand the README "Build your own" recipe into a bullet-proof, step-by-step doc). **Keep it in sync with each release** (toolchain version pins + steps); README links to it. | this repo | MED |
 
 CF-1/CF-2 are mirrored in aedh `rvw/Code_review 2026-06-04.md` §2 (★A / ★A2 / item C / item L).
