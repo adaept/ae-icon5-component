@@ -57,3 +57,6 @@ When work starts here, the first deliverable is a **detailed plan** covering:
 - A living **roadmap** of future improvements surfaced during this upgrade cycle.
 
 Scope mirrored in aedh `rvw/Code_review 2026-06-04.md` §4.3.
+
+**Draft plan started 2026-06-05 → `docs/modernization-plan.md`** (review/iterate, then execute
+its phased sequence §13).

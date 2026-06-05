@@ -1,0 +1,153 @@
+# ae-icon5-component — Modernization Plan
+
+**Started:** 2026-06-05 · **Repo:** `adaept/ae-icon5-component` (`master`) · **Status:** DRAFT for review
+**Cross-ref:** aedh `rvw/Code_review 2026-06-04.md` §4.1 / §4.3 (master integration plan).
+
+> First task of the modernization (per `CLAUDE.md`). This is the **plan**, not the code —
+> review/iterate, then execute in phases (§13).
+
+---
+
+## 0. Current state (from source review, 2026-06-04)
+
+- **Package:** `@adaept/ae-icon5@1.3.4` (npm, public, MIT). **Stencil** component.
+- **Element:** tag `<ae-icon5-component>`, namespace `aeicon5`, **`shadow: true`**.
+- **Props:** `aesize`, `name`, `color`, `src`, `adaept`, `arialabel`, `aetype`; render modes
+  `aelogos` / `mydataform`(+`mydatapanel`) / `namigram` / default — each emits `<ion-icon>`.
+- **Output targets:** `dist` (lazy loader → `dist/loader`, what aedh registers) + `www` (demo).
+  **No `dist-custom-elements`** (no tree-shakable build).
+- **Deploy:** npm publish + Firebase project `aeicon5` (`www`) — **both manual**. CI = CodeQL only.
+- **Tooling (2021):** Stencil **2.5.2**, ionicons **5.5.1**, Jest 27, Puppeteer 10, typescript-eslint 4,
+  `.eslintrc.json`. `homepage` = `aeicon5.adaept.com` (stale/NXDOMAIN).
+- **Known bug:** `ion-icon:hover { box-shadow: inset 0 0 0 2px red; transform: scale(2) }` —
+  square, hardcoded red, inside shadow DOM → un-overridable by consumers.
+
+## 1. Goals / non-goals
+
+**Goals:** modern toolchain in sync with aedh; a **minimal, tree-shakable** component for aedh;
+configurable hover (color/shape/effect via CSS); keep npm + `aeicon5` Firebase + GitHub repo;
+demo with a git# stamp; pluggable icon sources (e.g. Iconify); real tests + README; a living roadmap.
+**Non-goals (this cycle):** breaking the public prop API (additive only); rewriting consumers;
+moving off Stencil.
+
+## 2. Architecture — separate the **two artifacts** (emphasized)
+
+Keep these cleanly decoupled, with separate build outputs and separate styles:
+
+| Artifact | What | Build target | Ships to | Styling |
+|---|---|---|---|---|
+| **Component (library)** | the web component(s) | `dist-custom-elements` (+ `dist` loader for back-compat) | **npm** → aedh | only component-essential CSS (sizing, hover vars) |
+| **Demo (showcase)** | gallery, examples, git# stamp | `www` | **Firebase `aeicon5`** | demo-only CSS (the 100+ color classes, layout) |
+
+Actions:
+- Audit the current component CSS: the 100+ `ion-color-*` classes + demo layout belong to the
+  **demo**, not the published component — move them out of the component's bundled styles.
+- Confirm nothing demo-only (`index.html`, gallery scripts) is pulled into `dist`/`dist-custom-elements`.
+- Consider a `src/demo/` (or `www-src/`) folder for demo assets vs `src/components/` for the library.
+
+## 3. Tooling modernization (sync with aedh)
+
+- **Stencil 2.5.2 → 4.x** (follow 2→3→4 upgrade notes: config shape, output-target names, Node engine,
+  Jest). **ionicons 5.5.1 → 8.x.**
+- **Node 22**, **TypeScript ~5.9**, `package.json` `engines`.
+- **ESLint 9 flat config** (`eslint.config.js`, mirror aedh); remove `.eslintrc.json`.
+- **Output targets:** add `dist-custom-elements` (`customElementsExportBehavior: 'auto-define-custom-elements'`),
+  keep `dist` (loader) for aedh's current `main.ts` until ★A2 switches it, keep `www`.
+- Migration approach: scaffold a fresh Stencil 4 config and port the component, or run the official
+  upgrade — whichever yields a green build faster.
+
+## 4. Hover + feature updates (CSS options) — fixes the ★A blocker
+
+Replace the hardcoded rule with themeable CSS custom properties (defaults = round, currentColor):
+```css
+:host {
+  --ae-hover-ring-color: currentColor;
+  --ae-hover-ring-width: 2px;
+  --ae-hover-radius: 50%;     /* shape: 50% = circle, 0 = square */
+  --ae-hover-scale: 1;        /* effect */
+}
+ion-icon:hover {
+  box-shadow: inset 0 0 0 var(--ae-hover-ring-width) var(--ae-hover-ring-color);
+  border-radius: var(--ae-hover-radius);
+  transform: scale(var(--ae-hover-scale));
+}
+```
+- Expose via CSS custom props (works through shadow DOM) and/or `::part(icon)` for deeper styling.
+- Document the knobs in the README; keep `shadow: true`.
+
+## 5. Scoped icons for aedh (extract only what's used)
+
+aedh uses a small set (Home balls: `football`, `basketball`, `tennisball`, `baseball`; plus
+About/menu/fab icons: `add`, `alarm`, `american-football`, `aperture`, `at`, `barcode`, `basket`,
+`beer`, `menu`, …). Options to evaluate:
+- **(a)** `dist-custom-elements` + aedh imports only the component (JS tree-shakes), but `<ion-icon>`
+  still lazy-loads SVGs at runtime → aedh must still provide the SVGs.
+- **(b)** **Bundle a curated SVG subset** in the component (only the needed glyphs) so aedh drops the
+  wholesale 1357-SVG copy.
+- **(c)** **Build-time subsetting**: a manifest of icon names → generate a minimal icon module.
+- **Plan:** consumer declares its icon set (prop or build manifest); component ships/lazy-loads only
+  those. Directly enables aedh **item C** (drop the `ionicons/.../svg` asset glob).
+
+## 6. Multiple icon sources (Iconify, etc.)
+
+- Abstract the source behind an adapter; add a `set`/`provider` prop
+  (e.g. `set="ionicons"` default, `set="iconify:mdi"`, …).
+- Evaluate **Iconify** (on-demand SVG API + offline packages) for bundle impact and offline use.
+- Keep ionicons as default for back-compat; additive API only.
+
+## 7. git# stamp in the Firebase demo
+
+- Mirror aedh's About build stamp (03a §13): a prebuild script writes git sha/branch/time; the **demo**
+  (`www`) shows it in a footer. **Demo-only** — not in the published component.
+
+## 8. Version-bump protocol
+
+- **Triple** `ionicons/Stencil/component` (e.g. `8.x/4.x/1.4.0`) shown on the demo (like aedh's About).
+- On a change: bump component semver → update the demo triple (installed ionicons/Stencil + new
+  component version) → tag `vX.Y.Z` → CI publishes npm + deploys the demo → bump the aedh dep.
+- Document in README + `CLAUDE.md`.
+
+## 9. CI/CD (automate npm + Firebase; keep GitHub + CodeQL)
+
+- **`ci.yml`** — PR/push: `npm ci` → build (`dist` + `dist-custom-elements` + `www`) → lint → test.
+- **`release.yml`** — tag `v*`: build → `npm publish` (`NPM_TOKEN`, `--provenance`) →
+  `firebase deploy --only hosting` to `aeicon5` (service-account secret) → GitHub Release.
+- Keep `codeql-analysis.yml`; add Dependabot/renovate; fold into aedh's monthly cadence.
+- **Fix `homepage` → `https://aeicon5.web.app`** (aedh §4.1 finding 5).
+
+## 10. Testing
+
+- **Smoke** (mirror aedh `testing/smoke.mjs`): Puppeteer hits the deployed demo / local `www`, asserts
+  it renders and a sample `<ae-icon5-component>` appears, no page errors.
+- **Component specs**: Stencil testing (`newSpecPage` / `newE2EPage`) — render, prop reactivity, hover
+  CSS-var application, the scoped-icon mechanism, the Iconify adapter. Modernize Jest 27 → Stencil 4
+  stack (Stencil uses Jest; evaluate aligning with aedh's Vitest where practical).
+
+## 11. README docs
+
+Install; register-loader vs `dist-custom-elements` import; **props table**; **CSS custom props** for
+hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning protocol; dev loop
+(`npm pack` with aedh); deploy/release.
+
+## 12. Roadmap (living — capture improvements surfaced this cycle)
+
+- Standalone/no-Ionic icon rendering; SSR/hydration; a11y audit (aria, labels); animation presets;
+  more icon sets; typed icon-name unions; tree-shaking/bundle-size metrics; theming tokens. *(append
+  as discovered.)*
+
+## 13. Sequenced execution
+
+1. **Tooling** — Stencil 4, ionicons 8, Node 22/TS 5.9/ESLint 9 flat; green build/test; fix `homepage`.
+2. **Outputs + UX** — add `dist-custom-elements`; themeable hover CSS (§4); demo git# stamp; enforce the
+   §2 component/demo separation.
+3. **Icons** — scoped-icon mechanism (§5); Iconify adapter (§6).
+4. **CI + tests + docs** — `ci.yml` / `release.yml`; smoke + specs; README.
+5. **Release** — tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app` + GitHub →
+   aedh consumes (★A2) and drops the SVG glob (item C).
+
+## Open questions (decide during review)
+
+- Keep the `dist` loader for back-compat, or move aedh straight to `dist-custom-elements`?
+- Icon-subsetting mechanism: build manifest vs runtime declaration (§5 a/b/c)?
+- Iconify now, or roadmap it (§6/§12)?
+- Align tests on Stencil-Jest or push toward Vitest (aedh parity)?
