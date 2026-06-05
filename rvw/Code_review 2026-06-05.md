@@ -231,4 +231,6 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
 | **CF-9** | **Default icon set coverage** — confirm aedh's ~20 names are either in the default manifest or registered by aedh when item C lands | this repo / aedh | LOW |
 | **CF-10** | **Third-party procedural guide** — `docs/THIRD-PARTY-GUIDE.md` **fully drafted** (9 fleshed-out steps + prereqs + release checklist) with a **sync guard** (`scripts/check-guide-pins.mjs` / `npm run check.guide`, in `ci.yml` + `release.yml`) that **fails CI if the guide's pinned toolchain drifts from `package.json`**. README links to it. **Ongoing carry-forward (per release):** bump the guide's `toolchain-pins` block to match `package.json` (guard-enforced) and re-verify the step snippets against the current toolchain (manual). | this repo | LOW |
 
+| **CF-11** | **Generalize the release runbook for 3rd-party devs** — the README "Release runbook (maintainer — adaept)" is adaept-specific (scope `@adaept`, project `aeicon5`). Fold a provider-agnostic version into `docs/THIRD-PARTY-GUIDE.md` §9 (own npm scope/org, own Firebase project or skip the demo deploy, where to get each token). | this repo | LOW |
+
 CF-1/CF-2 are mirrored in aedh `rvw/Code_review 2026-06-04.md` §2 (★A / ★A2 / item C / item L).

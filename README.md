@@ -239,22 +239,73 @@ npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
   (`--provenance`, needs `NPM_TOKEN`) → deploy `www/` to the **aeicon5** Firebase site
   (needs `FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release.
 
-To cut a release: bump `version` in `package.json`, then
+### Release runbook (maintainer — adaept)
+
+Step-by-step for publishing a new version. The tag does the work; you mostly need the two
+secrets set **once**. _(This runbook is adaept-specific — scope `@adaept`, package
+`@adaept/ae-icon5`, Firebase project `aeicon5`. A generalized version for other authors is a
+TODO — see review CF-11.)_
+
+#### One-time setup (do once, ~10 min)
+
+**On npm** — get a token that CI can publish with:
+
+1. Sign in at <https://www.npmjs.com> (account must be a member of the **`@adaept`** org with
+   permission to publish). If you've never logged in on this machine, you can also run
+   `npm login` locally — but CI publishes with a **token**, not your login.
+2. Click your avatar → **Access Tokens** → **Generate New Token** → choose **Automation**
+   (Automation tokens skip 2FA, which CI requires). Optionally restrict it to the `@adaept` scope.
+3. **Copy the token now** (it's shown once). It looks like `npm_XXXXXXXX…`.
+
+**On Firebase** — get a service-account key for the demo deploy:
+
+4. <https://console.firebase.google.com> → project **`aeicon5`** → ⚙ **Project settings** →
+   **Service accounts** → **Generate new private key** → download the JSON file.
+
+**On the GitHub repo** — store both as Actions secrets:
+
+5. Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
+   - **`NPM_TOKEN`** = the `npm_…` token from step 2.
+   - **`FIREBASE_SERVICE_ACCOUNT`** = the **entire contents** of the JSON file from step 4 (open it,
+     copy everything, paste as the value).
+
+#### Each release (repeat)
+
+1. Make sure `master` is green (the CI badge / Actions tab).
+2. Bump **`version`** in `package.json` (e.g. `1.4.0` → `1.4.1`); commit and push:
+   ```bash
+   git add package.json && git commit -m "chore: v1.4.1" && git push
+   ```
+   _(The demo's `ionicons/Stencil/component` triple + git# stamp update themselves on build.)_
+3. Tag it and push the tag — **this triggers the release**:
+   ```bash
+   git tag -a v1.4.1 -m "v1.4.1" && git push origin v1.4.1
+   ```
+4. Watch **Actions → Release**. It builds + tests, then `npm publish`, deploys the demo, smoke-tests
+   it, and creates a GitHub Release.
+
+#### Verify
 
 ```bash
-git tag v1.4.0 && git push origin v1.4.0
+npm view @adaept/ae-icon5 version     # → the new version
 ```
+…and open <https://aeicon5.web.app> (footer shows the new triple) and the repo's **Releases** tab.
 
-The demo's version triple (`ionicons/Stencil/component`) and git# stamp update automatically
-from the installed versions + git on each build.
+#### If the Release run fails
 
-### Firebase (manual deploy)
+- **At "Publish to npm"** → `NPM_TOKEN` is missing/expired/insufficient. Fix the secret (step 2/5),
+  then **Actions → the failed run → "Re-run failed jobs"** (no need to re-tag).
+- **At "Deploy to Firebase"** → check `FIREBASE_SERVICE_ACCOUNT`, then re-run.
+- A re-run reuses the existing tag. Only delete/re-push a tag if you changed the code:
+  `git push origin :v1.4.1` (delete remote) then re-tag.
+
+#### Manual fallback (no CI)
 
 ```bash
-npm i -g firebase-tools   # one-time
-firebase login            # one-time
-npm run build             # produce www/
-firebase deploy           # → https://aeicon5.web.app  (project: aeicon5)
+npm login                       # interactive; needs your npm 2FA
+npm publish --access public     # prepublishOnly builds dist first
+npm i -g firebase-tools && firebase login
+npm run build && firebase deploy   # → https://aeicon5.web.app  (project: aeicon5)
 ```
 
 ## Build your own icon component package (recipe)
