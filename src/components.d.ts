@@ -91,15 +91,27 @@ declare namespace LocalJSX {
          */
         "src"?: string;
     }
+
+    interface AeIcon5ComponentAttributes {
+        "adaept": string;
+        "aesize": string;
+        "aetype": string;
+        "arialabel": string;
+        "color": string;
+        "name": string;
+        "src": string;
+        "aetitle": string;
+    }
+
     interface IntrinsicElements {
-        "ae-icon5-component": AeIcon5Component;
+        "ae-icon5-component": Omit<AeIcon5Component, keyof AeIcon5ComponentAttributes> & { [K in keyof AeIcon5Component & keyof AeIcon5ComponentAttributes]?: AeIcon5Component[K] } & { [K in keyof AeIcon5Component & keyof AeIcon5ComponentAttributes as `attr:${K}`]?: AeIcon5ComponentAttributes[K] } & { [K in keyof AeIcon5Component & keyof AeIcon5ComponentAttributes as `prop:${K}`]?: AeIcon5Component[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "ae-icon5-component": LocalJSX.AeIcon5Component & JSXBase.HTMLAttributes<HTMLAeIcon5ComponentElement>;
+            "ae-icon5-component": LocalJSX.IntrinsicElements["ae-icon5-component"] & JSXBase.HTMLAttributes<HTMLAeIcon5ComponentElement>;
         }
     }
 }

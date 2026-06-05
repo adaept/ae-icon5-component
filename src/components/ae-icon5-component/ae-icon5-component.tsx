@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- `h` is the JSX pragma, used by compiled render output
 import { Component, Element, h, Method, Prop, State, Watch } from '@stencil/core'
 import 'ionicons'
 
@@ -245,8 +245,7 @@ export class AeIcon5 {
     //console.log('getIconSizeMinus prevsizeminus = ' + prevsizeminus);
     //console.log('getIconSizeMinus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
     currsizeminus = +this.aesize.substr(2) - 8
-    // eslint-disable-next-line no-unused-expressions
-    currsizeminus < 8 ? currsizeminus = initsize : currsizeminus
+    if (currsizeminus < 8) currsizeminus = initsize
     //console.log(currsizeminus);
   }
 
@@ -254,8 +253,7 @@ export class AeIcon5 {
     //console.log('getIconSizePlus prevsizeplus = ' + prevsizeplus);
     //console.log('getIconSizePlus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
     currsizeplus = +this.aesize.substr(2) + 8
-    // eslint-disable-next-line no-unused-expressions
-    currsizeplus > maxsize ? currsizeplus = 8 : currsizeplus
+    if (currsizeplus > maxsize) currsizeplus = 8
     //console.log(currsizeplus);
   }
 
