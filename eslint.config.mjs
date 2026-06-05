@@ -12,11 +12,13 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
-    // Node-side tooling scripts (build stamp generator, etc.).
-    files: ['scripts/**/*.{js,mjs,cjs}', '*.mjs'],
+    // Node-side tooling + tests (build-stamp generator, icon guard, smoke test).
+    // `globals.browser` covers the document/window used inside puppeteer
+    // page.evaluate callbacks, which lint sees in the Node file.
+    files: ['scripts/**/*.{js,mjs,cjs}', 'testing/**/*.{js,mjs,cjs}', '*.mjs'],
     languageOptions: {
       sourceType: 'module',
-      globals: { ...globals.node }
+      globals: { ...globals.node, ...globals.browser }
     }
   },
   {

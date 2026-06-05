@@ -1,0 +1,60 @@
+name: Release
+
+# Tag a version to publish: `git tag v1.4.0 && git push origin v1.4.0`
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write # create the GitHub Release
+  id-token: write # npm provenance (--provenance)
+
+jobs:
+  release:
+    name: publish npm + deploy aeicon5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci
+
+      - name: Build (dist + dist-custom-elements + www)
+        run: npm run build
+
+      - name: Validate scoped-icon manifest
+        run: npm run check.icons
+
+      - name: Test (spec + unit)
+        run: |
+          npm test
+          npm run test.unit
+
+      - name: Publish to npm (public, with provenance)
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Deploy demo to Firebase (aeicon5)
+        run: |
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
+          export GOOGLE_APPLICATION_CREDENTIALS="$RUNNER_TEMP/sa.json"
+          npx firebase-tools deploy --only hosting --project aeicon5 --non-interactive
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Smoke the deployed demo
+        run: npm run smoke
+        env:
+          CI: 'true'
+          BASE_URL: https://aeicon5.web.app
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

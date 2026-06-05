@@ -205,7 +205,6 @@ imported by the published component.
 ```bash
 npm start          # Stencil dev server (watch + serve) at the demo
 npm run build      # build dist + dist-custom-elements + www
-npm test           # spec (+ e2e) tests
 npm run lint       # ESLint 9 flat config
 ```
 
@@ -217,14 +216,44 @@ npm pack                                   # → adaept-ae-icon5-<version>.tgz
 npm i ../ae-icon5-component/adaept-ae-icon5-<version>.tgz
 ```
 
-## Firebase (demo deploy)
+## Test
 
 ```bash
-firebase login          # one-time
-firebase -V             # version
-npm i -g firebase-tools # update
-npm run build           # produce www/
-firebase deploy         # → https://aeicon5.web.app
+npm test           # component specs — Stencil/Jest (newSpecPage)
+npm run test.unit  # Vitest POC (pure unit, jsdom) — the Vitest baseline
+npm run smoke      # Puppeteer smoke: self-serves ./www, asserts it renders
+npm run check.icons # validate the scoped-icon manifest vs installed ionicons
+```
+
+- **Specs** stay on Stencil's built-in **Jest** (`*.spec.ts`); the full Jest → Vitest
+  crossover is deferred to sync with aedh (plan §12 / D4).
+- **Smoke** runs against the local `www` by default; set `BASE_URL` to hit the deployed
+  demo: `BASE_URL=https://aeicon5.web.app npm run smoke`.
+
+## CI / Release
+
+- **`.github/workflows/ci.yml`** — on push/PR to `master`: install → lint → `check.icons`
+  → build → spec tests → Vitest → smoke the built demo.
+- **`.github/workflows/release.yml`** — on a `v*` tag: build + test → `npm publish`
+  (`--provenance`, needs `NPM_TOKEN`) → deploy `www/` to the **aeicon5** Firebase site
+  (needs `FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release.
+
+To cut a release: bump `version` in `package.json`, then
+
+```bash
+git tag v1.4.0 && git push origin v1.4.0
+```
+
+The demo's version triple (`ionicons/Stencil/component`) and git# stamp update automatically
+from the installed versions + git on each build.
+
+### Firebase (manual deploy)
+
+```bash
+npm i -g firebase-tools   # one-time
+firebase login            # one-time
+npm run build             # produce www/
+firebase deploy           # → https://aeicon5.web.app  (project: aeicon5)
 ```
 
 ## License

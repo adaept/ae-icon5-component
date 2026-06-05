@@ -26,7 +26,9 @@
     "test.watch": "stencil test --spec --e2e --watchAll",
     "lint": "eslint .",
     "lint.fix": "eslint . --fix",
-    "check.icons": "node scripts/check-icon-manifest.mjs"
+    "check.icons": "node scripts/check-icon-manifest.mjs",
+    "test.unit": "vitest run",
+    "smoke": "node testing/smoke.mjs"
   },
   "dependencies": {
     "ionicons": "^8.0.13"
@@ -39,9 +41,11 @@
     "globals": "^16.5.0",
     "jest": "^29.7.0",
     "jest-cli": "^29.7.0",
+    "jsdom": "^26.1.0",
     "puppeteer": "^24.1.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.60.1"
+    "typescript-eslint": "^8.60.1",
+    "vitest": "^4.1.8"
   },
   "engines": {
     "node": ">=22"

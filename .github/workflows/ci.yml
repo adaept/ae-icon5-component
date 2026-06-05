@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    name: build · lint · test · smoke
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Validate scoped-icon manifest (rename guard)
+        run: npm run check.icons
+
+      - name: Build (dist + dist-custom-elements + www)
+        run: npm run build
+
+      - name: Spec tests (Stencil/Jest)
+        run: npm test
+
+      - name: Unit tests (Vitest POC)
+        run: npm run test.unit
+
+      - name: Smoke the built demo (local www)
+        run: npm run smoke
+        env:
+          CI: 'true'
