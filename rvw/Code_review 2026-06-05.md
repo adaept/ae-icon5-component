@@ -2,11 +2,24 @@
 
 **Date:** 2026-06-05 · **Repo:** `adaept/ae-icon5-component` (`master`) · **Base git#:** `d450a4c`
 **Cross-ref:** aedh `rvw/Code_review 2026-06-04.md` §2 (item ★A), §4.1.2 (findings), §4.3 ·
-this repo `docs/modernization-plan.md` §3 / §13 (Phase 1) and §5 / D2 (scoped icons).
+this repo `docs/modernization-plan.md` §13 (phased sequence), §5 / D2 (scoped icons).
 
-> Record of **Phase 1 (tooling)** execution + an **ionicons rename** investigation that surfaced
-> during it. Phase 1 = modernization-plan §13.1: Stencil 4, ionicons 8, Node 22 / TS 5.9 / ESLint 9
-> flat; green build/test/lint; fix `homepage`.
+> Living execution log for the modernization (plan §13). Records each phase as it lands plus
+> an **ionicons rename** investigation (§3) that surfaced in Phase 1. Sections: §1 Phase 1,
+> §2 test hang, §3 ionicons rename, §4 Phase 2, §5 Phase 3, §6 next.
+
+**Status (2026-06-05):**
+
+| Phase | Scope | State | Commit |
+|---|---|---|---|
+| **1 — Tooling** | Stencil 4, ionicons 8, Node 22 / TS 5.9 / ESLint 9 flat; `homepage`; green build/test/lint | ✅ done | `75124fa` |
+| **2 — Outputs + UX** | `dist-custom-elements`; themeable hover (★A fix) + `--ae-color`; demo git# stamp; §2 CSS split; `setInterval` fix | ✅ done | `86803fd` |
+| **3 — Scoped icons** | manifest + `addIcons` (D2); `registerIcons` API; `set` source seam (D3); rename CI guard (item L) | ✅ done | `556d091` |
+| **4 — CI + tests + docs** | `ci.yml` / `release.yml`; Puppeteer smoke + Vitest POC; fuller README | ⬜ next | — |
+| **5 — Release** | tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app`; aedh consumes | ⬜ | — |
+
+All phases verified green (build · lint 0-err · spec tests · icon guard · browser/demo smoke).
+Aedh-side follow-ups (★A2 / item C, carry-forward item L tick-off) tracked in §6 and aedh §2.
 
 ---
 
