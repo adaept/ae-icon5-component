@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars -- `h` is the JSX pragma, used by compiled render output
 import { Component, Element, h, Method, Prop, State, Watch } from '@stencil/core'
-import 'ionicons'
+import 'ionicons' // defines the <ion-icon> element
+import { registerDefaultIcons } from '../../icons' // scoped-icon manifest (D2)
 
 /*
 import { createAnimation } from "@ionic/core";
@@ -48,6 +49,12 @@ export class AeIcon5 {
    * Identifier for render options
    */
   @Prop() adaept: string;
+
+  /**
+   * Icon source set (D3 seam). Only 'ionicons' is implemented this cycle;
+   * additional providers (e.g. 'iconify:*') can be added without API churn.
+   */
+  @Prop() set: string = 'ionicons';
 
   /**
    * Size of the icon
@@ -146,6 +153,9 @@ export class AeIcon5 {
    * componentWillLoad will only be called once.
    */
   componentWillLoad() {
+    // Register the bundled default icon set for the active source (D2/D3).
+    // Idempotent; icons not in the set still fall back to ionicons' runtime fetch.
+    registerDefaultIcons(this.set)
     //console.log('Component ae-icon5-component is about to be rendered');
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);

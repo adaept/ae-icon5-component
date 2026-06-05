@@ -138,6 +138,52 @@ ae-icon5-component.fancy {
 
 ---
 
+## Icon sources & scoped icons
+
+By default `<ion-icon name="…">` fetches its SVG from ionicons **at runtime**. To avoid
+that network fetch (and to let host apps drop a wholesale copy of all ionicons SVGs), this
+component ships a small **build-time manifest** that registers a curated default set from
+ionicons' ES modules via `addIcons` — bundled, no fetch.
+
+- **Default set** — a curated list (`src/icons/manifest.ts`, ~34 icons: the sport balls,
+  common app/menu/fab icons). These render from bundled data. Any name **not** in the set
+  still falls back to ionicons' runtime fetch, so large galleries keep working.
+- **Register your own** — bundle exactly the icons your app uses (this is how a host app
+  drops the full ionicons SVG copy):
+
+  ```js
+  import { registerIcons } from '@adaept/ae-icon5';      // icon utilities (package root)
+  import { home, settings, search } from 'ionicons/icons';
+
+  registerIcons({ home, settings, search }); // kebab name → SVG data, bundled
+  ```
+
+  `registerIcons` is a thin wrapper over ionicons' `addIcons` (also re-exported), so
+  `import { addIcons } from 'ionicons'` works identically if you prefer.
+
+- **Why ES imports?** Named imports from `ionicons/icons` are tree-shaken to just what you
+  register, and if ionicons **renames or removes** an icon, your build fails on the missing
+  export instead of silently rendering a blank (a runtime 404). The bundled manifest is
+  guarded in CI:
+
+  ```bash
+  npm run check.icons   # validates every manifest name against the installed ionicons
+  ```
+
+### Icon `set` (source) — `set`
+
+The `set` prop selects the icon source. Only `ionicons` is implemented this cycle (the
+default); it is the seam for adding providers such as Iconify later **without** API changes:
+
+```html
+<ae-icon5-component name="football" set="ionicons"></ae-icon5-component>
+```
+
+> **Roadmap:** Iconify (`set="iconify:mdi"`, …) is planned for ≈ v1.5.0 (modernization plan
+> §6 / D3). Unknown sets fall back to `ionicons`.
+
+---
+
 ## Demo
 
 The showcase in `www/` is deployed to **https://aeicon5.web.app**. It is built separately

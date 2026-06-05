@@ -36,6 +36,11 @@ export namespace Components {
          */
         "name": string;
         /**
+          * Icon source set (D3 seam). Only 'ionicons' is implemented this cycle; additional providers (e.g. 'iconify:*') can be added without API churn.
+          * @default 'ionicons'
+         */
+        "set": string;
+        /**
           * Url of the icon
          */
         "src": string;
@@ -87,6 +92,11 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * Icon source set (D3 seam). Only 'ionicons' is implemented this cycle; additional providers (e.g. 'iconify:*') can be added without API churn.
+          * @default 'ionicons'
+         */
+        "set"?: string;
+        /**
           * Url of the icon
          */
         "src"?: string;
@@ -94,6 +104,7 @@ declare namespace LocalJSX {
 
     interface AeIcon5ComponentAttributes {
         "adaept": string;
+        "set": string;
         "aesize": string;
         "aetype": string;
         "arialabel": string;

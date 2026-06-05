@@ -117,7 +117,32 @@ only; tidy when the component is next touched.
 **README:** rewritten with install, the two register paths (`dist/components` vs `dist/loader`),
 sizing, the two coloring paths, themeable hover, props table, build-stamp, dev loop, deploy.
 
-## 5. Next (per plan §13)
+## 5. Phase 3 (scoped icons) — executed 2026-06-05
 
-- **Phase 3** — scoped-icon **manifest + `addIcons`** (§5 / D2) with the rename CI guard (§3 above).
+Plan §13.3 / §5 / D2 (+ the D3 seam). Iconify stays deferred (D3 → roadmap ≈ v1.5.0).
+Build + lint + tests + icon guard all green.
+
+| Item | What landed |
+|---|---|
+| **Manifest + `addIcons` (D2)** | `src/icons/manifest.ts` — kebab `name=` → **named ES imports** from `ionicons/icons` (tree-shaken; **34** default icons: sport balls + common app/menu icons). `src/icons/index.ts` registers them via `addIcons` on the component's `componentWillLoad`. Names not in the set still fall back to ionicons' runtime fetch (demo gallery unchanged). |
+| **Consumer extensibility** | re-exported `addIcons` + a friendly `registerIcons(map)` from the **package root** `@adaept/ae-icon5` (new `src/index.ts`; `types` → `dist/types/index.d.ts`). This is how aedh drops the wholesale 1357-SVG copy (**item C**): `registerIcons({ home, … })` from `ionicons/icons`. |
+| **Source seam + `set` prop (D3)** | `src/icons/sources.ts` — minimal `IconSource` interface, ionicons the sole source; `set` prop (default `ionicons`) selects it. Unknown sets fall back to ionicons. Iconify slots in later with **no API churn** — not implemented this cycle. |
+| **Rename CI guard (item L)** | `scripts/check-icon-manifest.mjs` + `npm run check.icons` — validates **every** manifest name against the **installed** ionicons (svg set **and** ES export). Fail-loud on a rename/removal/typo. Currently: *OK — 34 icons valid in ionicons 8.0.13*. |
+| **Tests** | `src/icons/icons.spec.ts` (5 specs: manifest shape, kebab keys, aedh icons present, registration no-throw, source-seam fallback). Suite now **8/8** green, clean exit. |
+| **README** | new "**Icon sources & scoped icons**" section: default set, `registerIcons` (root import) + ionicons `addIcons` equivalence, the `set` prop, the CI guard, Iconify roadmap note. |
+
+**Why named ES imports (the item-L payoff):** `import { football } from 'ionicons/icons'`
+makes an ionicons rename a **build error**, not a silent runtime 404 — exactly the protection
+flagged in §3. The `check.icons` guard adds a second net against kebab-name typos.
+
+**Packaging note:** the icon utils are inlined into the component bundle, so they are **not** a
+separate `dist/components/icons` path. They are exported from the **package root** (runtime via
+`dist/index.*`, types via `dist/types/index.d.ts`) and also present on the custom-elements
+build. README documents the root import. aedh's `dist/loader` consumption is unaffected.
+
+## 6. Next (per plan §13)
+
 - **Phase 4** — CI (`ci.yml` / `release.yml`), Puppeteer smoke + Vitest POC, fuller README.
+- **aedh-side (★A2 / item C):** adopt `dist-custom-elements`, register its ~20 icons via
+  `registerIcons`, drop the 1357-SVG glob, then **tick off carry-forward item L** after
+  reconciling its names against the pinned ionicons.

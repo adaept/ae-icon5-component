@@ -8,7 +8,7 @@
   "module": "dist/index.js",
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
-  "types": "dist/types/components.d.ts",
+  "types": "dist/types/index.d.ts",
   "customElements": "dist/components/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
@@ -25,7 +25,8 @@
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "lint": "eslint .",
-    "lint.fix": "eslint . --fix"
+    "lint.fix": "eslint . --fix",
+    "check.icons": "node scripts/check-icon-manifest.mjs"
   },
   "dependencies": {
     "ionicons": "^8.0.13"
