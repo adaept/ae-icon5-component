@@ -29,6 +29,9 @@ jobs:
       - name: Validate scoped-icon manifest (rename guard)
         run: npm run check.icons
 
+      - name: Validate third-party guide pins (sync guard)
+        run: npm run check.guide
+
       - name: Build (dist + dist-custom-elements + www)
         run: npm run build
 

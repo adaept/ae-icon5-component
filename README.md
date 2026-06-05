@@ -223,6 +223,7 @@ npm test           # component specs — Stencil/Jest (newSpecPage)
 npm run test.unit  # Vitest POC (pure unit, jsdom) — the Vitest baseline
 npm run smoke      # Puppeteer smoke: self-serves ./www, asserts it renders
 npm run check.icons # validate the scoped-icon manifest vs installed ionicons
+npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
 ```
 
 - **Specs** stay on Stencil's built-in **Jest** (`*.spec.ts`); the full Jest → Vitest
@@ -261,8 +262,9 @@ firebase deploy           # → https://aeicon5.web.app  (project: aeicon5)
 A bullet-proof, reproducible procedure to create a package like this one — a Stencil web
 component that wraps an icon set, ships tree-shakable + lazy builds, themeable styling, a
 build-stamped demo, and a publish/deploy pipeline. Each step names the **canonical file in
-this repo** to copy from. A fuller, version-pinned procedural guide is maintained separately
-(see the carry-forward note at the end).
+this repo** to copy from. A fuller, version-pinned procedural guide lives at
+[`docs/THIRD-PARTY-GUIDE.md`](docs/THIRD-PARTY-GUIDE.md) (its pins are CI-checked against
+`package.json` via `npm run check.guide`).
 
 > **Pinned toolchain** (keep these in sync): Node **22**, `@stencil/core` **^4.43**,
 > `ionicons` **^8**, `typescript` **~5.9**, `eslint` **9** flat + `typescript-eslint` **8**,
@@ -328,9 +330,10 @@ this repo** to copy from. A fuller, version-pinned procedural guide is maintaine
 **9. Publish.** Bump `version`, commit, then `git tag vX.Y.Z && git push origin vX.Y.Z` — the
 release workflow does the rest.
 
-> **Maintainers:** a dedicated, version-pinned **third-party procedural guide** is to be kept in
-> sync with each release (review §8, CF-10). When the toolchain versions above change, update
-> both this recipe and that guide.
+> **Maintainers:** the dedicated [`docs/THIRD-PARTY-GUIDE.md`](docs/THIRD-PARTY-GUIDE.md) must be
+> kept in sync with each release (review §8, CF-10). Its pinned toolchain is **CI-enforced** —
+> `npm run check.guide` fails if the guide's pins drift from `package.json`. When the versions
+> above change, update both this recipe and that guide.
 
 ## License
 

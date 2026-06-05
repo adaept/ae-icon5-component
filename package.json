@@ -30,6 +30,7 @@
     "lint": "eslint .",
     "lint.fix": "eslint . --fix",
     "check.icons": "node scripts/check-icon-manifest.mjs",
+    "check.guide": "node scripts/check-guide-pins.mjs",
     "test.unit": "vitest run",
     "smoke": "node testing/smoke.mjs",
     "prepublishOnly": "npm run build"

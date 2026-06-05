@@ -30,6 +30,9 @@ jobs:
       - name: Validate scoped-icon manifest
         run: npm run check.icons
 
+      - name: Validate third-party guide pins (sync guard)
+        run: npm run check.guide
+
       - name: Test (spec + unit)
         run: |
           npm test
