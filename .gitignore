@@ -24,3 +24,10 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 .env
+
+# Claude Code local backup (not part of the component) — see aeBibleClass/synch-to-onedrive.bat
+_claude_backup/
+.claude/scheduled_tasks.lock
+
+# npm pack output (local dev link to aedh)
+*.tgz
