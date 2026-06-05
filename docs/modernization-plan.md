@@ -123,9 +123,10 @@ About/menu/fab icons: `add`, `alarm`, `american-football`, `aperture`, `at`, `ba
 
 - **Smoke** (mirror aedh `testing/smoke.mjs`): Puppeteer hits the deployed demo / local `www`, asserts
   it renders and a sample `<ae-icon5-component>` appears, no page errors.
-- **Component specs (→ D4):** **Stencil 4's built-in Jest** (`newSpecPage` / `newE2EPage`) — render,
-  prop reactivity, hover CSS-var application, the scoped-icon manifest. (Stencil dictates Jest; not
-  Vitest — see D4.) Modernize from Jest 27 to the Stencil 4 stack.
+- **Component specs (→ D4):** baseline on **Stencil 4 Jest** (`newSpecPage` / `newE2EPage`) — render,
+  prop reactivity, hover CSS-var application, the scoped-icon manifest (modernize Jest 27 → Stencil 4
+  stack). **Plus a minimal Vitest POC** (pure unit test) this cycle to stand up the Vitest harness.
+  Full **Jest → Vitest** crossover is planned to land with **aedh's A22** (D4).
 
 ## 11. README docs
 
@@ -135,9 +136,12 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
 
 ## 12. Roadmap (living — capture improvements surfaced this cycle)
 
+- **Jest → Vitest** component-spec crossover — **sync with aedh A22** (D4); reassess Stencil's Vitest
+  support then.
+- **Iconify** + other icon sources (D3) — ≈ **v1.5.0**.
+- Remove the legacy **`dist` loader** once all consumers are on `dist-custom-elements` (D1) — a future major.
 - Standalone/no-Ionic icon rendering; SSR/hydration; a11y audit (aria, labels); animation presets;
-  more icon sets; typed icon-name unions; tree-shaking/bundle-size metrics; theming tokens. *(append
-  as discovered.)*
+  typed icon-name unions; tree-shaking/bundle-size metrics; theming tokens. *(append as discovered.)*
 
 ## 13. Sequenced execution
 
@@ -145,7 +149,8 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
 2. **Outputs + UX** — add `dist-custom-elements`; themeable hover CSS (§4); demo git# stamp; enforce the
    §2 component/demo separation.
 3. **Icons** — scoped-icon mechanism (§5); Iconify adapter (§6).
-4. **CI + tests + docs** — `ci.yml` / `release.yml`; smoke + specs; README.
+4. **CI + tests + docs** — `ci.yml` / `release.yml`; Puppeteer smoke + Stencil-Jest specs **+ a minimal
+   Vitest POC**; README. (Full Jest→Vitest crossover deferred to the aedh-A22 sync — §12.)
 5. **Release** — tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app` + GitHub →
    aedh consumes (★A2) and drops the SVG glob (item C).
 
@@ -173,11 +178,17 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
   a thin adapter interface) so Iconify slots in later **without** API churn — but **don't implement it
   this cycle** (it would delay the aedh-unblocking deliverables ★A→★A2→C). Target ≈ **v1.5.0**.
 
-**D4 — Tests: Stencil's Jest for component specs; Puppeteer smoke for aedh-parity.**
-- Component unit/e2e specs use **Stencil 4's built-in Jest** (`newSpecPage` / `newE2EPage`) — the
-  supported path; coercing Vitest onto Stencil's renderer isn't worth it.
-- **Smoke** uses **Puppeteer**, mirroring aedh `testing/smoke.mjs` (framework-neutral → parity at the
-  smoke level). Justified divergence: Stencil dictates Jest; aedh's Vitest is an Angular choice.
+**D4 — Tests: Vitest is the GOAL (aedh parity); this cycle = Stencil-Jest baseline + a minimal Vitest
+POC; full crossover lands with aedh's A22.**
+- **Goal:** unify the component on **Vitest** to match aedh's runner.
+- **This cycle:** keep **Stencil 4's built-in Jest** (`newSpecPage` / `newE2EPage`) as the *working*
+  component-spec baseline — **don't block the release on a test-runner migration**. **Add a minimal
+  Vitest POC** (a pure unit test, no Stencil renderer) to stand up the Vitest harness and prove the
+  path — the same way aedh seeded its `vitest-harness.spec.ts`.
+- **Crossover:** plan the full **Jest → Vitest** migration of the component specs to **coincide with
+  aedh being on Angular 22** (the natural sync point). Reassess Stencil's Vitest-support maturity at
+  that time. Tracked in §12 roadmap.
+- **Smoke** stays **Puppeteer** (mirrors aedh `testing/smoke.mjs`; framework-neutral) regardless.
 
 *(All four were the prior open questions; resolved for execution. Revisit only if a phase surfaces a
 blocker.)*
