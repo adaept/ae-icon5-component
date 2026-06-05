@@ -51,8 +51,9 @@ Actions:
   Jest). **ionicons 5.5.1 → 8.x.**
 - **Node 22**, **TypeScript ~5.9**, `package.json` `engines`.
 - **ESLint 9 flat config** (`eslint.config.js`, mirror aedh); remove `.eslintrc.json`.
-- **Output targets:** add `dist-custom-elements` (`customElementsExportBehavior: 'auto-define-custom-elements'`),
-  keep `dist` (loader) for aedh's current `main.ts` until ★A2 switches it, keep `www`.
+- **Output targets (→ D1):** add `dist-custom-elements` (`customElementsExportBehavior:
+  'auto-define-custom-elements'`) as the primary, keep `dist` (loader) for aedh's current `main.ts`
+  through one transition cycle, keep `www`.
 - Migration approach: scaffold a fresh Stencil 4 config and port the component, or run the official
   upgrade — whichever yields a green build faster.
 
@@ -85,8 +86,9 @@ About/menu/fab icons: `add`, `alarm`, `american-football`, `aperture`, `at`, `ba
 - **(b)** **Bundle a curated SVG subset** in the component (only the needed glyphs) so aedh drops the
   wholesale 1357-SVG copy.
 - **(c)** **Build-time subsetting**: a manifest of icon names → generate a minimal icon module.
-- **Plan:** consumer declares its icon set (prop or build manifest); component ships/lazy-loads only
-  those. Directly enables aedh **item C** (drop the `ionicons/.../svg` asset glob).
+- **Decided (→ D2):** build-time **manifest** (`src/icons/manifest.ts`) + `addIcons` ES-module
+  registration (bundled, no runtime SVG fetch); ship a small default set + a documented way for
+  consumers to register their own. Directly enables aedh **item C** (drop the `ionicons/.../svg` glob).
 
 ## 6. Multiple icon sources (Iconify, etc.)
 
@@ -94,6 +96,8 @@ About/menu/fab icons: `add`, `alarm`, `american-football`, `aperture`, `at`, `ba
   (e.g. `set="ionicons"` default, `set="iconify:mdi"`, …).
 - Evaluate **Iconify** (on-demand SVG API + offline packages) for bundle impact and offline use.
 - Keep ionicons as default for back-compat; additive API only.
+- **Deferred this cycle (→ D3):** build the adapter **seam** now, implement **ionicons only**; land
+  Iconify in a follow-up (≈ v1.5.0), tracked in §12.
 
 ## 7. git# stamp in the Firebase demo
 
@@ -119,9 +123,9 @@ About/menu/fab icons: `add`, `alarm`, `american-football`, `aperture`, `at`, `ba
 
 - **Smoke** (mirror aedh `testing/smoke.mjs`): Puppeteer hits the deployed demo / local `www`, asserts
   it renders and a sample `<ae-icon5-component>` appears, no page errors.
-- **Component specs**: Stencil testing (`newSpecPage` / `newE2EPage`) — render, prop reactivity, hover
-  CSS-var application, the scoped-icon mechanism, the Iconify adapter. Modernize Jest 27 → Stencil 4
-  stack (Stencil uses Jest; evaluate aligning with aedh's Vitest where practical).
+- **Component specs (→ D4):** **Stencil 4's built-in Jest** (`newSpecPage` / `newE2EPage`) — render,
+  prop reactivity, hover CSS-var application, the scoped-icon manifest. (Stencil dictates Jest; not
+  Vitest — see D4.) Modernize from Jest 27 to the Stencil 4 stack.
 
 ## 11. README docs
 
@@ -145,9 +149,35 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
 5. **Release** — tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app` + GitHub →
    aedh consumes (★A2) and drops the SVG glob (item C).
 
-## Open questions (decide during review)
+## Resolved decisions (2026-06-05)
 
-- Keep the `dist` loader for back-compat, or move aedh straight to `dist-custom-elements`?
-- Icon-subsetting mechanism: build manifest vs runtime declaration (§5 a/b/c)?
-- Iconify now, or roadmap it (§6/§12)?
-- Align tests on Stencil-Jest or push toward Vitest (aedh parity)?
+**D1 — Output targets: ship BOTH `dist-custom-elements` (primary) and `dist` (loader), for now.**
+- aedh targets **`dist-custom-elements`** (tree-shakable; the goal) — the switch happens in aedh
+  item ★A2, not here.
+- Keep the **`dist` lazy loader** through **one** transition cycle so aedh's current `main.ts`
+  registration keeps working and the cutover is deliberate, not a flag-day break.
+- **Deprecate/remove `dist`** in a later major once aedh (and any other consumer) is on
+  custom-elements → roadmap (§12).
+
+**D2 — Scoped icons: build-time manifest + `addIcons` ES-module registration (option c), consumer-extensible.**
+- Register icons from `ionicons/icons` **ES modules** via `addIcons({...})` (bundled, **no runtime
+  SVG fetch**). This is precisely what lets aedh drop the wholesale 1357-SVG copy (item C) and bundle
+  only its ~20 glyphs.
+- Drive the set from a **manifest** (e.g. `src/icons/manifest.ts`); ship a small **default set**
+  (demo/common icons), and expose a documented way for consumers to register **their own** additional
+  icons (re-export `addIcons` / accept an icons map prop).
+- Rejected: **(a)** keeps fetching all SVGs at runtime; pure **(b)** (hardcoded subset) isn't extensible.
+
+**D3 — Iconify: deferred to roadmap (post-1.4.0); keep the architecture adapter-ready.**
+- This cycle implements **ionicons only**. Design the icon-source seam now (a `set`/`provider` prop +
+  a thin adapter interface) so Iconify slots in later **without** API churn — but **don't implement it
+  this cycle** (it would delay the aedh-unblocking deliverables ★A→★A2→C). Target ≈ **v1.5.0**.
+
+**D4 — Tests: Stencil's Jest for component specs; Puppeteer smoke for aedh-parity.**
+- Component unit/e2e specs use **Stencil 4's built-in Jest** (`newSpecPage` / `newE2EPage`) — the
+  supported path; coercing Vitest onto Stencil's renderer isn't worth it.
+- **Smoke** uses **Puppeteer**, mirroring aedh `testing/smoke.mjs` (framework-neutral → parity at the
+  smoke level). Justified divergence: Stencil dictates Jest; aedh's Vitest is an Angular choice.
+
+*(All four were the prior open questions; resolved for execution. Revisit only if a phase surfaces a
+blocker.)*
