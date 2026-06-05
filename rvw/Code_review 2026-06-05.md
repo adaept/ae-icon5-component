@@ -183,8 +183,14 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
   `dist/esm/index.mjs` (stale Stencil-2 layout) → removed; added `unpkg` →
   `dist/aeicon5/aeicon5.esm.js`; `types` already → `dist/types/index.d.ts`. Added
   `prepublishOnly: npm run build` so a manual `npm publish` can't ship a stale `dist`.
-- **`npm publish --dry-run` verified:** `@adaept/ae-icon5@1.4.0`, 360 kB packed / 1.3 MB
-  unpacked, 1418 files. (See CF-3 — 731 kB of that is the bundled ionicons SVG collection.)
+- **`npm publish --dry-run` verified:** `@adaept/ae-icon5@1.4.0` — after the CF-3 trim,
+  **126.8 kB packed / 508 kB unpacked, 48 files** (was 360 kB / 1.3 MB / 1418).
+- **CF-3 done — demo assets no longer shipped to consumers.** `package.json` `files` now
+  negates `dist/aeicon5/svg/**` (1357 ionicons; lazy runtime-fetch fallback, redundant under
+  `addIcons`) **and** `dist/collection/assets/**` (the 12 adaept **aeicons** + the generated
+  demo `build-stamp.js`, which had been leaking in via the collection copy). Confirmed: 0
+  aeicons / 0 demo-stamp / 0 ionicons-svg in the tarball; the **Firebase demo (`www`) keeps
+  its own copies** and is unaffected.
 
 **To release (your action):** set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT` repo secrets →
 `git tag v1.4.0 && git push origin v1.4.0` → `release.yml` publishes npm + deploys
@@ -203,8 +209,12 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
   Vitest goal (D4). Jest baseline kept + Vitest POC seeded this cycle.
 - **Packaging drift:** legacy `es2015`/`es2017` entries pointed at a file Stencil 4 no longer
   emits (fixed in Phase-5 prep).
-- **Publish size:** 731 kB / 1358 files of the 1.3 MB tarball is the ionicons SVG copy (lazy
-  loader's runtime-fetch fallback) — redundant for `addIcons` consumers (CF-3).
+- **Publish bloat + demo-asset leak (fixed, CF-3):** the tarball had shipped the 1357-svg
+  ionicons collection **and** demo-only assets — the 12 adaept **aeicons** (used only by the
+  `aelogos`/`namigram` showcase modes; referenced via relative URLs that never resolve from the
+  package anyway) plus the generated demo `build-stamp.js`, both copied into `dist/collection/
+  assets/`. Excluded via `files` negation → 360 kB → **126.8 kB**, 1418 → **48 files**. The demo
+  (`www`, deployed separately) keeps everything.
 
 **Carry-forward tasks:**
 
@@ -212,7 +222,7 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
 |---|---|---|---|
 | **CF-1** | **Release v1.4.0** — set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT`, tag `v1.4.0` | this repo (Phase 5) | **HIGH** |
 | **CF-2** | **aedh ★A2 / item C** — adopt `dist-custom-elements`, `registerIcons` aedh's ~20 icons, drop the 1357-SVG glob, then **tick off item L** | aedh §2 | **HIGH** (after CF-1) |
-| **CF-3** | **Shrink the npm tarball** — exclude `dist/aeicon5/svg/**` (731 kB) once verified no loader/standalone consumer relies on the package-relative svg path (they set their own asset path / register icons) | this repo | MED |
+| ~~CF-3~~ | ✅ **DONE 2026-06-05** — `files` negates `dist/aeicon5/svg/**` (ionicons) + `dist/collection/assets/**` (demo aeicons + build-stamp). Tarball 360 kB → **126.8 kB**, 1418 → **48 files**; demo `www` unaffected | this repo | — |
 | **CF-4** | **Jest → Vitest** full crossover of component specs; migrate off deprecated `stencil test` (→ `@stencil/vitest` / `@stencil/playwright`) | sync with aedh **A22** (D4) | MED |
 | **CF-5** | **Iconify source** — implement the D3 seam (`set="iconify:*"`) | ≈ v1.5.0 | LOW |
 | **CF-6** | **Drop the legacy `dist` lazy loader** once all consumers are on `dist-custom-elements` (D1) | future major | LOW |

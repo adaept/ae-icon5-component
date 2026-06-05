@@ -12,7 +12,11 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "files": [
-    "dist/"
+    "dist/",
+    "!dist/aeicon5/svg",
+    "!dist/aeicon5/svg/**",
+    "!dist/collection/assets",
+    "!dist/collection/assets/**"
   ],
   "scripts": {
     "gen.stamp": "node scripts/gen-build-stamp.mjs",
