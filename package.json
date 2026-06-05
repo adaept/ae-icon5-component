@@ -9,16 +9,20 @@
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "types": "dist/types/components.d.ts",
+  "customElements": "dist/components/index.js",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "files": [
     "dist/"
   ],
   "scripts": {
+    "gen.stamp": "node scripts/gen-build-stamp.mjs",
+    "prebuild": "node scripts/gen-build-stamp.mjs",
     "build": "stencil build",
     "now-build": "stencil build",
+    "prestart": "node scripts/gen-build-stamp.mjs",
     "start": "stencil build --dev --watch --serve",
-    "test": "stencil test --spec --e2e --forceExit",
+    "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "lint": "eslint .",
     "lint.fix": "eslint . --fix"

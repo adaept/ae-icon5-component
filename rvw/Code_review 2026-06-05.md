@@ -86,8 +86,38 @@ turns a renamed/removed icon into a **build-time error** (missing export), not a
 - When aedh adopts the manifest (★A2 / item C), reconcile its ~20 in-app names against the same
   pinned version so a future ionicons bump can't silently blank an icon on either side.
 
-## 4. Next (per plan §13)
+## 4. Phase 2 (outputs + UX) — executed 2026-06-05
 
-- **Phase 2** — `dist-custom-elements` output; themeable hover CSS (§4, fixes the ★A blocker);
-  demo git# stamp; §2 component/demo CSS separation; **clear the `setInterval`** (drop `--forceExit`).
-- **Phase 3** — scoped-icon **manifest + `addIcons`** (§5 / D2) with the rename CI guard above.
+Plan §13.2. All five items done; build + lint + test green; color model browser-verified.
+
+| Item | Before | After |
+|---|---|---|
+| **Output targets (D1)** | `dist` + `www` | added **`dist-custom-elements`** (auto-define) as primary; `dist` loader + `www` kept. Emits `dist/components/index.js`; `customElements` field added to `package.json`. |
+| **Hover (★A blocker)** | `box-shadow: inset 0 0 0 2px red` + `scale(2)`, hardcoded, un-overridable in shadow DOM | themeable `--ae-hover-ring-color` (currentColor) / `-width` / `-radius` (50%) / `-scale` (1) / `-bg`. |
+| **`setInterval` leak** | uncleared in constructor → hung Jest (needed `--forceExit`) | moved to `connectedCallback`, cleared in `disconnectedCallback`; `--forceExit` removed — test exits clean. |
+| **Demo git# stamp** | static `<div>5.5.1/2.5.2/1.3.4</div>` | `scripts/gen-build-stamp.mjs` (prebuild/prestart) → live triple `ionicons/Stencil/component · git@branch · built…` in footer. Demo-only, gitignored. |
+| **CSS separation (§2)** | ~1330-line web-color palette bundled **in the component** | palette dropped; **`--ae-color`** custom prop added (theme colors stay on `color=`). Component CSS **40 KB → 6.3 KB**; palette **gone from `dist`**. 244 demo tags converted; `aered`/`aegreen` → hex. |
+
+**Color model (now, documented in README "How it works"):**
+- Ionic **theme** colors (`primary`…`dark`) → `color=` attribute (ionicons' own `icon.css`
+  resolves these via `:host(.ion-color){color:var(--ion-color-base)!important}`).
+- **Any other** color → `--ae-color` (pierces shadow DOM; falls back to `--color`). The old
+  `.ion-color-<webcolor>` classes were demo-only and load-bearing *only* because they sat in the
+  component's shadow scope — exactly the §2 bloat that's now removed.
+
+**Verification:** `stencil build` ✓ · `eslint` ✓ (0 errors; 2 intentional `no-explicit-any`
+warnings) · spec tests 3/3 ✓ (clean exit, no `--forceExit`). Headless Puppeteer against built
+`www/`: `--ae-color: mediumaquamarine` → `rgb(102,205,170)`, `color="success"` → `rgb(16,220,96)`,
+**0 page errors**.
+
+**Minor follow-up (non-blocking):** the click-info panel (`iconClicked` in the `.tsx`) builds
+display HTML with `color=` + `this.color`, now empty for `--ae-color` icons — cosmetic demo-panel
+only; tidy when the component is next touched.
+
+**README:** rewritten with install, the two register paths (`dist/components` vs `dist/loader`),
+sizing, the two coloring paths, themeable hover, props table, build-stamp, dev loop, deploy.
+
+## 5. Next (per plan §13)
+
+- **Phase 3** — scoped-icon **manifest + `addIcons`** (§5 / D2) with the rename CI guard (§3 above).
+- **Phase 4** — CI (`ci.yml` / `release.yml`), Puppeteer smoke + Vitest POC, fuller README.

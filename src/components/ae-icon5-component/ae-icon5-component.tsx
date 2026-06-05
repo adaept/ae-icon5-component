@@ -111,10 +111,27 @@ export class AeIcon5 {
    */
   @State() tick = {}
 
+  /**
+   * Handle for the periodic re-render timer so it can be cleared on teardown.
+   */
+  private updateTimer: ReturnType<typeof setInterval>;
+
   constructor() {
     this.iconClicked = this.iconClicked.bind(this)
+  }
+
+  /**
+   * Start the periodic re-render once the element is in the DOM.
+   * (Paired with disconnectedCallback so the timer never outlives the element —
+   * an uncleared interval here previously kept Jest/Node alive after tests.)
+   */
+  connectedCallback() {
     // the update can be triggered anytime
-    setInterval(() => this.aeUpdateMethod(), 4000)
+    this.updateTimer = setInterval(() => this.aeUpdateMethod(), 4000)
+  }
+
+  disconnectedCallback() {
+    clearInterval(this.updateTimer)
   }
 
   aeUpdateMethod() {

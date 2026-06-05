@@ -31,3 +31,6 @@ _claude_backup/
 
 # npm pack output (local dev link to aedh)
 *.tgz
+
+# generated demo build stamp (scripts/gen-build-stamp.mjs, regenerated each build)
+src/assets/build-stamp.js

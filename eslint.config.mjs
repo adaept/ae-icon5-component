@@ -7,10 +7,18 @@ import globals from 'globals'
 export default tseslint.config(
   {
     // Build outputs and generated files are not linted.
-    ignores: ['dist/', 'www/', 'loader/', 'src/components.d.ts']
+    ignores: ['dist/', 'www/', 'loader/', 'src/components.d.ts', 'src/assets/build-stamp.js']
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    // Node-side tooling scripts (build stamp generator, etc.).
+    files: ['scripts/**/*.{js,mjs,cjs}', '*.mjs'],
+    languageOptions: {
+      sourceType: 'module',
+      globals: { ...globals.node }
+    }
+  },
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
