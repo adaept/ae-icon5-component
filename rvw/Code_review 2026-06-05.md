@@ -16,7 +16,7 @@ this repo `docs/modernization-plan.md` §13 (phased sequence), §5 / D2 (scoped 
 | **2 — Outputs + UX** | `dist-custom-elements`; themeable hover (★A fix) + `--ae-color`; demo git# stamp; §2 CSS split; `setInterval` fix | ✅ done | `86803fd` |
 | **3 — Scoped icons** | manifest + `addIcons` (D2); `registerIcons` API; `set` source seam (D3); rename CI guard (item L) | ✅ done | `556d091` |
 | **4 — CI + tests + docs** | `ci.yml` / `release.yml`; Puppeteer smoke + Vitest POC; fuller README | ✅ done | `4abb658` |
-| **5 — Release** | tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app`; aedh consumes | ⬜ next | — |
+| **5 — Release** | **prepped** (v1.4.0, entry fields fixed, dry-run verified); awaiting secrets + `v1.4.0` tag | 🟡 prepped | §8 |
 
 All phases verified green (build · lint 0-err · spec tests · icon guard · browser/demo smoke).
 Aedh-side follow-ups (★A2 / item C, carry-forward item L tick-off) tracked in §6 and aedh §2.
@@ -173,11 +173,51 @@ all green. (CI/release workflows are YAML-validated; they run on GitHub once pus
 **Note (codeql):** the pre-existing `codeql-analysis.yml` still uses `actions/checkout@v2`
 (old). Out of Phase-4 scope; bump to `@v4` when convenient (roadmap).
 
-## 7. Next (per plan §13)
+## 7. Phase 5 (release) — prepped 2026-06-05
 
-- **Phase 5 — Release:** set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT` secrets; bump
-  `package.json` to **1.4.0**; tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm publish +
-  `aeicon5.web.app` deploy + GitHub Release via `release.yml`.
-- **aedh-side (★A2 / item C):** adopt `dist-custom-elements`, register its ~20 icons via
-  `registerIcons`, drop the 1357-SVG glob, then **tick off carry-forward item L** after
-  reconciling its names against the pinned ionicons.
+Not yet released (needs repo secrets + a deliberate tag), but everything else is ready:
+
+- **Version → `1.4.0`** in `package.json`; demo triple now `8.0.13/4.43.5/1.4.0` (auto from
+  the build stamp).
+- **Packaging fixes (found at the release gate):** `es2015`/`es2017` pointed at a **missing**
+  `dist/esm/index.mjs` (stale Stencil-2 layout) → removed; added `unpkg` →
+  `dist/aeicon5/aeicon5.esm.js`; `types` already → `dist/types/index.d.ts`. Added
+  `prepublishOnly: npm run build` so a manual `npm publish` can't ship a stale `dist`.
+- **`npm publish --dry-run` verified:** `@adaept/ae-icon5@1.4.0`, 360 kB packed / 1.3 MB
+  unpacked, 1418 files. (See CF-3 — 731 kB of that is the bundled ionicons SVG collection.)
+
+**To release (your action):** set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT` repo secrets →
+`git tag v1.4.0 && git push origin v1.4.0` → `release.yml` publishes npm + deploys
+`aeicon5.web.app` + cuts the GitHub Release.
+
+## 8. Summary findings & carry-forward
+
+**Findings (Phases 1–4):**
+- **ionicons rename risk is insulated today** (§3): the published component hard-codes no icon
+  names (forwards `name=`); the demo's 1192 names all resolve in ionicons 8. D2's `addIcons`
+  ES-imports make any future rename a **build error**, with `check.icons` as a second net.
+- **Color was shadow-DOM-coupled:** the ~100 web-color classes only worked because they sat in
+  the component's shadow scope (ionicons reflects `color=` → `.ion-color-*`). Replaced by
+  `--ae-color` (custom props pierce shadow DOM); component CSS **40 KB → 6.3 KB**.
+- **Stencil's integrated `stencil test` is deprecated** (removed in Stencil v5) → reinforces the
+  Vitest goal (D4). Jest baseline kept + Vitest POC seeded this cycle.
+- **Packaging drift:** legacy `es2015`/`es2017` entries pointed at a file Stencil 4 no longer
+  emits (fixed in Phase-5 prep).
+- **Publish size:** 731 kB / 1358 files of the 1.3 MB tarball is the ionicons SVG copy (lazy
+  loader's runtime-fetch fallback) — redundant for `addIcons` consumers (CF-3).
+
+**Carry-forward tasks:**
+
+| # | Task | Where | Priority |
+|---|---|---|---|
+| **CF-1** | **Release v1.4.0** — set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT`, tag `v1.4.0` | this repo (Phase 5) | **HIGH** |
+| **CF-2** | **aedh ★A2 / item C** — adopt `dist-custom-elements`, `registerIcons` aedh's ~20 icons, drop the 1357-SVG glob, then **tick off item L** | aedh §2 | **HIGH** (after CF-1) |
+| **CF-3** | **Shrink the npm tarball** — exclude `dist/aeicon5/svg/**` (731 kB) once verified no loader/standalone consumer relies on the package-relative svg path (they set their own asset path / register icons) | this repo | MED |
+| **CF-4** | **Jest → Vitest** full crossover of component specs; migrate off deprecated `stencil test` (→ `@stencil/vitest` / `@stencil/playwright`) | sync with aedh **A22** (D4) | MED |
+| **CF-5** | **Iconify source** — implement the D3 seam (`set="iconify:*"`) | ≈ v1.5.0 | LOW |
+| **CF-6** | **Drop the legacy `dist` lazy loader** once all consumers are on `dist-custom-elements` (D1) | future major | LOW |
+| **CF-7** | **`codeql-analysis.yml`** uses `actions/checkout@v2` → bump to `@v4` | this repo | LOW |
+| **CF-8** | **Click-info panel cosmetic** — `iconClicked` builds display HTML with `color=` + `this.color`, now empty for `--ae-color` icons (demo only) | this repo | LOW |
+| **CF-9** | **Default icon set coverage** — confirm aedh's ~20 names are either in the default manifest or registered by aedh when item C lands | this repo / aedh | LOW |
+
+CF-1/CF-2 are mirrored in aedh `rvw/Code_review 2026-06-04.md` §2 (★A / ★A2 / item C / item L).

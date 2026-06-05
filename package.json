@@ -1,13 +1,12 @@
 {
   "name": "@adaept/ae-icon5",
-  "version": "1.3.4",
+  "version": "1.4.0",
   "private": false,
   "description": "adaept Icon5 Component",
   "homepage": "https://aeicon5.web.app",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
-  "es2015": "dist/esm/index.mjs",
-  "es2017": "dist/esm/index.mjs",
+  "unpkg": "dist/aeicon5/aeicon5.esm.js",
   "types": "dist/types/index.d.ts",
   "customElements": "dist/components/index.js",
   "collection": "dist/collection/collection-manifest.json",
@@ -28,7 +27,8 @@
     "lint.fix": "eslint . --fix",
     "check.icons": "node scripts/check-icon-manifest.mjs",
     "test.unit": "vitest run",
-    "smoke": "node testing/smoke.mjs"
+    "smoke": "node testing/smoke.mjs",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "ionicons": "^8.0.13"
