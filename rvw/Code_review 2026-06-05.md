@@ -15,8 +15,8 @@ this repo `docs/modernization-plan.md` §13 (phased sequence), §5 / D2 (scoped 
 | **1 — Tooling** | Stencil 4, ionicons 8, Node 22 / TS 5.9 / ESLint 9 flat; `homepage`; green build/test/lint | ✅ done | `75124fa` |
 | **2 — Outputs + UX** | `dist-custom-elements`; themeable hover (★A fix) + `--ae-color`; demo git# stamp; §2 CSS split; `setInterval` fix | ✅ done | `86803fd` |
 | **3 — Scoped icons** | manifest + `addIcons` (D2); `registerIcons` API; `set` source seam (D3); rename CI guard (item L) | ✅ done | `556d091` |
-| **4 — CI + tests + docs** | `ci.yml` / `release.yml`; Puppeteer smoke + Vitest POC; fuller README | ⬜ next | — |
-| **5 — Release** | tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app`; aedh consumes | ⬜ | — |
+| **4 — CI + tests + docs** | `ci.yml` / `release.yml`; Puppeteer smoke + Vitest POC; fuller README | ✅ done | `4abb658` |
+| **5 — Release** | tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm + `aeicon5.web.app`; aedh consumes | ⬜ next | — |
 
 All phases verified green (build · lint 0-err · spec tests · icon guard · browser/demo smoke).
 Aedh-side follow-ups (★A2 / item C, carry-forward item L tick-off) tracked in §6 and aedh §2.
@@ -153,9 +153,31 @@ separate `dist/components/icons` path. They are exported from the **package root
 `dist/index.*`, types via `dist/types/index.d.ts`) and also present on the custom-elements
 build. README documents the root import. aedh's `dist/loader` consumption is unaffected.
 
-## 6. Next (per plan §13)
+## 6. Phase 4 (CI + tests + docs) — executed 2026-06-05
 
-- **Phase 4** — CI (`ci.yml` / `release.yml`), Puppeteer smoke + Vitest POC, fuller README.
+Plan §13.4. Iconify-free per D3; full Jest→Vitest crossover stays deferred (D4 → aedh-A22).
+
+| Item | What landed |
+|---|---|
+| **Smoke (§10)** | `testing/smoke.mjs` (mirrors aedh) — Puppeteer; **self-serves `./www`** (no separate server) or hits `BASE_URL`. Asserts title, `<ae-icon5-component>` renders an `<ion-icon>`, the footer **build-stamp triple**, and **0 page errors**. `npm run smoke`. Local run: 5/5 PASS (1440 icons). |
+| **Vitest POC (D4)** | `vitest` + `jsdom`; `vitest.config.ts` (scoped to `test/**/*.vitest.ts`, jsdom, globals) + `test/vitest-poc.vitest.ts` (arithmetic · jsdom DOM · project-ESM manifest import). `npm run test.unit` → 3/3. **Kept separate** from the Stencil/Jest `*.spec.ts` baseline so `stencil test` never collides. |
+| **`ci.yml`** | push/PR `master`: install → `lint` → `check.icons` → `build` → `npm test` (Jest) → `test.unit` (Vitest) → `smoke` (built `www`). |
+| **`release.yml`** | tag `v*`: build + test → `npm publish --provenance` (`NPM_TOKEN`) → `firebase deploy --only hosting` to **aeicon5** (`FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release. |
+| **Docs** | README **Test** + **CI / Release** sections (commands, `BASE_URL`, secrets, the `git tag v1.4.0` release flow). |
+| **lint** | flat config extended: node+browser globals for `scripts/` + `testing/` tooling (puppeteer `page.evaluate` uses `document`). |
+
+**Verification:** lint 0-err · build · Jest **8/8** · Vitest **3/3** · smoke **5/5** · `check.icons`
+all green. (CI/release workflows are YAML-validated; they run on GitHub once pushed — the
+`NPM_TOKEN` and `FIREBASE_SERVICE_ACCOUNT` repo secrets must be set before a `v*` tag.)
+
+**Note (codeql):** the pre-existing `codeql-analysis.yml` still uses `actions/checkout@v2`
+(old). Out of Phase-4 scope; bump to `@v4` when convenient (roadmap).
+
+## 7. Next (per plan §13)
+
+- **Phase 5 — Release:** set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT` secrets; bump
+  `package.json` to **1.4.0**; tag `v1.4.0` (triple `8.x/4.x/1.4.0`); verify npm publish +
+  `aeicon5.web.app` deploy + GitHub Release via `release.yml`.
 - **aedh-side (★A2 / item C):** adopt `dist-custom-elements`, register its ~20 icons via
   `registerIcons`, drop the 1357-SVG glob, then **tick off carry-forward item L** after
   reconciling its names against the pinned ionicons.
