@@ -46,7 +46,10 @@ jobs:
       # Provenance is generated automatically; requires the npm "trusted publisher"
       # for this repo + workflow to be configured (see README release runbook).
       - name: Publish to npm (Trusted Publishing / OIDC)
-        run: npm publish --access public
+        run: |
+          node --version
+          npm --version   # must be >= 11.5.1 for OIDC trusted publishing
+          npm publish --access public
 
       - name: Deploy demo to Firebase (aeicon5)
         run: |
