@@ -255,12 +255,19 @@ npm directly, so there is **no npm token to create, store, rotate, or expire**. 
 **On npm — register the trusted publisher** _(no token):_
 
 > **`@adaept` is an npm _user account_, not an organization.** The scope belongs to the npm user
-> **`adaept`** (email `peterennis@yahoo.com`) — confirm with `npm owner ls @adaept/ae-icon5`. **Do
+> **`adaept`** (email `noreply@example.com`) — confirm with `npm owner ls @adaept/ae-icon5`. **Do
 > not create an organization** (npm may nudge you to; you can't create an org named `adaept` because
 > your user already owns the scope).
 
-1. Sign in at <https://www.npmjs.com> **as the user `adaept`** (not `peterennis`). Forgot the
-   password? Reset it via the `peterennis@yahoo.com` email.
+1. Sign in at <https://www.npmjs.com> **as the user `adaept`**. Forgot the
+   password? Reset it via the `noreply@example.com` email.
+
+> **2FA must be TOTP-first.** npm's save/publish flow requires an **authenticator-app (TOTP)
+> code** — a **security key / passkey alone (e.g. Windows Hello) won't satisfy it**, so saving the
+> trusted publisher below silently fails and the row vanishes on reload. If your account is
+> passkey-only, **disable 2FA → re-enable it → choose _Authenticator App_ first**, then re-add the
+> passkey. (Resetting 2FA regenerates recovery codes and drops the old passkey enrollment.)
+
 2. On the **`@adaept/ae-icon5` package settings** page, configure publishing (npm's current
    wording — see [npm's trusted-publishing docs](https://docs.npmjs.com/trusted-publishers) if it
    differs):
