@@ -316,8 +316,9 @@ npm view @adaept/ae-icon5 version     # → the new version
   `permissions: id-token: write` and npm is **≥ 11.5.1**. Fix, then **Actions → the failed run →
   "Re-run failed jobs"** (no need to re-tag).
 - **At "Deploy to Firebase"** → check `FIREBASE_SERVICE_ACCOUNT`, then re-run.
-- A re-run reuses the existing tag. Only delete/re-push a tag if you changed the code:
-  `git push origin :v1.4.1` (delete remote) then re-tag.
+- A re-run reuses the **workflow file as of the tagged commit**. If you changed the code **or
+  `release.yml` itself** (e.g. the OIDC switch), a re-run won't pick it up — **move the tag** to the
+  new commit: `git tag -d vX.Y.Z && git push origin :vX.Y.Z` then re-tag on the new commit and push.
 
 #### Token fallback (only if OIDC can't be used)
 
