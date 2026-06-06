@@ -261,17 +261,22 @@ npm directly, so there is **no npm token to create, store, rotate, or expire**. 
 
 1. Sign in at <https://www.npmjs.com> **as the user `adaept`** (not `peterennis`). Forgot the
    password? Reset it via the `peterennis@yahoo.com` email.
-2. On the **`@adaept/ae-icon5` package settings**, add a **GitHub Actions trusted publisher**. (npm
-   places this under the package's *Settings → Trusted Publisher*; follow
-   [npm's trusted-publishing docs](https://docs.npmjs.com/trusted-publishers) for the exact
-   click-path, which npm changes.) Enter:
-   | Field | Value |
-   |---|---|
-   | Organization / owner | `adaept` _(the GitHub org that owns the repo)_ |
-   | Repository | `ae-icon5-component` |
-   | Workflow filename | `release.yml` |
-   | Environment | _(leave blank — the workflow uses none)_ |
-3. Save. No token, no expiry. _(Provenance is then emitted automatically.)_
+2. On the **`@adaept/ae-icon5` package settings** page, configure publishing (npm's current
+   wording — see [npm's trusted-publishing docs](https://docs.npmjs.com/trusted-publishers) if it
+   differs):
+   - **Trusted Publisher** → add a **GitHub Actions** publisher:
+     | Field | Value |
+     |---|---|
+     | Organization / owner | `adaept` _(the GitHub org that owns the repo)_ |
+     | Repository | `ae-icon5-component` |
+     | Workflow filename | `release.yml` |
+     | Environment | _(leave blank — the workflow uses none)_ |
+   - **Allowed actions** → check **"Allow npm publish"**.
+   - **Publishing access** → select **"Require two-factor authentication and disallow tokens
+     (recommended)"**. OIDC trusted publishing still works (it isn't a token) — but this **disables
+     the [token fallback](#token-fallback-only-if-oidc-cant-be-used)** unless you switch it back.
+   - Click **"Update Package Settings"** (this page has no "Save").
+3. Done — no token to store, rotate, or expire. _(Provenance is emitted automatically.)_
 
 **On Firebase — service-account key for the demo deploy:**
 
