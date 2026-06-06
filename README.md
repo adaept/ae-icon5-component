@@ -235,39 +235,57 @@ npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
 
 - **`.github/workflows/ci.yml`** — on push/PR to `master`: install → lint → `check.icons`
   → build → spec tests → Vitest → smoke the built demo.
-- **`.github/workflows/release.yml`** — on a `v*` tag: build + test → `npm publish`
-  (`--provenance`, needs `NPM_TOKEN`) → deploy `www/` to the **aeicon5** Firebase site
+- **`.github/workflows/release.yml`** — on a `v*` tag: build + test → `npm publish` via
+  **Trusted Publishing (OIDC, no token)** → deploy `www/` to the **aeicon5** Firebase site
   (needs `FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release.
 
 ### Release runbook (maintainer — adaept)
 
-Step-by-step for publishing a new version. The tag does the work; you mostly need the two
-secrets set **once**. _(This runbook is adaept-specific — scope `@adaept`, package
-`@adaept/ae-icon5`, Firebase project `aeicon5`. A generalized version for other authors is a
-TODO — see review CF-11.)_
+Step-by-step for publishing a new version. The tag does the work; the one-time setup below
+(an npm **trusted publisher** + one Firebase secret) is done **once**. _(This runbook is
+adaept-specific — scope `@adaept`, package `@adaept/ae-icon5`, Firebase project `aeicon5`. A
+generalized version for other authors is a TODO — see review CF-11.)_
 
 #### One-time setup (do once, ~10 min)
 
-**On npm** — get a token that CI can publish with:
+This package publishes with **npm Trusted Publishing (OIDC)** — GitHub Actions authenticates to
+npm directly, so there is **no npm token to create, store, rotate, or expire**. You configure it
+**once** on npm, plus one Firebase secret.
 
-1. Sign in at <https://www.npmjs.com> (account must be a member of the **`@adaept`** org with
-   permission to publish). If you've never logged in on this machine, you can also run
-   `npm login` locally — but CI publishes with a **token**, not your login.
-2. Click your avatar → **Access Tokens** → **Generate New Token** → choose **Automation**
-   (Automation tokens skip 2FA, which CI requires). Optionally restrict it to the `@adaept` scope.
-3. **Copy the token now** (it's shown once). It looks like `npm_XXXXXXXX…`.
+**On npm — register the trusted publisher** _(no token):_
 
-**On Firebase** — get a service-account key for the demo deploy:
+> **`@adaept` is an npm _user account_, not an organization.** The scope belongs to the npm user
+> **`adaept`** (email `peterennis@yahoo.com`) — confirm with `npm owner ls @adaept/ae-icon5`. **Do
+> not create an organization** (npm may nudge you to; you can't create an org named `adaept` because
+> your user already owns the scope).
+
+1. Sign in at <https://www.npmjs.com> **as the user `adaept`** (not `peterennis`). Forgot the
+   password? Reset it via the `peterennis@yahoo.com` email.
+2. On the **`@adaept/ae-icon5` package settings**, add a **GitHub Actions trusted publisher**. (npm
+   places this under the package's *Settings → Trusted Publisher*; follow
+   [npm's trusted-publishing docs](https://docs.npmjs.com/trusted-publishers) for the exact
+   click-path, which npm changes.) Enter:
+   | Field | Value |
+   |---|---|
+   | Organization / owner | `adaept` _(the GitHub org that owns the repo)_ |
+   | Repository | `ae-icon5-component` |
+   | Workflow filename | `release.yml` |
+   | Environment | _(leave blank — the workflow uses none)_ |
+3. Save. No token, no expiry. _(Provenance is then emitted automatically.)_
+
+**On Firebase — service-account key for the demo deploy:**
 
 4. <https://console.firebase.google.com> → project **`aeicon5`** → ⚙ **Project settings** →
    **Service accounts** → **Generate new private key** → download the JSON file.
 
-**On the GitHub repo** — store both as Actions secrets:
+**On the GitHub repo — store the one secret you still need:**
 
 5. Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
-   - **`NPM_TOKEN`** = the `npm_…` token from step 2.
-   - **`FIREBASE_SERVICE_ACCOUNT`** = the **entire contents** of the JSON file from step 4 (open it,
-     copy everything, paste as the value).
+   - **`FIREBASE_SERVICE_ACCOUNT`** = the **entire contents** of the JSON from step 4 (open it, copy
+     everything, paste as the value). _(No `NPM_TOKEN` — trusted publishing replaces it.)_
+
+> **Baked into `release.yml`:** the job has `permissions: id-token: write` and upgrades CI to
+> **npm ≥ 11.5.1** (Node 22 ships npm 10, which predates OIDC publishing).
 
 #### Each release (repeat)
 
@@ -293,11 +311,21 @@ npm view @adaept/ae-icon5 version     # → the new version
 
 #### If the Release run fails
 
-- **At "Publish to npm"** → `NPM_TOKEN` is missing/expired/insufficient. Fix the secret (step 2/5),
-  then **Actions → the failed run → "Re-run failed jobs"** (no need to re-tag).
+- **At "Publish to npm"** → the **trusted publisher** on npm must match this repo exactly: owner
+  `adaept`, repo `ae-icon5-component`, workflow `release.yml`. Also confirm the job kept
+  `permissions: id-token: write` and npm is **≥ 11.5.1**. Fix, then **Actions → the failed run →
+  "Re-run failed jobs"** (no need to re-tag).
 - **At "Deploy to Firebase"** → check `FIREBASE_SERVICE_ACCOUNT`, then re-run.
 - A re-run reuses the existing tag. Only delete/re-push a tag if you changed the code:
   `git push origin :v1.4.1` (delete remote) then re-tag.
+
+#### Token fallback (only if OIDC can't be used)
+
+Trusted publishing is preferred. If you must use a token instead: create a **Granular Access
+Token** on npm (Access Tokens → Generate New Token; **Read and write**, scoped to
+`@adaept/ae-icon5`) — note it **expires (≈90-day max)**, so you'll rotate it — store it as the
+**`NPM_TOKEN`** secret, and in `release.yml` give the publish step
+`env: { NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} }` and add `--provenance` back to the command.
 
 #### Manual fallback (no CI)
 
@@ -362,8 +390,12 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 **7. CI + release** — copy [`.github/workflows/ci.yml`](.github/workflows/ci.yml) and
 [`release.yml`](.github/workflows/release.yml):
 - CI: install → lint → `check.icons` → build → Jest → Vitest → smoke.
-- Release (on `v*` tag): publish to npm `--provenance` + deploy the demo + GitHub Release.
-- Add repo secrets **`NPM_TOKEN`** and **`FIREBASE_SERVICE_ACCOUNT`** before tagging.
+- Release (on `v*` tag): publish to npm + deploy the demo + GitHub Release.
+- **Publish with npm Trusted Publishing (OIDC) — no token to store/rotate.** Register your
+  repo+workflow as a trusted publisher on the npm package and give the job
+  `permissions: id-token: write` + npm ≥ 11.5.1 (see the maintainer runbook above). For the demo
+  deploy add a **`FIREBASE_SERVICE_ACCOUNT`** secret. _(Token fallback exists if OIDC isn't an
+  option — see the runbook.)_
 
 **8. Package hygiene (don't ship the demo to consumers).** In `package.json`:
 - Entry fields: `main` (cjs), `module` (esm), `unpkg`, `types` → `dist/types/index.d.ts`,

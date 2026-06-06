@@ -7,7 +7,7 @@ on:
 
 permissions:
   contents: write # create the GitHub Release
-  id-token: write # npm provenance (--provenance)
+  id-token: write # npm Trusted Publishing (OIDC) — no token — + automatic provenance
 
 jobs:
   release:
@@ -21,6 +21,10 @@ jobs:
           node-version: 22
           cache: npm
           registry-url: https://registry.npmjs.org
+
+      # Trusted Publishing (OIDC) requires npm >= 11.5.1; Node 22 ships npm 10.
+      - name: Upgrade npm (for OIDC publishing)
+        run: npm install -g npm@latest
 
       - run: npm ci
 
@@ -38,10 +42,11 @@ jobs:
           npm test
           npm run test.unit
 
-      - name: Publish to npm (public, with provenance)
-        run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Trusted Publishing: GitHub authenticates to npm via OIDC (no NPM_TOKEN).
+      # Provenance is generated automatically; requires the npm "trusted publisher"
+      # for this repo + workflow to be configured (see README release runbook).
+      - name: Publish to npm (Trusted Publishing / OIDC)
+        run: npm publish --access public
 
       - name: Deploy demo to Firebase (aeicon5)
         run: |

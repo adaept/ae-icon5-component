@@ -162,13 +162,14 @@ Plan §13.4. Iconify-free per D3; full Jest→Vitest crossover stays deferred (D
 | **Smoke (§10)** | `testing/smoke.mjs` (mirrors aedh) — Puppeteer; **self-serves `./www`** (no separate server) or hits `BASE_URL`. Asserts title, `<ae-icon5-component>` renders an `<ion-icon>`, the footer **build-stamp triple**, and **0 page errors**. `npm run smoke`. Local run: 5/5 PASS (1440 icons). |
 | **Vitest POC (D4)** | `vitest` + `jsdom`; `vitest.config.ts` (scoped to `test/**/*.vitest.ts`, jsdom, globals) + `test/vitest-poc.vitest.ts` (arithmetic · jsdom DOM · project-ESM manifest import). `npm run test.unit` → 3/3. **Kept separate** from the Stencil/Jest `*.spec.ts` baseline so `stencil test` never collides. |
 | **`ci.yml`** | push/PR `master`: install → `lint` → `check.icons` → `build` → `npm test` (Jest) → `test.unit` (Vitest) → `smoke` (built `www`). |
-| **`release.yml`** | tag `v*`: build + test → `npm publish --provenance` (`NPM_TOKEN`) → `firebase deploy --only hosting` to **aeicon5** (`FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release. |
+| **`release.yml`** | tag `v*`: build + test → `npm publish` via **Trusted Publishing (OIDC, no token)** → `firebase deploy --only hosting` to **aeicon5** (`FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release. _(Switched from an `NPM_TOKEN` to OIDC — see §7.)_ |
 | **Docs** | README **Test** + **CI / Release** sections (commands, `BASE_URL`, secrets, the `git tag v1.4.0` release flow). |
 | **lint** | flat config extended: node+browser globals for `scripts/` + `testing/` tooling (puppeteer `page.evaluate` uses `document`). |
 
 **Verification:** lint 0-err · build · Jest **8/8** · Vitest **3/3** · smoke **5/5** · `check.icons`
 all green. (CI/release workflows are YAML-validated; they run on GitHub once pushed — the
-`NPM_TOKEN` and `FIREBASE_SERVICE_ACCOUNT` repo secrets must be set before a `v*` tag.)
+npm **trusted publisher** must be registered + the `FIREBASE_SERVICE_ACCOUNT` secret set before a
+`v*` tag — see §7.)
 
 **Note (codeql):** the pre-existing `codeql-analysis.yml` still uses `actions/checkout@v2`
 (old). Out of Phase-4 scope; bump to `@v4` when convenient (roadmap).
@@ -192,9 +193,17 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
   aeicons / 0 demo-stamp / 0 ionicons-svg in the tarball; the **Firebase demo (`www`) keeps
   its own copies** and is unaffected.
 
-**To release (your action):** set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT` repo secrets →
-`git tag v1.4.0 && git push origin v1.4.0` → `release.yml` publishes npm + deploys
-`aeicon5.web.app` + cuts the GitHub Release.
+**Release attempt + pivot to OIDC (2026-06-05):** `v1.4.0` was tagged; `release.yml` ran green
+through build/tests but **failed at `npm publish`** (no `NPM_TOKEN` secret) — nothing published
+(npm still at 1.3.0) or deployed. Rather than rely on a long-lived token (npm has capped token
+lifetimes to ~90 days and is deprecating classic tokens), `release.yml` was **switched to npm
+Trusted Publishing (OIDC)** — no token to store/rotate/expire, provenance automatic. The publish
+step drops `NODE_AUTH_TOKEN` and the job upgrades CI to **npm ≥ 11.5.1** (Node 22 ships npm 10).
+
+**To release (your action):** (1) on npm (as user `adaept`) register a **trusted publisher** for
+`@adaept/ae-icon5` → owner `adaept`, repo `ae-icon5-component`, workflow `release.yml`; (2) set the
+**`FIREBASE_SERVICE_ACCOUNT`** secret; (3) re-run the failed `v1.4.0` Release (or re-tag). No
+`NPM_TOKEN` needed. Full step-by-step in the README "Release runbook (maintainer — adaept)".
 
 ## 8. Summary findings & carry-forward
 
@@ -220,7 +229,7 @@ Not yet released (needs repo secrets + a deliberate tag), but everything else is
 
 | # | Task | Where | Priority |
 |---|---|---|---|
-| **CF-1** | **Release v1.4.0** — set `NPM_TOKEN` + `FIREBASE_SERVICE_ACCOUNT`, tag `v1.4.0` | this repo (Phase 5) | **HIGH** |
+| **CF-1** | **Release v1.4.0** — register the npm **trusted publisher** (OIDC) + set `FIREBASE_SERVICE_ACCOUNT`, then re-run/re-tag `v1.4.0` | this repo (Phase 5) | **HIGH** |
 | **CF-2** | **aedh ★A2 / item C** — adopt `dist-custom-elements`, `registerIcons` aedh's ~20 icons, drop the 1357-SVG glob, then **tick off item L** | aedh §2 | **HIGH** (after CF-1) |
 | ~~CF-3~~ | ✅ **DONE 2026-06-05** — `files` negates `dist/aeicon5/svg/**` (ionicons) + `dist/collection/assets/**` (demo aeicons + build-stamp). Tarball 360 kB → **126.8 kB**, 1418 → **48 files**; demo `www` unaffected | this repo | — |
 | **CF-4** | **Jest → Vitest** full crossover of component specs; migrate off deprecated `stencil test` (→ `@stencil/vitest` / `@stencil/playwright`) | sync with aedh **A22** (D4) | MED |
