@@ -52,7 +52,12 @@ jobs:
         run: |
           node --version
           npm --version   # must be >= 11.5.1 for OIDC trusted publishing
-          npm publish --access public
+          # OIDC diagnostics: is GitHub actually issuing an id-token to this job?
+          # Prints "yes" if the request URL is present (never prints the token itself).
+          echo "OIDC id-token request URL present: ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
+          # --loglevel=verbose surfaces the OIDC token-exchange request + the
+          # registry's rejection reason (e.g. trusted-publisher field mismatch).
+          npm publish --access public --loglevel=verbose
 
       - name: Deploy demo to Firebase (aeicon5)
         run: |
