@@ -1,0 +1,109 @@
+# Code Review — ae-icon5-component
+
+**Date:** 2026-08-07 · **Repo:** `adaept/ae-icon5-component`
+**Continues:** `rvw/Code_review 2026-06-05.md` (Phases 1–5 modernization log; §8's carry-forward
+table, re-verified below against current repo state).
+**Cross-ref:** aedh `rvw/Code_review 2026-08-07.md` §2 (where §2 below originated);
+`adaept5tudio/design-system/README.md` (the canonical mark assets §2 references).
+
+> Task-only entry — no code changed in this repo this session. Re-verifies 2026-06-05's
+> carry-forward list against the actual repo state (§1) and logs one new task (§2), surfaced
+> while fixing an "ae" menu icon in aedh.
+
+---
+
+## 1. Carry-forward tasks — re-verified against current repo state (2026-08-07)
+
+Re-checked each 2026-06-05 item against `package.json`, `git log`, workflow files, and source —
+not just re-copied. Priority key: **HIGH/MED/LOW** · ✅ done · ◑ partial · ☐ open.
+
+| # | Task | Status (06-05) | Status (08-07, verified) | Pri |
+|---|------|---|---|-----|
+| CF-1 | Release v1.4.0 — npm trusted publisher (OIDC) + `FIREBASE_SERVICE_ACCOUNT`, re-tag | 🟡 prepped | ✅ **done** — `package.json` confirms `1.4.0`; published to npm (2FA blocked interactive publish, worked around via a no-2FA Granular Access Token per aedh `rvw/Code_review 2026-08-06.md` §6); consumed by aedh (★A2, same date). OIDC release-workflow hardening continued past 06-05 (`baac19f`…`8f2e2bf`: diagnostics, registry-url fix, dependency-advisory patches). | — |
+| CF-2 | aedh adopts `registerIcons`/`dist-custom-elements`, drops the 1357-svg glob, ticks off item L | ☐ open | ☐ **still open** — aedh consumed 1.4.0 for `<ae-icon5-component>` on Home (★A2), but that's distinct from item C (scoped icons / dropping the wholesale ionicons copy), which aedh's own 2026-08-06 carry-forward table still lists as "not yet started." | HIGH |
+| CF-3 | Trim published tarball (exclude demo aeicons/ionicons-svg) | ✅ done | ✅ still done (no regression found) | — |
+| CF-4 | Jest → Vitest full crossover; drop deprecated `stencil test` | 🟡 POC seeded | ◑ **still partial** — `test/vitest-poc.vitest.ts` (POC) coexists with the original Jest/Stencil specs (`src/components/.../ae-icon5-component.spec.ts`, `src/icons/icons.spec.ts`); no full migration yet. | MED |
+| CF-5 | Iconify source (`set="iconify:*"` seam) | ☐ deferred (≈v1.5.0) | ☐ **still deferred** — `src/icons/sources.ts`'s own comment still says "Iconify is intentionally NOT implemented here yet." | LOW |
+| CF-6 | Drop legacy `dist` lazy loader once consumers are on `dist-custom-elements` | ☐ future major | ☐ **still open** — still 1.4.0 (no major bump); aedh's `main.ts` still uses `dist/loader`'s `defineCustomElements`, not `dist-custom-elements`, so this can't land yet regardless. | LOW |
+| CF-7 | `codeql-analysis.yml`: `actions/checkout@v2` → `@v4` | ☐ open | ☐ **still open** — verified still `@v2` (`.github/workflows/codeql-analysis.yml:39`). | LOW |
+| CF-8 | Click-info panel cosmetic (`iconClicked` builds display HTML with now-empty `color=`) | ☐ open | ☐ **still open** — verified `iconClicked()` (`ae-icon5-component.tsx:287`) unchanged since 06-05. | LOW |
+| CF-9 | Confirm aedh's ~20 icon names are in the default manifest or registered when item C lands | ☐ open | ☐ **still open** — blocked on CF-2/item C starting. | LOW |
+| CF-10 | Third-party guide sync (`docs/THIRD-PARTY-GUIDE.md`, guard `check.guide`) | ✅ drafted, ongoing-per-release | ◑ **ongoing as designed** — guard exists (`c25a70a`, `832a705`); re-verify pins against `package.json` next release, not a one-time close-out item. | LOW |
+| CF-11 | Generalize the release runbook for 3rd-party devs (fold adaept-specific steps into the guide) | ☐ open | ☐ **still open** — no commit found addressing this since 06-05. | LOW |
+
+**Net since 06-05:** CF-1 (the HIGH-priority release blocker) is done — real npm/OIDC work
+landed (`baac19f` through `8f2e2bf`), not just the prep noted last time. Everything else is
+unchanged or still in its prior partial state.
+
+---
+
+## 2. New task — publish an official "ae" brand-mark icon (design-system → this component)
+
+**Where this came from:** aedh needed a small "ae" icon for a menu entry (`/menu/adaept-gsap`,
+the "Adaept" item under the SVG group). Lacking a proper icon-scale asset, aedh's `main.ts`
+currently vendors design-system path data directly via a raw
+`addIcons({ ae: 'data:image/svg+xml;utf8,...' })` call — a stopgap. See aedh
+`rvw/Code_review 2026-08-07.md` §2/§2a/§2b for the full trail (three iterations: a hand-extracted
+glyph path; that path with a `vector-effect="non-scaling-stroke"` bug rendering as a solid blob;
+the canonical `ae-logo-outline.svg` stroke variant, user-flagged as still "double lines" and
+"touching the box edge"; landed on the approach below, user-confirmed "looks good").
+
+**Good news — the design-system side needs no new work.** `adaept5tudio/design-system/assets/`
+already has the right source geometry, generated by `npm run design-system.build`. **Use the
+FILLED variant, not the outline** — this was tried both ways in aedh and the outline lost:
+- `ae-logo-mono.svg` **(the one to use)** — single boolean-unioned **filled** shape
+  (`fill="currentColor"`, no stroke) — union of "a" + its 180° rotation "e" into one contour set.
+  A fill has no "stroke every internal contour" failure mode, so it reads as one clean solid mark
+  at any size.
+- `ae-logo-outline.svg` — same union, but `fill="none" stroke="currentColor"` — **tried first in
+  aedh and rejected by user feedback ("double path lines")**: this mark has internal
+  counters/holes (each letter's inner boundary), and stroking traces the outer silhouette AND
+  every inner boundary separately — busy/duplicated-looking at icon scale no matter the
+  stroke-width. That's inherent to stroking this particular compound letterform, not something
+  tunable away. Skip it for icon use; keep it in mind only for contexts that specifically want a
+  line-art look at large size.
+
+**What's actually missing (icon-scale tuning, not present in either source file):**
+1. **Padding.** `ae-logo-mono.svg`'s outer circle fills ~97.6% of its native 1024×1024 viewBox
+   (~1.2% margin/side) — at icon scale it touches the box edge and looks flat (aedh's second
+   round of user feedback). Ionicons' own icons carry ~10% margin/side. Fix demonstrated in aedh:
+   widen the **viewBox**, don't rescale the path — `viewBox="-102 -102 1228 1228"` (102 = 1024 ×
+   10%) instead of the source's `0 0 1024 1024`. Chosen by rendering 0/5/10/15% padding variants
+   via Puppeteer and comparing against Ionicons' own icon proportions, not eyeballed.
+2. *(If ever revisiting the outline variant instead of mono-fill for some other context)*
+   `ae-logo-outline.svg`'s `stroke-width="11.4"` is ~1.1% of viewBox, tuned for a large print/logo
+   canvas — a near-invisible hairline at icon scale; aedh's now-superseded attempt used
+   `stroke-width="40"` (~3.9%, matched against Ionicons' `shuffle` at ~6.25% of its 512 viewBox).
+   Not needed for the recommended mono-fill approach, noted here only so this dead end isn't
+   re-walked.
+
+**That tuning has no home except aedh's `main.ts` comment right now** — exactly the kind of
+iterative-testing-as-source-of-truth this task should eliminate.
+
+**Proposed work (not started):**
+1. Add `'ae'` to this repo's icon system (`src/icons/manifest.ts` / `sources.ts` — see that
+   file's existing seam: `IconSource.register()` / `registerDefaults()`), sourcing the path data
+   from `design-system/assets/ae-logo-mono.svg` — the filled variant — NOT re-derived by hand.
+2. Apply the ~10% edge padding via viewBox (see above), verified the same way aedh did — actually
+   rendered at real `aesize` values via a headless browser, not eyeballed. Document the chosen
+   value's derivation in this repo (not just in a consumer's comment).
+3. Version bump + publish (this repo's existing npm-publish flow — see this repo's own notes on
+   the account 2FA workaround) — 1.4.0 → next minor.
+4. Once published, aedh should replace its `main.ts` `addIcons({ ae: ... })` stopgap with
+   consuming the newly-published icon from `@adaept/ae-icon5` instead (aedh
+   `rvw/Code_review 2026-08-07.md` item L).
+
+**Not urgent — no user-facing breakage today**, aedh's stopgap works, renders correctly, and is
+user-confirmed to look right; this is purely about not letting a hand-tuned magic number in a
+consumer's `main.ts` become the de facto source of truth for how the "ae" mark should look at
+icon scale.
+
+---
+
+## 3. References
+
+- **This task's origin:** aedh `rvw/Code_review 2026-08-07.md` §2.
+- **Canonical mark source:** `adaept5tudio/design-system/README.md` (`assets/` table, and the
+  "Mono-fill vs mono-outline" build notes).
+- **Prior review:** `rvw/Code_review 2026-06-05.md` (Phase 1–5 modernization log, §8 carry-forward
+  table re-verified in §1 above).
