@@ -367,7 +367,7 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 
 > **Pinned toolchain** (keep these in sync): Node **22**, `@stencil/core` **^4.43**,
 > `ionicons` **^8**, `typescript` **~5.9**, `eslint` **9** flat + `typescript-eslint` **8**,
-> `jest` **29**, `puppeteer` **24**, `vitest` **4** + `jsdom`.
+> `jest` **29**, `puppeteer` **25**, `vitest` **4** + `jsdom`.
 
 **1. Scaffold + pin the toolchain.**
 - `npm init stencil@latest component my-icons` (choose the *component* starter), then `cd my-icons`.

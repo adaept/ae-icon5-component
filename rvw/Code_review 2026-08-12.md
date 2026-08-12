@@ -83,6 +83,25 @@ Not committed as part of any release — no version bump, this is test infrastru
 change to the published package's runtime behavior (the flag/attribute logic lives in
 `src/index.html` and `src/assets/`, both demo-only, never part of `dist/`).
 
+## 2a. Dependabot follow-up — `puppeteer` 24 → 25 (same day, on request)
+
+Pushing §2's commit triggered GitHub's push-time Dependabot summary: 6 open alerts (4 high,
+2 moderate). Investigated on request (`user: "look into the aetimeline dependabot
+vulnerabilities"`, which also covered this repo since both were touched the same session) —
+checked via `gh api repos/adaept/ae-icon5-component/dependabot/alerts`, not just the push
+message, since `aetimeline`'s identical-looking warning turned out to already be resolved by the
+same commit that triggered it (see that repo's `rvw/Code_review 2026-08-12.md` §2a).
+
+**This repo's alerts were real and only partly self-resolving.** Local `npm audit` (8 findings):
+`brace-expansion`/`js-yaml`/`nanoid` cleared via plain `npm audit fix` (non-breaking). The
+remaining 4 (`extract-zip` + `ip-address` ×3, all high) only clear via `npm audit fix --force` —
+pulled in transitively through `@puppeteer/browsers` by the pinned `puppeteer ^24.1.0`; the fix
+bumps it to `^25.6.0`, a major version. Asked before applying (a version-pin change, not a pure
+lockfile fix) — approved. Applied, rebuilt, reran both `smoke` (5/5) and `e2e.testids` (4/4,
+§2's new test) — no regression. `npm audit`: **0 vulnerabilities**. README's pinned-toolchain
+note (`## Build your own icon component package`) updated: `puppeteer 24` → `puppeteer 25`
+(now matches `aedh`/`aetimeline`, both already on 25.6.0).
+
 ---
 
 ## 3. References
