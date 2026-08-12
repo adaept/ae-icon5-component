@@ -142,6 +142,12 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
 - Remove the legacy **`dist` loader** once all consumers are on `dist-custom-elements` (D1) — a future major.
 - Standalone/no-Ionic icon rendering; SSR/hydration; a11y audit (aria, labels); animation presets;
   typed icon-name unions; tree-shaking/bundle-size metrics; theming tokens. *(append as discovered.)*
+- **`--ionicon-stroke-width` override hook (CF-12, found via aedh's About page, 2026-08-12)** —
+  hardcoded as a direct 16px assignment on the component's inner `<ion-icon>` (half of ionicons'
+  own 32px default), not a `var()` indirection like `--ae-color`, so it can't be overridden from
+  outside — makes stroke-based icons (e.g. `add`) render visibly thinner than the same icon
+  rendered unwrapped. Fix: `--ionicon-stroke-width: var(--ae-stroke-width, 16px)`, same pattern as
+  color. Full writeup: `rvw/Code_review 2026-08-12.md` CF-12.
 
 ## 13. Sequenced execution
 

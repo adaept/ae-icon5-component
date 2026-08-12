@@ -27,6 +27,31 @@ until a session that actually re-audits each item.
 | CF-10 | Third-party guide sync (`docs/THIRD-PARTY-GUIDE.md`, guard `check.guide`) | ◑ ongoing-per-release | LOW |
 | CF-11 | Generalize the release runbook for 3rd-party devs | ☐ open | LOW |
 | **N** | **New task from §2, published to design system** — see 2026-08-07's §2 ("ae" brand-mark icon), still not started as of that entry. | ☐ open | MED |
+| **CF-12** | **`--ionicon-stroke-width` not overridable from outside the component** — see below. | ☐ open | MED |
+
+### CF-12 detail — hardcoded `--ionicon-stroke-width`, found via aedh's de-Ionic About page (2026-08-12)
+
+`ae-icon5-component.css`'s base rule (`ion-icon { ... --ionicon-stroke-width: 16px; }`) sets that
+custom property as a **direct value assigned to the component's own inner `<ion-icon>`**, not a
+`var()` indirection the way `color` is (`color: var(--ae-color, var(--color))`). 16px is half of
+ionicons' own 32px default (`stroke-width: var(--ionicon-stroke-width, 32px)`), so every
+stroke-based icon (e.g. `add`, a two-line "+") rendered through this component looks
+noticeably thinner than the same icon rendered as a plain, unwrapped `<ion-icon>` elsewhere —
+concretely, `aedh`'s About page fab button showed a thin "+" (via `ae-icon5-component`) next to a
+bold "X" (Ionic's own internal `ion-fab-button` close-icon, a separate, un-wrapped `<ion-icon>`
+that component renders itself). Because the 16px is a direct assignment (not `var(--ae-stroke-width,
+16px)`), a consumer setting `--ionicon-stroke-width` on the component's own host element from
+light DOM does **not** override it — the shadow tree's own more-specific, closer declaration wins,
+same cascade behavior `--ae-color`'s indirection was specifically designed to avoid. No `part`
+exposed on the inner `<ion-icon>` either, so `::part()` isn't an escape hatch (see the component's
+`render()` in `ae-icon5-component.tsx`).
+
+**Fix for next version:** same pattern already used for color — expose an override hook, e.g.
+`--ionicon-stroke-width: var(--ae-stroke-width, 16px)` (or whatever default is chosen after
+reconsidering whether 16px should even stay the default, given it visibly undershoots ionicons'
+own baseline). Until fixed, the only workaround from a consuming page is to bypass the component
+entirely for affected icons (a plain `<ion-icon>` instead) — that's what `aedh`'s About page did
+(see `aedh/rvw/Code_review 2026-08-12.md`, the About-page bug-fix entries), not a real fix.
 
 ---
 
