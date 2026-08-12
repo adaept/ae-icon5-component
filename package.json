@@ -33,6 +33,7 @@
     "check.guide": "node scripts/check-guide-pins.mjs",
     "test.unit": "vitest run",
     "smoke": "node testing/smoke.mjs",
+    "e2e.testids": "node testing/e2e.testids.mjs",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {

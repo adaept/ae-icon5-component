@@ -222,6 +222,7 @@ npm i ../ae-icon5-component/adaept-ae-icon5-<version>.tgz
 npm test           # component specs — Stencil/Jest (newSpecPage)
 npm run test.unit  # Vitest POC (pure unit, jsdom) — the Vitest baseline
 npm run smoke      # Puppeteer smoke: self-serves ./www, asserts it renders
+npm run e2e.testids # Puppeteer, typed data-testid selectors (testing/test-ids.mjs)
 npm run check.icons # validate the scoped-icon manifest vs installed ionicons
 npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
 ```
@@ -230,6 +231,12 @@ npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
   crossover is deferred to sync with aedh (plan §12 / D4).
 - **Smoke** runs against the local `www` by default; set `BASE_URL` to hit the deployed
   demo: `BASE_URL=https://aeicon5.web.app npm run smoke`.
+- **`e2e.testids`** is a separate, typed-selector test (dev plan A22) — it sets
+  `window.__AE_E2E__` before navigating so `testing/test-ids.mjs`'s `data-testid` attributes
+  attach, then asserts against them (currently: the demo's build-stamp element). A normal
+  `smoke` run, or any real page load, never sets that flag — verified empirically that a normal
+  load carries zero `data-testid` attributes. Cross-project id registry:
+  `adaept5tudio/docs/e2e-testing-strategy.md` §5a.
 
 ## CI / Release
 
@@ -396,7 +403,9 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 **6. Tests + a rename guard** — copy [`scripts/check-icon-manifest.mjs`](scripts/check-icon-manifest.mjs),
 [`testing/smoke.mjs`](testing/smoke.mjs), [`vitest.config.ts`](vitest.config.ts):
 - Spec tests on Stencil/Jest (`*.spec.ts`); a Vitest POC under `test/**/*.vitest.ts`; a
-  Puppeteer smoke that self-serves `./www`.
+  Puppeteer smoke that self-serves `./www`; optionally, typed `data-testid` selectors
+  ([`testing/test-ids.mjs`](testing/test-ids.mjs) + [`testing/e2e.testids.mjs`](testing/e2e.testids.mjs))
+  if the demo needs finer-grained E2E coverage than smoke's generic checks.
 - `check.icons` validates every manifest name against the **installed** icon set — so a renamed
   icon fails the build instead of silently 404-ing.
 
