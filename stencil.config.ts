@@ -18,7 +18,16 @@ export const config: Config = {
     },
     {
       type: 'www',
-      serviceWorker: null
+      serviceWorker: null,
+      // Demo-only: ion-icon's runtime SVG fetch (for any icon name outside the bundled
+      // manifest — registerDefaultIcons) requests `/svg/<name>.svg` off the site root, not
+      // `/build/svg/` where Stencil already copies ionicons' assetsDirs output. ion-icon is
+      // auto-bundled by Stencil from ionicons' own collection metadata whenever `<ion-icon>`
+      // appears in JSX — a separate compiled artifact from whatever we `import` from the
+      // `ionicons` package in TS, so its resourcesUrl can't be reconfigured from component
+      // code (setAssetPath there has no effect on it). Simplest fix: serve the same SVGs at
+      // the path it's actually requesting them from.
+      copy: [{ src: '../node_modules/ionicons/dist/ionicons/svg', dest: 'svg' }]
     }
   ]
 }
