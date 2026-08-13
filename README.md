@@ -133,8 +133,16 @@ ae-icon5-component.fancy {
 | `color` | string | Ionic **theme** color only (use `--ae-color` for others) |
 | `src` | string | URL to an SVG (used with `adaept`) |
 | `adaept` | string | render mode: `aelogos`, `namigram`, `mydataform`/`mydatapanel`, `adaept` |
-| `arialabel` | string | accessibility label / demo click hooks |
+| `arialabel` | string | accessibility label, applied as `aria-label` on the inner `<ion-icon>`; defaults to `name` if not set (see below) |
 | `aetype` | string | WIP (round) |
+
+**`arialabel` defaults to `name`** (issue #2) — previously an unset `arialabel` was `undefined`
+and never reached the DOM at all (no `aria-label` was applied to the rendered `<ion-icon>`, and
+the demo's click-info panel literally printed `arialabel:undefined`). The component now exposes
+a `resolvedArialabel` getter (`arialabel || name`) used both for the rendered `aria-label` and the
+demo panel, so every icon has a sensible accessible name out of the box — set `arialabel`
+explicitly only when you want something other than the icon name (e.g. `arialabel="Close"` for a
+`name="close"` icon used as a dismiss button).
 
 ---
 

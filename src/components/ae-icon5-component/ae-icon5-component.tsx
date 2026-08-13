@@ -67,9 +67,20 @@ export class AeIcon5 {
   @Prop() aetype: string
 
   /**
-   * Aaria label of the icon
+   * Accessible label for the icon, applied to the inner `<ion-icon>`'s
+   * `aria-label`. Falls back to `name` when not set (see `resolvedArialabel`)
+   * so consumers never have to pass it just to avoid an empty/undefined
+   * accessible name — set it explicitly to override.
    */
   @Prop() arialabel: string;
+
+  /**
+   * `arialabel` if the consumer set one, else `name` — never `undefined`.
+   * Used both for the rendered `aria-label` and the demo's info panel.
+   */
+  get resolvedArialabel(): string {
+    return this.arialabel || this.name || ''
+  }
 
   /**
    * Color of the icon
@@ -337,14 +348,14 @@ export class AeIcon5 {
           document.getElementById('containerDetail').innerHTML =
             '<b>name:</b>' + this.name +
             ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
-            ' <b>arialabel:</b>' + this.arialabel
+            ' <b>arialabel:</b>' + this.resolvedArialabel
           //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
 
           document.getElementById('containerPara').innerHTML =
             '<ae-icon5-component aesize="ae32" ' +
             ' name=' + this.name +
             ' color=' + this.color +
-            ' arialabel=' + this.arialabel + '>'
+            ' arialabel=' + this.resolvedArialabel + '>'
         }
       }
     }
@@ -379,7 +390,7 @@ export class AeIcon5 {
             {this.aelogos.map((aelogo, index) => (
               <ion-item style={{ '--animation-timimg': index } as any} >
                 {/* <ion-label>{index}</ion-label> */}
-                <ion-icon class={this.aesize} src={aelogo} color={this.color} onClick={this.iconClicked}>
+                <ion-icon class={this.aesize} src={aelogo} color={this.color} aria-label={this.resolvedArialabel} onClick={this.iconClicked}>
                 </ion-icon>
               </ion-item>
             ))}
@@ -408,7 +419,7 @@ export class AeIcon5 {
         ]
       )
     } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
-      return (<ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}></ion-icon>)
+      return (<ion-icon class={this.aesize} src={this.src} color={this.color} aria-label={this.resolvedArialabel} onClick={this.iconClicked}></ion-icon>)
     } else if (this.adaept === 'namigram' || this.adaept === 'mydatapanel') {
       return [
         <div>
@@ -417,7 +428,7 @@ export class AeIcon5 {
               {this.namigrams.map((namigram, index) => (
                 <ion-item style={{ '--animation-timimg': index } as any} >
                   {/* <ion-label>{index}</ion-label> */}
-                  <ion-icon class={this.aesize} src={namigram} color={this.color} onClick={this.iconClicked}>
+                  <ion-icon class={this.aesize} src={namigram} color={this.color} aria-label={this.resolvedArialabel} onClick={this.iconClicked}>
                   </ion-icon>
                 </ion-item>
               ))}
@@ -426,7 +437,7 @@ export class AeIcon5 {
         </div>
       ]
     } else if (this.name) {
-      return (<ion-icon class={this.aesize} name={this.name} color={this.color} onClick={this.iconClicked}></ion-icon>)
+      return (<ion-icon class={this.aesize} name={this.name} color={this.color} aria-label={this.resolvedArialabel} onClick={this.iconClicked}></ion-icon>)
     } else {
       return (null)
     }

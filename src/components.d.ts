@@ -24,7 +24,7 @@ export namespace Components {
          */
         "aetype": string;
         /**
-          * Aaria label of the icon
+          * Accessible label for the icon, applied to the inner `<ion-icon>`'s `aria-label`. Falls back to `name` when not set (see `resolvedArialabel`) so consumers never have to pass it just to avoid an empty/undefined accessible name — set it explicitly to override.
          */
         "arialabel": string;
         /**
@@ -80,7 +80,7 @@ declare namespace LocalJSX {
          */
         "aetype"?: string;
         /**
-          * Aaria label of the icon
+          * Accessible label for the icon, applied to the inner `<ion-icon>`'s `aria-label`. Falls back to `name` when not set (see `resolvedArialabel`) so consumers never have to pass it just to avoid an empty/undefined accessible name — set it explicitly to override.
          */
         "arialabel"?: string;
         /**
