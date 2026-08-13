@@ -88,6 +88,17 @@ export class AeIcon5 {
   @Prop({ mutable: true }) color: string;
 
   /**
+   * `color` if the consumer set an Ionic theme name, else the actual CSS color the icon
+   * renders with (icons colored via `--ae-color`/`--color` instead of `color=` have no
+   * `color` prop set at all) — never `undefined`. Used by the demo's info panel.
+   */
+  get resolvedColor(): string {
+    if (this.color) return this.color
+    const icon = this.el.shadowRoot?.querySelector('ion-icon')
+    return icon ? getComputedStyle(icon).color : ''
+  }
+
+  /**
    * Name of the icon
    */
   @Prop({ mutable: true }) name: string;
@@ -307,7 +318,7 @@ export class AeIcon5 {
             this.aesize = 'ae' + currsizeminus
             //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
             document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
               ' <b>arialabel:</b>' + this.arialabel
 
             document.getElementById('containerPara').innerHTML =
@@ -322,7 +333,7 @@ export class AeIcon5 {
             this.aesize = 'ae' + currsizeplus
             //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
             document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
               ' <b>arialabel:</b>' + this.arialabel
 
             document.getElementById('containerPara').innerHTML =
@@ -351,7 +362,7 @@ export class AeIcon5 {
         if (document.getElementById('containerDetail')) {
           document.getElementById('containerDetail').innerHTML =
             '<b>name:</b>' + this.name +
-            ' <b>color:</b>' + this.color + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+            ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
             ' <b>arialabel:</b>' + this.resolvedArialabel
           //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
 
