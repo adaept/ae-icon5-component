@@ -223,17 +223,34 @@ ion-icon.ae1024 {
 
 /**
  * Themeable hover (replaces the old hardcoded red square ring).
- * Defaults: a circular ring in the icon's own color, no zoom, no fill.
+ * Defaults: a circular ring in the icon's own color, no zoom, no fill — EXCEPT
+ * when the icon has no color of its own (still the hardcoded `pink` --color
+ * fallback above), in which case the ring defaults to rebeccapurple instead of
+ * pink, so hover is visible/distinct rather than just a slightly-different pink
+ * on pink. `--ae-color`-set icons and Ionic `color="…"` theme icons both keep
+ * a ring that matches their own color, same as before.
  * Consumers override these CSS custom properties from light DOM — they pierce
  * the shadow boundary, so the hover is fully themeable without ::part:
  *   ae-icon5-component { --ae-hover-ring-color: var(--ion-color-primary); --ae-hover-scale: 1.5; }
  */
 :host {
-  --ae-hover-ring-color: currentColor; /* ring color  (was hardcoded red)   */
+  --ae-hover-ring-color: var(--ae-color, rebeccapurple); /* ring color (was hardcoded red, then currentColor) */
   --ae-hover-ring-width: 2px;          /* ring width                        */
   --ae-hover-radius: 50%;              /* shape: 50% = circle, 0 = square   */
   --ae-hover-scale: 1;                 /* effect: 1 = none, >1 zooms         */
   --ae-hover-bg: transparent;          /* fill (was rebeccapurple/contrast) */
+}
+
+/* Ionic THEME color (color="primary" … "dark") isn't visible through --ae-color
+   at all (see the Color model comment above `ion-icon`'s own rule) — ionicons
+   resolves it internally. Detect it via the `color` HTML attribute (present on
+   the host whenever it's set in markup — the `color` @Prop isn't `reflect:
+   true`, but that only matters for programmatic changes after first render,
+   not the initial markup attribute this selector matches) and defer back to
+   currentColor so the ring still matches it, instead of falling through to the
+   rebeccapurple default meant only for truly-uncolored icons. */
+:host([color]) {
+  --ae-hover-ring-color: currentColor;
 }
 
 ion-icon:hover {

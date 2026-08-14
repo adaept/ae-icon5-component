@@ -145,7 +145,55 @@ for live verification, never `npm publish` or a Firebase deploy.
 
 ---
 
-## 3. References
+## 3. Follow-up — default hover ring color: pink → rebeccapurple
+
+**Request:** "the hover in icons defaults to pink, change it to rebeccapurple." First
+misread as a request to change the component's global default color (`--color: pink` →
+`rebeccapurple`), which would've also changed every uncolored icon's **resting** fill, not
+just hover — asked, and corrected: the resting color should **stay pink**; only the hover
+ring for those pink icons should become rebeccapurple, while icons with a color of their own
+(`--ae-color` or an Ionic `color="…"` theme attribute) should keep a ring matching *that*
+color, same as before.
+
+**Fix** (`ae-icon5-component.css`): reverted `--color` back to `pink`. Changed
+`--ae-hover-ring-color`'s default from `currentColor` to `var(--ae-color, rebeccapurple)` —
+so an icon with `--ae-color` set gets a ring in that color, and one without gets rebeccapurple
+instead of currentColor (which would've resolved to the same pink as the fill, i.e.
+pink-on-pink). Added a `:host([color]) { --ae-hover-ring-color: currentColor; }` override for
+the **separate** Ionic-theme-color path (`color="success"` etc. isn't visible through
+`--ae-color` at all — ionicons resolves it internally — so without this exception a
+theme-colored icon would incorrectly fall through to the rebeccapurple default too).
+
+**Verified** via Puppeteer (real `mouse.move` to trigger `:hover`, not a synthetic class
+toggle) across all three cases, computed `box-shadow` color read directly off the shadow-DOM
+`<ion-icon>`:
+- default/no color (deep in the "Ionicons - alphabetic group list" grid, `bulb-outline`,
+  screenshotted): fill stays `rgb(255,192,203)` (pink), ring is `rgb(102,51,153)`
+  (rebeccapurple) — matches.
+- `style="--ae-color: red"`: fill and ring both `rgb(255,0,0)` — matches its own color.
+- `color="success"`: fill and ring both `rgb(16,220,96)` — theme color preserved, not
+  overridden by the new default.
+
+**False alarm, investigated and resolved:** user reported "the ring color is black," which
+turned out to be the `adaeptZone` row specifically — its icons inherit `--ae-color: #222`
+from the container (§2a's legibility fix), so per the rule above their ring correctly matches
+that near-black color. Confirmed with the user this is the **intended** behavior (not a bug);
+the alphabetic-list icons (the actual "pink icons" the request meant) were already correctly
+rebeccapurple, confirmed by a targeted screenshot once the mouse was aimed precisely at the
+shadow-DOM `<ion-icon>`'s own rendered rect rather than the outer custom element's (their
+bounding boxes can differ under `adaeptZone`'s absolute-positioned/transformed ancestors — the
+first hover attempt there silently missed the target and returned `box-shadow: none`, which is
+what actually prompted a second, more careful check). Final user follow-up ("it looked black,
+zoom in shows purple") was a rendering/visibility artifact of the 2px ring at low zoom, not a
+color bug — no further change needed.
+
+**README updated:** `## Coloring icons` `--ae-color` fallback default (stayed `pink`,
+corrected after the mid-course revert), `### Themeable hover`'s example snippet and a new
+"Ring color defaults" paragraph explaining the `--ae-color`/theme-color/default split above.
+
+---
+
+## 4. References
 
 - **Prior review:** `rvw/Code_review 2026-08-13.md` (CF table, CF-13 deploy-staleness detail).
 - **This task's origin:** `rvw/Code_review 2026-08-07.md` §2 (item N, "ae" brand-mark icon).
@@ -154,4 +202,5 @@ for live verification, never `npm publish` or a Firebase deploy.
   `adaept5tudio/docs/adaept5tudio-dev-plan.md` item **A17** (the adaept font, whose `at`/`dp`/`ae`
   cells this task verified against).
 - **This repo:** `docs/modernization-plan.md` §12 (roadmap entry + CF-14, the manual-resync
-  limitation), `README.md` (`decorative` prop, `adaeptZone` provenance note).
+  limitation), `README.md` (`decorative` prop, `adaeptZone` provenance note, §3's hover-ring
+  color model).

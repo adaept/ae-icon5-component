@@ -105,13 +105,18 @@ Hovering an icon draws a ring. It is fully configurable through CSS custom prope
 
 ```css
 ae-icon5-component {
-  --ae-hover-ring-color: currentColor; /* ring color  (default: the icon's color) */
+  --ae-hover-ring-color: var(--ae-color, rebeccapurple); /* ring color — see below */
   --ae-hover-ring-width: 2px;          /* ring thickness                          */
   --ae-hover-radius: 50%;              /* shape: 50% = circle, 0 = square         */
   --ae-hover-scale: 1;                 /* zoom on hover: 1 = none, e.g. 1.5        */
   --ae-hover-bg: transparent;          /* fill behind the icon on hover           */
 }
 ```
+
+**Ring color defaults:** an icon colored via `--ae-color` or an Ionic `color="…"` theme
+attribute gets a ring in that same color; an icon with no color of its own (still the
+`pink` default) gets a **rebeccapurple** ring instead of pink-on-pink, so hover stays
+visible/distinct without you having to set anything.
 
 Example — a thick blue square that zooms slightly on hover:
 
