@@ -1,3 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <path d="M255.906 2.842C116.147 2.842 2.842 115.91 2.842 255.375c0 22.482 3.892 43.878 9.417 64.625h104.49c-9.172-19.65-14.666-41.341-14.666-64.448 0-84.683 68.795-153.323 153.657-153.323 84.862 0 153.646 68.64 153.646 153.323 0 84.595-68.647 153.159-153.386 153.303v99.052c58.605 0 112.456-20.013 155.345-53.406v54.657h97.813l-.182-253.783c0-139.465-113.304-252.533-253.063-252.533z" fill="none" stroke="#000" stroke-width="5.685"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Vendored copy — canonical source: adaept5tudio/design-system/assets/at.svg (itself a
+  copy of design-system/ae-base-at.svg). Re-sync manually when that changes; no
+  cross-repo build link exists between the two repos.
+
+  ae-base-at — canonical "at" pair-glyph of the adaept ambigram mark family (new,
+  2026-08-14 companion to C1's ae-base-a.svg).
+
+  Provenance: this path already existed in two places with no shared source of truth —
+  ae-icon5-component's src/assets/aeicons/at.svg, and the adaept font's hand-built
+  adaept-canonical-351.json "at" glyph (both trace back to the same historical aezdb
+  import, verified numerically identical). design-system/ is now the one home; both
+  consumers now vendor/sync FROM there instead of keeping independent copies.
+
+  Construction (computed via a least-squares circle fit over the path's own flattened
+  curve points, not eyeballed — same method in spirit as C1's R=500/r=430):
+
+    Canvas / center     512 x 512, center C ~= (256, 256)
+    Outer ring radius   R ~= 252  (fit rides 250.8-252.9 across the outer arcs -- the
+                         same kind of "breathing" tolerance C1's R=500 has)
+    Inner ring radius   r ~= 153.5 (fit rides 153.2-153.7, a clean full circle -- this
+                         is the "counter" hole of the ring, alpha channel visually
+                         reading as the bowl of "a")
+    Band width           R - r ~= 98.5
+    "t" crossbar         a straight bridge cutting the ring at y=320, from the outer
+                         edge (x=12.26) to the inner edge (x=116.75) -- the horizontal
+                         stroke that reads as "t" when this mark is NOT rotated
+    "t" stem             a straight bridge at x=256 from the inner ring's bottom
+                         (y=408.86) down past the outer ring to y=507.91 -- the vertical
+                         descender of "t"
+    Closing corner        the ring's ends are squared off to the viewBox corner
+                         (~509.16, 509.16) rather than continuing the outer arc all the
+                         way around -- an intentional design detail (matches the
+                         original source), not a fitting artifact
+
+  Style: fill="none" stroke="currentColor" -- this sub-family (unlike C1's filled
+  ae-base-a.svg) is drawn as a stroked outline, matching the existing adaept font
+  convention. stroke-width unified to 5.685.
+
+  Rotating this whole mark 180deg about (256,256) reads as "ta" -- a natural ambigram,
+  generated (never hand-authored); see dp.svg for the other new canonical pair.
+-->
+<svg width="512" height="512" viewBox="0 0 512 512" version="1.1"
+     xmlns="http://www.w3.org/2000/svg">
+  <!-- construction layer (toggle display to inspect; not part of the mark) -->
+  <g id="construction" fill="none" stroke="#c832e0" opacity="0.35" display="none">
+    <circle cx="256" cy="256" r="252" stroke-width="2"/>
+    <circle cx="256" cy="256" r="153.5" stroke="#1060ff" stroke-width="1" stroke-dasharray="8 8"/>
+    <path d="M256 4 V508 M4 256 H508" stroke-width="1"/>
+  </g>
+
+  <path id="ae-base-at" fill="none" stroke="currentColor" stroke-width="5.685"
+    d="M255.906 2.842C116.147 2.842 2.842 115.91 2.842 255.375c0 22.482 3.892 43.878 9.417 64.625h104.49c-9.172-19.65-14.666-41.341-14.666-64.448 0-84.683 68.795-153.323 153.657-153.323 84.862 0 153.646 68.64 153.646 153.323 0 84.595-68.647 153.159-153.386 153.303v99.052c58.605 0 112.456-20.013 155.345-53.406v54.657h97.813l-.182-253.783c0-139.465-113.304-252.533-253.063-252.533z"/>
 </svg>

@@ -1,0 +1,63 @@
+/*
+ * Vendored copy — canonical source: adaept5tudio/design-system/tokens.css.
+ * Re-sync manually when that changes; no cross-repo build link exists between the
+ * two repos. Used by the adaeptZone demo row (index.html) if you want to swap the
+ * icons' inherited color for a specific brand token instead of pure currentColor.
+ *
+ * adaept design tokens (C2) — design tokens are the concept, CSS custom
+ * properties are the implementation. Naming follows the Ionic theme pattern
+ * (--ion-color-X / -rgb / -contrast / -shade / -tint), prefixed --ae-.
+ *
+ * Brand colors are canonical from design-system/archive/newlogo-recovered.svg
+ * (layer "colors"): Emerald Green #178061, Imperial Red #ed2939.
+ * Shade = base darkened ~12%; tint = base lightened ~10% (Ionic convention).
+ */
+
+:root {
+  /* ---- color primitives: Emerald Green (the "e") ---- */
+  --ae-color-emerald: #178061;
+  --ae-color-emerald-rgb: 23, 128, 97;
+  --ae-color-emerald-contrast: #ffffff;
+  --ae-color-emerald-shade: #147155;
+  --ae-color-emerald-tint: #2e8d71;
+
+  /* ---- color primitives: Imperial Red (the "a") ---- */
+  --ae-color-imperial: #ed2939;
+  --ae-color-imperial-rgb: 237, 41, 57;
+  --ae-color-imperial-contrast: #ffffff;
+  --ae-color-imperial-shade: #d12432;
+  --ae-color-imperial-tint: #ef3e4d;
+
+  /* ---- semantic roles ---- */
+  --ae-color-primary: var(--ae-color-emerald);
+  --ae-color-primary-rgb: var(--ae-color-emerald-rgb);
+  --ae-color-primary-contrast: var(--ae-color-emerald-contrast);
+  --ae-color-primary-shade: var(--ae-color-emerald-shade);
+  --ae-color-primary-tint: var(--ae-color-emerald-tint);
+
+  --ae-color-accent: var(--ae-color-imperial);
+  --ae-color-accent-rgb: var(--ae-color-imperial-rgb);
+  --ae-color-accent-contrast: var(--ae-color-imperial-contrast);
+  --ae-color-accent-shade: var(--ae-color-imperial-shade);
+  --ae-color-accent-tint: var(--ae-color-imperial-tint);
+
+  /* construction stroke (guides/overlays only — never in shipped marks) */
+  --ae-color-construction: #c832e0;
+
+  /* ---- logo geometry (the C1 construction, unitless on a 1024 canvas) ---- */
+  --ae-logo-canvas: 1024;
+  --ae-logo-center: 512;
+  --ae-logo-radius-outer: 500;     /* outline circle (the fixed C1 bug)   */
+  --ae-logo-radius-inner: 437.5;   /* swoosh inner radius at the rim end  */
+  --ae-logo-letter-band: 250;      /* letter guides at center ± 250       */
+
+  /* ---- motion (GSAP/Vivus work consumes these — dev plan A5) ---- */
+  --ae-anim-duration-fast: 200ms;
+  --ae-anim-duration: 400ms;
+  --ae-anim-duration-slow: 800ms;
+  --ae-anim-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---- ambigram glyph design (the /goal baseline, 2026-06-13) ---- */
+  --ae-glyph-cell: 512;     /* square monospace cell                         */
+  --ae-glyph-stroke: 20;    /* UNIFORM stroke width — monospace exactitude   */
+}

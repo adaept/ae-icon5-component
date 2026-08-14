@@ -83,6 +83,14 @@ export class AeIcon5 {
   }
 
   /**
+   * When true, the rendered `<ion-icon>` is marked `aria-hidden` and gets no
+   * `aria-label` — for icons that are part of a larger decorative group whose
+   * *container* carries the meaningful label (e.g. several icons spelling out one
+   * word), so a screen reader doesn't announce each fragment separately.
+   */
+  @Prop() decorative: boolean = false
+
+  /**
    * Color of the icon
    */
   @Prop({ mutable: true }) color: string;
@@ -434,7 +442,9 @@ export class AeIcon5 {
         ]
       )
     } else if (Boolean(this.src) && Boolean(this.adaept === 'adaept')) {
-      return (<ion-icon class={this.aesize} src={this.src} color={this.color} aria-label={this.resolvedArialabel} onClick={this.iconClicked}></ion-icon>)
+      return this.decorative
+        ? (<ion-icon class={this.aesize} src={this.src} color={this.color} aria-hidden="true" onClick={this.iconClicked}></ion-icon>)
+        : (<ion-icon class={this.aesize} src={this.src} color={this.color} aria-label={this.resolvedArialabel} onClick={this.iconClicked}></ion-icon>)
     } else if (this.adaept === 'namigram' || this.adaept === 'mydatapanel') {
       return [
         <div>

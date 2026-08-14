@@ -148,6 +148,16 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
   outside — makes stroke-based icons (e.g. `add`) render visibly thinner than the same icon
   rendered unwrapped. Fix: `--ionicon-stroke-width: var(--ae-stroke-width, 16px)`, same pattern as
   color. Full writeup: `rvw/Code_review 2026-08-12.md` CF-12.
+- **Item N ("ae" brand-mark icon, `rvw/Code_review 2026-08-07.md` §2) — done 2026-08-14.**
+  `adaeptZone`'s 5-icon row (`at`/`dp`/`ae`/`pd`/`ta`) now sources from
+  `adaept5tudio/design-system/` instead of independently-drawn local SVGs — including two *new*
+  design-system canonicals (`ae-base-at.svg`/`ae-base-dp.svg`) added as part of this task, since
+  `at`/`dp` had the same "duplicated with no shared source of truth" problem the "ae" mark did.
+  Full writeup: `rvw/Code_review 2026-08-14.md`. **Known limitation, not yet automated:** the
+  vendored copies in `src/assets/aeicons/` require a manual re-sync when the design-system source
+  changes — there's no build-time or CI link between the two repos. Worth automating (e.g. a
+  `check`-style guard comparing file hashes, mirroring `check.guide`'s pattern) if this drifts in
+  practice; not done now since it's a two-file, low-churn asset.
 
 ## 13. Sequenced execution
 

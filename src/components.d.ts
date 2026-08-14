@@ -32,6 +32,11 @@ export namespace Components {
          */
         "color": string;
         /**
+          * When true, the rendered `<ion-icon>` is marked `aria-hidden` and gets no `aria-label` — for icons that are part of a larger decorative group whose *container* carries the meaningful label (e.g. several icons spelling out one word), so a screen reader doesn't announce each fragment separately.
+          * @default false
+         */
+        "decorative": boolean;
+        /**
           * Name of the icon
          */
         "name": string;
@@ -88,6 +93,11 @@ declare namespace LocalJSX {
          */
         "color"?: string;
         /**
+          * When true, the rendered `<ion-icon>` is marked `aria-hidden` and gets no `aria-label` — for icons that are part of a larger decorative group whose *container* carries the meaningful label (e.g. several icons spelling out one word), so a screen reader doesn't announce each fragment separately.
+          * @default false
+         */
+        "decorative"?: boolean;
+        /**
           * Name of the icon
          */
         "name"?: string;
@@ -108,6 +118,7 @@ declare namespace LocalJSX {
         "aesize": string;
         "aetype": string;
         "arialabel": string;
+        "decorative": boolean;
         "color": string;
         "name": string;
         "src": string;

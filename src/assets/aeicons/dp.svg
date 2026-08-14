@@ -1,3 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <path d="M255.91 509.158c-139.758 0-253.068-113.072-253.068-252.537S116.152 4.084 255.911 4.084c58.642 0 112.522 20.007 155.434 53.418V2.842h97.813v250.94h-.182v2.84c0 139.464-113.31 252.536-253.07 252.536zm-.18-99.382c84.861 0 153.655-68.65 153.655-153.332 0-84.683-68.794-153.332-153.656-153.332-84.861 0-153.655 68.649-153.655 153.332 0 84.683 68.794 153.332 153.655 153.332z" fill="none" stroke="#000" stroke-width="5.684"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Vendored copy — canonical source: adaept5tudio/design-system/assets/dp.svg (itself a
+  copy of design-system/ae-base-dp.svg). Re-sync manually when that changes; no
+  cross-repo build link exists between the two repos.
+
+  ae-base-dp — canonical "dp" pair-glyph of the adaept ambigram mark family (new,
+  2026-08-14 companion to C1's ae-base-a.svg and ae-base-at.svg).
+
+  Provenance: same situation as at.svg -- this path already existed, unsynced, in
+  ae-icon5-component's own src/assets/aeicons/dp.svg and the adaept font's hand-built
+  adaept-canonical-351.json "dp" glyph (verified numerically identical, both from the
+  same historical aezdb import). design-system/ is now the one home.
+
+  Construction (least-squares circle fit over the path's own flattened curve points):
+
+    Canvas / center     512 x 512, center C ~= (256, 256)
+    Outer ring radius   R ~= 252.7  (fit rides 252.5-252.9 across the outer arcs)
+    Inner ring radius   r ~= 153.5  (fit rides 153.3-153.7, a clean full circle --
+                         same radius as at.svg's inner ring, by construction)
+    Band width           R - r ~= 99.2
+    "p" stem/hook        a straight bridge at x=411.35 from the outer ring's upper
+                         area (y=57.50) up past the top of the ring to y=2.84 -- the
+                         ascender that reads as "p" when this mark is NOT rotated
+    Closing corner        same squared-off-to-the-viewBox-corner closing detour as
+                         at.svg (~509.16 region), not a fitting artifact
+
+  Style: fill="none" stroke="currentColor", stroke-width unified to 5.685 (same
+  512-canvas stroked-outline convention as the rest of the adaept font family, not
+  C1's filled convention).
+
+  Rotating this whole mark 180deg about (256,256) reads as "pd" -- a natural ambigram,
+  generated (never hand-authored).
+-->
+<svg width="512" height="512" viewBox="0 0 512 512" version="1.1"
+     xmlns="http://www.w3.org/2000/svg">
+  <!-- construction layer (toggle display to inspect; not part of the mark) -->
+  <g id="construction" fill="none" stroke="#c832e0" opacity="0.35" display="none">
+    <circle cx="256" cy="256" r="252.7" stroke-width="2"/>
+    <circle cx="256" cy="256" r="153.5" stroke="#1060ff" stroke-width="1" stroke-dasharray="8 8"/>
+    <path d="M256 4 V508 M4 256 H508" stroke-width="1"/>
+  </g>
+
+  <path id="ae-base-dp" fill="none" stroke="currentColor" stroke-width="5.685"
+    d="M255.91 509.158c-139.758 0-253.068-113.072-253.068-252.537S116.152 4.084 255.911 4.084c58.642 0 112.522 20.007 155.434 53.418V2.842h97.813v250.94h-.182v2.84c0 139.464-113.31 252.536-253.07 252.536zm-.18-99.382c84.861 0 153.655-68.65 153.655-153.332 0-84.683-68.794-153.332-153.656-153.332-84.861 0-153.655 68.649-153.655 153.332 0 84.683 68.794 153.332 153.655 153.332z"/>
 </svg>
