@@ -193,14 +193,76 @@ corrected after the mid-course revert), `### Themeable hover`'s example snippet 
 
 ---
 
-## 4. References
+## 4. `ionicons` 8.0.13 → 8.1.0 + demo parity with the full icon set (GitHub issue #19)
+
+**Request:** [issue #19](https://github.com/adaept/ae-icon5-component/issues/19) — "The latest
+ionicons is 8.1.0 and not version 5" — bump the dependency and "update so all new icons are
+available and change page from 5 to 8."
+
+**Investigation:** `package.json`'s `ionicons` dep was already on `^8.0.13` (not literally "5" —
+that was stale from `src/index.html`'s own heading text, `<h1>Ionicons 5 - theme and named
+colors</h1>`, left over from the pre-modernization era). The real gap was the demo's exhaustive
+**"Ionicons - alphabetic group list"** and **"Ionicons - alphabetic logos"** sections
+(`src/index.html`): hand-authored, one `<ae-icon5-component name="…">` per line, and never
+updated as ionicons grew — a diff of the installed package's 1357 SVG names (`node_modules/
+ionicons/dist/svg`) against every `name="…"` used in those two sections found **165 missing**
+icons (new logos — Discord, Figma, TikTok, X, Threads, Vercel, etc. — plus newer glyphs like
+`accessibility`, `bag-*`, `balloon`, `sparkles`, `storefront`…), none of it from a bad version
+pin, all of it from the list simply predating ionicons 6/7/8's additions.
+
+**Also found while diffing (pre-existing bugs, not scope creep — fixed as part of the same
+mechanical pass):** `mic-off-circle-sharp`, `phone-landscape-sharp`, and `phone-portrait-sharp`
+were each a **copy-paste duplicate of the preceding line** (e.g. `phone-landscape` listed twice,
+`phone-landscape-sharp` never); `cloud-upload-outline`/`cloud-upload-sharp` were missing from the
+group list entirely (only the bare `cloud-upload` was there). These silently showed the wrong
+icon (or none) for four names in the "alphabetic group list" grid.
+
+**Fix:**
+- `package.json` / `package-lock.json`: `ionicons` `^8.0.13` → `^8.1.0` (`npm install
+  ionicons@8.1.0`). Confirmed the two versions ship an **identical 1357-name icon set** — no SVG
+  additions/removals between them, so this is a pure version-currency bump, not a re-audit of
+  which icons exist.
+- `docs/THIRD-PARTY-GUIDE.md`: `ionicons` toolchain pin (both the pins block and the scaffold
+  snippet) updated to `^8.1.0` to match, restoring `npm run check.guide` to green for this pin —
+  it separately flagged a pre-existing, unrelated `puppeteer` pin drift (`^24.1.0` guide vs
+  `^25.6.0` installed) that predates this session (confirmed via `git stash`); left for a future
+  CF-10 pass rather than folded in here.
+- `src/index.html`: `<h1>Ionicons 5 - theme and named colors</h1>` → `<h1>Ionicons 8 - theme and
+  named colors</h1>` (that curated color-demo section itself is intentionally non-exhaustive —
+  content untouched, heading only). The **group-list and logos sections were fully regenerated**
+  from the installed ionicons package rather than hand-patched: reverse-engineered the existing
+  curatorial ordering (verified against ~1120 existing entries before touching anything) — sort
+  by root name, plain/`-outline`/`-sharp` before the `-circle` variant of the same root, e.g.
+  `add`, `add-outline`, `add-sharp`, `add-circle`, `add-circle-outline`, `add-circle-sharp` — and
+  regenerated both sections from all 1357 installed names against that rule (logos section is
+  simple alphabetical, confirmed separately). This fixed the four duplicate/missing-variant bugs
+  above for free and is a **mechanical, re-derivable transformation**, not a manual edit — 18 of
+  ~1120 existing entries shifted by a few positions where the reconstructed rule and the original
+  hand-authored order disagreed at the margins (e.g. `bar-chart` vs `barbell`); inconsequential,
+  still alphabetically sensible either way.
+
+**Verified:** `npm run check.icons` (component's own curated 34-icon manifest still valid against
+8.1.0), `npm run build`, `npm run test.unit` (3/3 pass), `npm run start` + a live diff of the
+served page's `name="…"` attributes against the installed SVG set (**zero missing**), and a
+Puppeteer screenshot pass confirming real SVG glyphs render (not blank/missing-icon boxes) with
+no console errors. `npm run lint`'s pre-existing `no-undef` error in
+`src/assets/test-ids.browser.js` and two `any`-type warnings in the component are unrelated to
+this change (present before it; confirmed via `git stash`).
+
+**Not committed as part of a release** — no version bump; changes are `package.json`/
+`package-lock.json`, `docs/THIRD-PARTY-GUIDE.md`, `src/index.html` only.
+
+---
+
+## 5. References
 
 - **Prior review:** `rvw/Code_review 2026-08-13.md` (CF table, CF-13 deploy-staleness detail).
-- **This task's origin:** `rvw/Code_review 2026-08-07.md` §2 (item N, "ae" brand-mark icon).
+- **This task's origin:** `rvw/Code_review 2026-08-07.md` §2 (item N, "ae" brand-mark icon);
+  [GitHub issue #19](https://github.com/adaept/ae-icon5-component/issues/19) (§4's origin).
 - **Cross-repo:** `adaept5tudio/rvw/Code_review 2026-08-14.md` (design-system + font side),
   `adaept5tudio/design-system/README.md` (the two new canonical files' full documentation),
   `adaept5tudio/docs/adaept5tudio-dev-plan.md` item **A17** (the adaept font, whose `at`/`dp`/`ae`
   cells this task verified against).
 - **This repo:** `docs/modernization-plan.md` §12 (roadmap entry + CF-14, the manual-resync
   limitation), `README.md` (`decorative` prop, `adaeptZone` provenance note, §3's hover-ring
-  color model).
+  color model), `docs/THIRD-PARTY-GUIDE.md` (§4's ionicons pin update).
