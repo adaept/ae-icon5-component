@@ -326,7 +326,7 @@ export class AeIcon5 {
             this.aesize = 'ae' + currsizeminus
             //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
             document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
               ' <b>arialabel:</b>' + this.arialabel
 
             document.getElementById('containerPara').innerHTML =
@@ -341,7 +341,7 @@ export class AeIcon5 {
             this.aesize = 'ae' + currsizeplus
             //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
             document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
               ' <b>arialabel:</b>' + this.arialabel
 
             document.getElementById('containerPara').innerHTML =
@@ -370,7 +370,7 @@ export class AeIcon5 {
         if (document.getElementById('containerDetail')) {
           document.getElementById('containerDetail').innerHTML =
             '<b>name:</b>' + this.name +
-            ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + this.aetype +
+            ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
             ' <b>arialabel:</b>' + this.resolvedArialabel
           //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
 

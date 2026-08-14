@@ -254,11 +254,44 @@ this change (present before it; confirmed via `git stash`).
 
 ---
 
-## 5. References
+## 5. Click-info panel showed literal `aetype:undefined` (GitHub issue #21)
+
+**Request:** [issue #21](https://github.com/adaept/ae-icon5-component/issues/21) — "aetype is
+undefined … happens when click on icon and showing details at the top."
+
+**Root cause:** `iconClicked()` (`ae-icon5-component.tsx`) builds the demo's `#containerDetail`
+info-panel text by string-concatenating `this.aetype` directly, with no fallback — unlike
+`color`/`arialabel`, which already go through `resolvedColor`/`resolvedArialabel` getters for
+exactly this reason. `aetype` is unset on effectively every icon in the demo (only the 3
+SIZE/RESET row icons, ids `1`/`2`/`3`, set `aetype="round"`); clicking any other icon — the
+entire "alphabetic group list"/"alphabetic logos" sections included — left `this.aetype` as JS
+`undefined`, which the concatenation prints literally: `aetype:undefined`.
+
+**Fix:** guarded the three `iconClicked()` call sites with `(this.aetype || '')` instead of
+`this.aetype`. Considered a `resolvedAetype` getter (matching the `resolvedColor`/
+`resolvedArialabel` pattern) but rejected it: unlike those two, `aetype` isn't consumed anywhere
+in render (still WIP per its own doc comment) — its only three call sites are this same
+string-concat pattern, so a getter would be a one-line body with no second caller to justify the
+extra API surface. Inline guard is the smaller, correctly-scoped diff; revisit if `aetype` grows
+real render logic later.
+
+**Verified:** `npm run build`, `npm run test.unit` (3/3 pass), and a live Puppeteer click test —
+clicking `logo-github` (no `aetype` set) now shows `aetype:` with nothing after it (no
+`"undefined"` substring anywhere in the panel text); clicking id `"1"` (`aetype="round"`) still
+correctly shows `aetype:round`.
+
+**Not folded in:** CF-8 (`iconClicked` also emits an empty `color=` into the `containerPara`
+markup preview) is the same category of demo cosmetic bug but a different code path — left open,
+still tracked in §1's carry-forward table.
+
+---
+
+## 6. References
 
 - **Prior review:** `rvw/Code_review 2026-08-13.md` (CF table, CF-13 deploy-staleness detail).
 - **This task's origin:** `rvw/Code_review 2026-08-07.md` §2 (item N, "ae" brand-mark icon);
-  [GitHub issue #19](https://github.com/adaept/ae-icon5-component/issues/19) (§4's origin).
+  [GitHub issue #19](https://github.com/adaept/ae-icon5-component/issues/19) (§4's origin);
+  [GitHub issue #21](https://github.com/adaept/ae-icon5-component/issues/21) (§5's origin).
 - **Cross-repo:** `adaept5tudio/rvw/Code_review 2026-08-14.md` (design-system + font side),
   `adaept5tudio/design-system/README.md` (the two new canonical files' full documentation),
   `adaept5tudio/docs/adaept5tudio-dev-plan.md` item **A17** (the adaept font, whose `at`/`dp`/`ae`
