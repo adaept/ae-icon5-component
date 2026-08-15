@@ -193,7 +193,39 @@ pushing.
 
 ---
 
-## 6. References
+## 6. Octocat icon top-aligned with the logo (GitHub issue #28)
+
+**Request:** [issue #28](https://github.com/adaept/ae-icon5-component/issues/28) — "the top of
+the Octocat icon should align with the top of the logo" (no body).
+
+**Investigation:** `#fixedGithub`'s hardcoded `top: 30px` (`aestyles.css`) sat 12px below the "ae"
+logo icon's actual top — measured via `getBoundingClientRect()` on both icons' shadow-DOM
+`ion-icon` elements (logo: 18px; octocat: 30px), not eyeballed.
+
+**Fix (with two false starts, both reverted before landing):**
+- First pass: moved `#fixedGithub` to `top: 18px` (matching the logo) and shifted `#circleGithub`
+  — the pink circle behind the octocat glyph — by the same 12px, `32px` → `20px`, preserving its
+  original 2px inset from the icon's own top (that inset centers the circle on the glyph,
+  compensating for the icon's internal padding within its 32px box).
+- User asked to A/B test `#circleGithub` at the *same* top as the icon (no 2px inset), to compare
+  visually — set to `18px` temporarily.
+- Misread the follow-up ("move the logo up 2px to match the pink circle") as "shift the logo's
+  own position" and added `margin-top: -2px` to the logo's `<a>` — user corrected: the octocat
+  icon's top should be level with the logo (not offset), and the pink circle's 2px inset needed
+  to stay (it's what centers the circle on the icon, not something to remove). Reverted the
+  logo's `margin-top` entirely and set `#circleGithub` back to `top: 20px`.
+- **Final state:** `#fixedGithub` (octocat icon) `top: 18px` = logo's `top: 18px` (level, per the
+  request); `#circleGithub` (pink circle) `top: 20px` (2px inset from the icon, preserved).
+
+**Verified:** `npm run build`, `npm run test.unit` (3/3 pass), `npm run lint` (same 3
+pre-existing, unrelated issues), and a live Puppeteer measurement of the final state —
+`ghTop: 18`, `logoTop: 18`, `circleTop: 20` — plus a screenshot.
+
+**Not committed as part of a release** — no version bump.
+
+---
+
+## 7. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
@@ -202,8 +234,9 @@ pushing.
   (§3's origin), [GitHub issue #24](https://github.com/adaept/ae-icon5-component/issues/24)
   (§4's origin), [GitHub issue #26](https://github.com/adaept/ae-icon5-component/issues/26)
   (§5's origin; that section also spun off
-  [issue #27](https://github.com/adaept/ae-icon5-component/issues/27)).
+  [issue #27](https://github.com/adaept/ae-icon5-component/issues/27)), [GitHub issue
+  #28](https://github.com/adaept/ae-icon5-component/issues/28) (§6's origin).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
   new em-scaling note; §5's source-link doc), `ae-icon5-component.css` (`:host` hover-ring custom
   properties, §4's `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub`
-  stacking, `body` padding-top — §3), `scripts/gen-icon-line-map.mjs` (§5).
+  stacking and positioning — §3, §6), `scripts/gen-icon-line-map.mjs` (§5).

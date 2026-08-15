@@ -49,7 +49,8 @@ div.container {
 
 #fixedGithub {
   position: fixed;
-  top: 30px;
+  top: 18px; /* aligned with the "ae" logo icon's own top (issue #28), not eyeballed —
+                measured via getBoundingClientRect() against the logo's shadow-DOM ion-icon */
   left: 200px;
   width: 32px;
   height: 32px;
@@ -58,7 +59,7 @@ div.container {
 
 #circleGithub {
   position: fixed;
-  top: 32px;
+  top: 20px; /* keeps its original 2px inset from #fixedGithub's own top, so it stays centered on the icon */
   left: 202px;
   width: 28px;
   height: 29px;
