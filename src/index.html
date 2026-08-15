@@ -56,7 +56,12 @@
     </div>
   </a>
 
-  <div>
+  <!-- Fixed header (issue #23): everything here used to scroll away with the page body,
+       leaving only the GitHub icon (#fixedGithub, already position:fixed) visible. Pinning
+       this whole block to the viewport top keeps the click-info panel visible no matter how
+       far the icon galleries below are scrolled. body's padding-top (aestyles.css) reserves
+       the space this no-longer-takes-up-in-flow block would otherwise occupy. -->
+  <div id="aeHeader">
     <ion-row>
       <br />
       <div>
@@ -77,18 +82,17 @@
     <!-- version triple (ionicons/Stencil/component) — populated from the build stamp -->
     <div id="aeVersionTriple" title="ionicons / Stencil / component"></div>
     <script>aeSetTestId(document.getElementById('aeVersionTriple'), AE_TEST_IDS.buildStamp);</script>
-  </div>
 
-  <ion-row>
-    <div id="containerPara">
-      <ae-icon5-component style="--ae-color: mediumaquamarine" aesize="ae32" name="information-circle-outline">
-      </ae-icon5-component>
-    </div>
-    <div id="containerDetail">
-      Click an icon and information is shown here
-    </div>
-  </ion-row>
-  <hr>
+    <ion-row>
+      <div id="containerPara">
+        <ae-icon5-component style="--ae-color: mediumaquamarine" aesize="ae32" name="information-circle-outline">
+        </ae-icon5-component>
+      </div>
+      <div id="containerDetail">
+        Click an icon and information is shown here
+      </div>
+    </ion-row>
+    <hr>
   </div>
 
   <div class="aeicon5-scroll">

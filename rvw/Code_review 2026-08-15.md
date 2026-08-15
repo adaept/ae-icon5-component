@@ -65,11 +65,60 @@ across all seven "Stroke Width Sample" sizes — computed `box-shadow` inset wid
 
 ---
 
-## 3. References
+## 3. Click-info panel scrolled out of sight (GitHub issue #23)
+
+**Request:** [issue #23](https://github.com/adaept/ae-icon5-component/issues/23) — "On scrolling
+down the Octocat icon with GitHub link remains visible but the information that is displayed
+when the icon is clicked will scroll out of sight. It should remain visible."
+
+**Root cause:** `#fixedGithub`/`#circleGithub` (the octocat link) were already `position: fixed`
+(`aestyles.css`), so they stayed pinned to the viewport. Nothing else in the header — the ae
+logo/™, the version-triple build stamp, and critically `#containerPara`/`#containerDetail` (the
+click-info panel) — had any fixed/sticky positioning, so all of it scrolled away with the rest of
+the page inside `div.aeicon5-scroll`'s (and `body`'s own, since both share the same `height:
+800px; overflow: scroll` rule) scroll box.
+
+**Fix:**
+- `src/index.html`: wrapped the ae-logo/™ block, the version-triple stamp, and the click-info
+  `<ion-row>` in a new `<div id="aeHeader">`. Folded in a pre-existing stray unmatched `</div>`
+  found while doing this (harmless — browsers silently no-op an orphan closing tag — but it's now
+  the wrapper's real closing tag instead of dangling).
+- `aestyles.css`: `#aeHeader { position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  background-color: ivory; }`, plus `body { padding-top: 152px; }` to reserve the flow-space
+  `#aeHeader` no longer occupies (152px measured from the element's actual rendered height via a
+  live Puppeteer check, not guessed, so `div.aeicon5-scroll`'s content doesn't start out hidden
+  underneath the new fixed header).
+- **Regression caught before landing:** the new `#aeHeader`'s opaque background painted over the
+  octocat icon (both fixed-position; `#aeHeader`'s explicit `z-index: 50` outranked
+  `#fixedGithub`'s unset z-index). First fix attempt added `z-index: 60` to *both*
+  `#fixedGithub` and `#circleGithub`, which fixed the header-vs-github stacking but broke the
+  *octocat-glyph-vs-pink-circle* stacking within `#fixedGithub` itself (equal z-index positioned
+  siblings paint in DOM order, and `#circleGithub` comes after the icon — its explicit z-index
+  now let its background paint over the icon glyph, showing a blank pink circle). Fixed by
+  putting `z-index: 60` on `#fixedGithub` **only** — since that also has `position: fixed`, it
+  establishes its own stacking context, so its `#circleGithub` child's z-index resolves relative
+  to *that* context (unchanged relative order vs. the icon) while the whole pair still lifts
+  above `#aeHeader` as one unit.
+
+**Verified:** `npm run build`, `npm run test.unit` (3/3 pass), `npm run lint` (same 3
+pre-existing, unrelated issues as prior sessions), and a live Puppeteer sequence — clicked an
+icon (populating `#containerDetail` with real data), scrolled both `div.aeicon5-scroll` and the
+page 3000px down, confirmed `#aeHeader`'s top and the octocat icon's top both stayed at 0/30px
+(unchanged from the unscrolled state) and `#containerDetail` still showed the clicked icon's
+info — plus a direct `elementFromPoint` check at the octocat's coordinates resolving to the
+`<ae-icon5-component>` (not `#circleGithub`'s flat pink background), confirming the stacking fix.
+
+**Not committed as part of a release** — no version bump.
+
+---
+
+## 4. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
-- **This task's origin:** [GitHub issue #22](https://github.com/adaept/ae-icon5-component/issues/22)
-  (§2's origin).
+- **This session's origin:** [GitHub issue #22](https://github.com/adaept/ae-icon5-component/issues/22)
+  (§2's origin), [GitHub issue #23](https://github.com/adaept/ae-icon5-component/issues/23)
+  (§3's origin).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
-  new em-scaling note), `ae-icon5-component.css` (`:host` hover-ring custom properties).
+  new em-scaling note), `ae-icon5-component.css` (`:host` hover-ring custom properties),
+  `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub` stacking, `body` padding-top — §3).
