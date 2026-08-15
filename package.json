@@ -20,10 +20,11 @@
   ],
   "scripts": {
     "gen.stamp": "node scripts/gen-build-stamp.mjs",
-    "prebuild": "node scripts/gen-build-stamp.mjs",
+    "gen.iconlinemap": "node scripts/gen-icon-line-map.mjs",
+    "prebuild": "node scripts/gen-build-stamp.mjs && node scripts/gen-icon-line-map.mjs",
     "build": "stencil build",
     "now-build": "stencil build",
-    "prestart": "node scripts/gen-build-stamp.mjs",
+    "prestart": "node scripts/gen-build-stamp.mjs && node scripts/gen-icon-line-map.mjs",
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",

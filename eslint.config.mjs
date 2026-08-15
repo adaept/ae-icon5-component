@@ -7,7 +7,10 @@ import globals from 'globals'
 export default tseslint.config(
   {
     // Build outputs and generated files are not linted.
-    ignores: ['dist/', 'www/', 'loader/', 'src/components.d.ts', 'src/assets/build-stamp.js']
+    ignores: [
+      'dist/', 'www/', 'loader/', 'src/components.d.ts',
+      'src/assets/build-stamp.js', 'src/assets/icon-line-map.js'
+    ]
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

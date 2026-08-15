@@ -139,15 +139,71 @@ arialabel:ae-refresh-circle`, matching the `-`/`+` icons' behavior.
 
 ---
 
-## 5. References
+## 5. Click-info panel: "jump to source" link (GitHub issue #26)
+
+**Request:** [issue #26](https://github.com/adaept/ae-icon5-component/issues/26) — "show the line
+numbers for first occurrence of icon info with click icon to goto the code example… for
+developers to quickly see the first code implementation example of any click info feature."
+
+**Fix:**
+- New `scripts/gen-icon-line-map.mjs` — build-time script, same convention as
+  `gen-build-stamp.mjs` (demo-only, gitignored output, wired into `prebuild`/`prestart`). Scans
+  `src/index.html`, records the **first** line number of every icon `name`'s first occurrence
+  (verified beforehand that every `name="…"` in the file, apart from three unrelated `<meta>`
+  tags in `<head>`, is on a line that also contains the literal text `ae-icon5-component`, so a
+  same-line substring check is enough — no HTML parser needed), writes
+  `src/assets/icon-line-map.js` (`window.AE_ICON_LINE_MAP`).
+- `ae-icon5-component.tsx`: the click-info panel now appends a **source** link —
+  `github.com/adaept/ae-icon5-component/blob/master/src/index.html#L<line>` — when the clicked
+  icon's `name` is in the map. Icons rendered via `src` (no `name`, e.g. `adaeptZone`) correctly
+  omit the link rather than showing a broken one.
+- **Consolidated `iconClicked()`'s four copy-pasted info-panel blocks into one
+  `renderInfoPanel()` method** while touching all four to add this feature — directly motivated
+  by #21 and #24 both being exactly this copy-paste going stale in one of the four spots; one
+  method removes the recurring failure mode instead of adding a fifth near-duplicate.
+- `eslint.config.mjs` / `.gitignore`: excluded the new generated file, mirroring
+  `build-stamp.js`'s existing treatment (same `window`-global lint noise, same "regenerated every
+  build" reasoning).
+- `README.md`: documented the new link and generator script.
+
+**Verified:** `npm run build`, `npm run test.unit` (3/3 pass), `npm run lint` (same 3 pre-existing
+issues), `npm run check.icons`, and live Puppeteer checks — clicking `add` linked to
+`index.html:467` (confirmed against the file directly), RESET linked to `index.html:141`
+(its own `name="refresh-circle"` tag), and a `src`-based icon correctly showed no source link.
+
+**Found but out of scope, filed separately:** `src`-based icons show a literal `name:undefined`
+in the panel (same string-concat-with-no-fallback category as #21's `aetype:undefined`, and the
+`color=` case CF-8 already tracks) — filed as
+[issue #27](https://github.com/adaept/ae-icon5-component/issues/27) rather than folded in here.
+
+**Post-verification catch — the link pointed at the wrong line until this was pushed:** the demo
+computes line numbers against the **local** `src/index.html` (155 for `tennisball-outline`,
+after this session's own edits shifted everything below the new `<script>` tag down by 5 lines),
+but the link is hardcoded to `blob/master/…` — the already-**pushed** `master`, which still had
+the pre-#26 file (`tennisball-outline` at line 150) until this commit. Reported by the user
+testing against the live dev server before the push; confirmed via `git show
+origin/master:src/index.html`. Not a logic bug in the generator — an inherent gap between
+"what the local demo just computed" and "what's live on GitHub" whenever `src/index.html` has
+unpushed changes. No code fix for this (there isn't one that doesn't defeat the point of linking
+at the canonical GitHub source); resolved for this specific case by pushing promptly. Worth
+keeping in mind for any future `src/index.html`-editing session between generating the map and
+pushing.
+
+**Not committed as part of a release** — no version bump.
+
+---
+
+## 6. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
 - **This session's origin:** [GitHub issue #22](https://github.com/adaept/ae-icon5-component/issues/22)
   (§2's origin), [GitHub issue #23](https://github.com/adaept/ae-icon5-component/issues/23)
   (§3's origin), [GitHub issue #24](https://github.com/adaept/ae-icon5-component/issues/24)
-  (§4's origin).
+  (§4's origin), [GitHub issue #26](https://github.com/adaept/ae-icon5-component/issues/26)
+  (§5's origin; that section also spun off
+  [issue #27](https://github.com/adaept/ae-icon5-component/issues/27)).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
-  new em-scaling note), `ae-icon5-component.css` (`:host` hover-ring custom properties, §4's
-  `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub` stacking, `body`
-  padding-top — §3).
+  new em-scaling note; §5's source-link doc), `ae-icon5-component.css` (`:host` hover-ring custom
+  properties, §4's `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub`
+  stacking, `body` padding-top — §3), `scripts/gen-icon-line-map.mjs` (§5).

@@ -314,6 +314,39 @@ export class AeIcon5 {
     //console.log(currsizeplus);
   }
 
+  /**
+   * Fills the demo's #containerDetail/#containerPara click-info panel for the clicked icon.
+   * Pulled out of iconClicked's per-case bodies (issue #24 was this exact block missing from
+   * one case; issue #26 needs it extended in all of them) so there's one place to keep in
+   * sync instead of N copy-pasted blocks.
+   */
+  private renderInfoPanel(arialabel: string) {
+    const detailEl = document.getElementById('containerDetail')
+    const paraEl = document.getElementById('containerPara')
+    if (!detailEl || !paraEl) return
+
+    // Demo-only dev aid (issue #26): link to this icon's first code example in
+    // src/index.html, via a build-time name -> line-number map (see
+    // scripts/gen-icon-line-map.mjs). Undefined for icons rendered via `src` instead of
+    // `name` (e.g. the ae logo), and gracefully absent if the map script hasn't loaded.
+    const lineMap = (window as unknown as { AE_ICON_LINE_MAP?: Record<string, number> }).AE_ICON_LINE_MAP
+    const line = this.name ? lineMap?.[this.name] : undefined
+    const sourceLink = line
+      ? ' <b>source:</b> <a href="https://github.com/adaept/ae-icon5-component/blob/master/src/index.html#L' + line +
+        '" target="_blank" rel="noopener noreferrer">index.html:' + line + '</a>'
+      : ''
+
+    detailEl.innerHTML = '<b>name:</b>' + this.name +
+      ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
+      ' <b>arialabel:</b>' + arialabel + sourceLink
+
+    paraEl.innerHTML =
+      '<ae-icon5-component aesize="ae32" ' +
+      ' name=' + this.name +
+      ' color=' + this.color +
+      ' arialabel=' + arialabel + '>'
+  }
+
   iconClicked(evt) {
     console.log('iconClicked evt = ' + evt.currentTarget)
     console.log('iconClicked this.arialabel = ' + this.arialabel)
@@ -324,31 +357,13 @@ export class AeIcon5 {
           case 'ae-remove-circle': {
             this.getIconSizeMinus()
             this.aesize = 'ae' + currsizeminus
-            //console.log('ae-remove-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-            document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
-              ' <b>arialabel:</b>' + this.arialabel
-
-            document.getElementById('containerPara').innerHTML =
-              '<ae-icon5-component aesize="ae32" ' +
-              ' name=' + this.name +
-              ' color=' + this.color +
-              ' arialabel=' + this.arialabel + '>'
+            this.renderInfoPanel(this.arialabel)
             break
           }
           case 'ae-add-circle': {
             this.getIconSizePlus()
             this.aesize = 'ae' + currsizeplus
-            //console.log('ae-add-circle: ' + this.arialabel + ' ' + this.aesize + ' ' + this.aetype);
-            document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
-              ' <b>arialabel:</b>' + this.arialabel
-
-            document.getElementById('containerPara').innerHTML =
-              '<ae-icon5-component aesize="ae32" ' +
-              ' name=' + this.name +
-              ' color=' + this.color +
-              ' arialabel=' + this.arialabel + '>'
+            this.renderInfoPanel(this.arialabel)
             break
           }
           case 'ae-refresh-circle': {
@@ -359,16 +374,7 @@ export class AeIcon5 {
             const addIcon = document.getElementById('2') as HTMLAeIcon5ComponentElement
             if (removeIcon) removeIcon.aesize = 'ae' + initsize
             if (addIcon) addIcon.aesize = 'ae' + initsize
-
-            document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
-              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
-              ' <b>arialabel:</b>' + this.arialabel
-
-            document.getElementById('containerPara').innerHTML =
-              '<ae-icon5-component aesize="ae32" ' +
-              ' name=' + this.name +
-              ' color=' + this.color +
-              ' arialabel=' + this.arialabel + '>'
+            this.renderInfoPanel(this.arialabel)
             break
           }
           default: {
@@ -377,19 +383,7 @@ export class AeIcon5 {
           }
         }
       } else {
-        if (document.getElementById('containerDetail')) {
-          document.getElementById('containerDetail').innerHTML =
-            '<b>name:</b>' + this.name +
-            ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
-            ' <b>arialabel:</b>' + this.resolvedArialabel
-          //console.log('Z ' + document.getElementById("containerDetail").innerHTML);
-
-          document.getElementById('containerPara').innerHTML =
-            '<ae-icon5-component aesize="ae32" ' +
-            ' name=' + this.name +
-            ' color=' + this.color +
-            ' arialabel=' + this.resolvedArialabel + '>'
-        }
+        this.renderInfoPanel(this.resolvedArialabel)
       }
     }
   }

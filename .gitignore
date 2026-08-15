@@ -34,3 +34,7 @@ _claude_backup/
 
 # generated demo build stamp (scripts/gen-build-stamp.mjs, regenerated each build)
 src/assets/build-stamp.js
+
+# generated demo icon name -> src/index.html line-number map (scripts/gen-icon-line-map.mjs,
+# regenerated each build)
+src/assets/icon-line-map.js
