@@ -112,13 +112,42 @@ info — plus a direct `elementFromPoint` check at the octocat's coordinates res
 
 ---
 
-## 4. References
+## 4. RESET button didn't display info (GitHub issue #24)
+
+**Request:** [issue #24](https://github.com/adaept/ae-icon5-component/issues/24) — "the reset
+button does not display info when clicked" (no body).
+
+**Root cause:** `iconClicked()`'s switch on `this.arialabel` has three cases for the SIZE row's
+three icons (`id="1"`/`"2"`/`"3"`, `-`/`+`/RESET). `ae-remove-circle` and `ae-add-circle` both
+update `#containerDetail`/`#containerPara` with the clicked icon's info (same two-statement
+block, copy-pasted between them — the file's existing convention, not something this fix
+changed). `ae-refresh-circle` (RESET) only reset the SIZE row's icon sizes back to default and
+`break`s — the copy-paste never happened for that third case, so clicking RESET silently did
+nothing to the info panel.
+
+**Fix:** added the same two-statement `#containerDetail`/`#containerPara` update block to the
+`ae-refresh-circle` case, after its existing size-reset logic — matching the other two cases'
+exact pattern rather than extracting a shared helper, consistent with how the surrounding code is
+already written.
+
+**Verified:** `npm run build`, `npm run test.unit` (3/3 pass), `npm run lint` (same 3
+pre-existing, unrelated issues), and a live Puppeteer click on the RESET icon (`id="3"`) —
+`#containerDetail` now reads `name:refresh-circle color:danger aesize:ae48 aetype:round
+arialabel:ae-refresh-circle`, matching the `-`/`+` icons' behavior.
+
+**Not committed as part of a release** — no version bump.
+
+---
+
+## 5. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
 - **This session's origin:** [GitHub issue #22](https://github.com/adaept/ae-icon5-component/issues/22)
   (§2's origin), [GitHub issue #23](https://github.com/adaept/ae-icon5-component/issues/23)
-  (§3's origin).
+  (§3's origin), [GitHub issue #24](https://github.com/adaept/ae-icon5-component/issues/24)
+  (§4's origin).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
-  new em-scaling note), `ae-icon5-component.css` (`:host` hover-ring custom properties),
-  `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub` stacking, `body` padding-top — §3).
+  new em-scaling note), `ae-icon5-component.css` (`:host` hover-ring custom properties, §4's
+  `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub` stacking, `body`
+  padding-top — §3).

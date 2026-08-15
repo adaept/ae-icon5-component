@@ -359,6 +359,16 @@ export class AeIcon5 {
             const addIcon = document.getElementById('2') as HTMLAeIcon5ComponentElement
             if (removeIcon) removeIcon.aesize = 'ae' + initsize
             if (addIcon) addIcon.aesize = 'ae' + initsize
+
+            document.getElementById('containerDetail').innerHTML = '<b>name:</b>' + this.name +
+              ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
+              ' <b>arialabel:</b>' + this.arialabel
+
+            document.getElementById('containerPara').innerHTML =
+              '<ae-icon5-component aesize="ae32" ' +
+              ' name=' + this.name +
+              ' color=' + this.color +
+              ' arialabel=' + this.arialabel + '>'
             break
           }
           default: {
