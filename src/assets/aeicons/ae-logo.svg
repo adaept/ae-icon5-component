@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Vendored copy — canonical source: adaept5tudio/design-system/assets/ae-logo.svg.
+  Re-sync manually when that changes; no cross-repo build link exists between the two
+  repos (see rvw/Code_review 2026-08-14.md §2's CF-14). Replaces the old
+  assets/logo.gif header logo — see GitHub issue #20.
+
+  ae-logo — the adaept "ae" ambigram mark (C1), color variant: ONE path, used twice —
+  the "a" (Imperial Red) and the "e" = the SAME path rotated 180deg about (512,512)
+  (Emerald Green). True ambigram by construction, no separate "e" geometry to drift.
+  Colors resolve from this repo's vendored assets/design-tokens.css custom properties
+  (--ae-color-imperial/--ae-color-emerald), with brand-hex fallbacks for standalone use.
+
+  GENERATED (design-system.build, from ae-base-a.svg) — do not hand-edit its path data.
+-->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" version="1.1"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path id="ae-base-a" fill="currentColor" fill-rule="evenodd" d="M 391.25058,331.81942
+      C 480.99256,343.16492 469.4282,444.67529 466,486
+      c -64.03364,-1.10479 0,0 -122.57,-2
+      C 250,484.5 166,504 164.1,611.29
+      C 166.8,695.64 223.19,760.94 300.52,762
+      C 387.59,761.55 449.76,726.6 500,673.52
+      L 524,350.48
+      C 479.07,291.54 458.01,262.04 325.44,262
+      C 187.62168,262.62272 33.676279,390.03638 12,512
+      c 0,133.33542 41.902491,250.5 154.26547,361.15328 94.91298,93.4688 205.4306,142.87532 341.55098,141.65682 133.35062,-1.1937 265.73859,-39.70302 368.3567,-151.81888
+      C 966.21122,764.61973 1016.6416,645.27516 1012,512
+      C 1012,752 782,942 512,942
+      A 430 430 0 0 1 82 512
+      C 124.4259,384.06612 253.54357,307.72902 391.25058,331.81942
+      Z
+      M 459.61,538
+      c 0.51,35 4.07,48.27 16.21,81.7 -57.45,45.06 -149.08,96.54 -211.63,45.53
+      C 235.52,634.24 219.09149,596.32451 254.66974,556.91684 307.79032,515.74684 393.94,538 459.61,538
+      Z"/>
+  </defs>
+
+  <use xlink:href="#ae-base-a" href="#ae-base-a"
+       style="color: var(--ae-color-imperial, #ed2939)"/>
+  <use xlink:href="#ae-base-a" href="#ae-base-a" transform="rotate(180 512 512)"
+       style="color: var(--ae-color-emerald, #178061)"/>
+</svg>

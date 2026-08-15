@@ -286,14 +286,65 @@ still tracked in §1's carry-forward table.
 
 ---
 
-## 6. References
+## 6. Header logo: `assets/logo.gif` → design-system "ae" mark + ™ (GitHub issue #20)
+
+**Request:** [issue #20](https://github.com/adaept/ae-icon5-component/issues/20) — "this is an
+old design"; follow-up comment: replace the `<img src="assets/logo.gif">` header link with "the
+design system logo with TM… It should only be the ae design."
+
+**Investigation:** the old `<a href="https://adaept.com/"><img src="assets/logo.gif"
+width="150"></a>` (top of `src/index.html`, above the version-triple stamp) rendered a **175×51
+animated GIF** — recovered its native dimensions from git history since the tag only set
+`width`, so it displayed at ~150×44 (proportional scale). Confirmed via `git log --all
+--diff-filter=A -- src/assets/logo.gif` this predates the design-system work entirely; nothing
+else in the repo referenced the file once removed.
+
+**Fix:**
+- Vendored `assets/aeicons/ae-logo.svg` from `adaept5tudio/design-system/assets/ae-logo.svg` —
+  the **color** variant of the "ae" ambigram mark (red "a" + green "e", same boolean-derived path
+  used twice, rotated 180°; same provenance-comment convention as this repo's existing
+  `ae.svg`/`at.svg`/`dp.svg`). Its `var(--ae-color-imperial, #ed2939)`/`var(--ae-color-emerald,
+  #178061)` colors resolve correctly since `assets/design-tokens.css` (vendored §2 of this same
+  session) defines both tokens and CSS custom properties inherit across the shadow-DOM boundary
+  `<ion-icon src="…">` uses to inline-fetch the file.
+- `src/index.html`: replaced the `<img>` with `<ae-icon5-component src="assets/aeicons/
+  ae-logo.svg" adaept="adaept" decorative>` — the same `adaept="adaept"` + `src` render branch
+  `adaeptZone` already established (§2), wrapped in the existing `<a href="https://adaept.com/">`
+  with the accessible name moved to the link itself (`aria-label="adaept™"`, matching the
+  `fixedGithub` link's pattern just above it) plus a sibling `™` span.
+- Three rounds of visual correction against live Puppeteer screenshots, each driven by direct
+  user feedback on the running dev server rather than guessed up front: (1) initial pass used
+  `aesize="ae128"` — too large once the old gif's real ~44px rendered height was recovered from
+  git history; corrected to `aesize="ae40"` (already the exact size `adaeptZone`'s letter icons
+  use, so it's consistent with the one other place this mark appears in the demo). (2) the `™`
+  inherited the browser's default link blue/underline since it sits inside an `<a>` with no reset
+  — fixed with `color: inherit; text-decoration: none` on the anchor. (3) `align-items: center`
+  put the `™` mid-height against the icon instead of top-aligned; switched to `align-items:
+  flex-start`, confirmed via `getBoundingClientRect()` that both elements' box tops land at the
+  same y-coordinate.
+- Deleted `src/assets/logo.gif` (dead asset, confirmed no remaining references before removal).
+  `www/` is gitignored build output, not touched directly.
+
+**Verified:** `npm run build` (clean, three times across the sizing/alignment iterations),
+`npm run test.unit` (3/3 pass), `npm run lint` (same two pre-existing issues as §4/§5, confirmed
+unrelated), and live Puppeteer checks on the dev server after each correction — final computed
+styles: `™` span `color: rgb(0,0,0)`, `text-decoration: none`, `font-size: 16px`; icon and `™`
+bounding-box tops both at the same y-coordinate.
+
+**Not committed as part of a release** — no version bump.
+
+---
+
+## 7. References
 
 - **Prior review:** `rvw/Code_review 2026-08-13.md` (CF table, CF-13 deploy-staleness detail).
 - **This task's origin:** `rvw/Code_review 2026-08-07.md` §2 (item N, "ae" brand-mark icon);
   [GitHub issue #19](https://github.com/adaept/ae-icon5-component/issues/19) (§4's origin);
-  [GitHub issue #21](https://github.com/adaept/ae-icon5-component/issues/21) (§5's origin).
+  [GitHub issue #21](https://github.com/adaept/ae-icon5-component/issues/21) (§5's origin);
+  [GitHub issue #20](https://github.com/adaept/ae-icon5-component/issues/20) (§6's origin).
 - **Cross-repo:** `adaept5tudio/rvw/Code_review 2026-08-14.md` (design-system + font side),
-  `adaept5tudio/design-system/README.md` (the two new canonical files' full documentation),
+  `adaept5tudio/design-system/README.md` (the two new canonical files' full documentation, and
+  §6's `ae-logo.svg` color variant),
   `adaept5tudio/docs/adaept5tudio-dev-plan.md` item **A17** (the adaept font, whose `at`/`dp`/`ae`
   cells this task verified against).
 - **This repo:** `docs/modernization-plan.md` §12 (roadmap entry + CF-14, the manual-resync
