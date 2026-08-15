@@ -225,7 +225,49 @@ pre-existing, unrelated issues), and a live Puppeteer measurement of the final s
 
 ---
 
-## 7. References
+## 7. Stale favicon/icon predating the design-system logo (GitHub issue #25)
+
+**Request:** [issue #25](https://github.com/adaept/ae-icon5-component/issues/25) — "the ae icon
+in the GitHub repo is not showing the design system logo update… This is the original ae account
+logo that predates the design system update."
+
+**Investigation:** `src/assets/icon/icon.png` (64×64, used as the demo's `apple-touch-icon`) and
+`favicon.ico` (5 sizes: 64/48/32/24/16, all 32bpp) both dated to 2026-06-05 — before any of the
+design-system work. Visually confirmed against a Puppeteer render of the current mark: the old
+files show a different construction entirely (a thin outer ring + interlaced swirl), not the
+canonical "ae" ambigram this repo already vendors at `src/assets/aeicons/ae-logo.svg` (§ from
+2026-08-14's session) — and not a stale copy of a *newer* design-system version either, genuinely
+the old pre-C1 mark. Cross-checked `adaept5tudio/design-system/assets/ae-icon.png` (512×512
+RGBA, transparent, documented there as the canonical web-app/PWA icon source) — visually
+identical to `ae-logo.svg`'s color mark, confirming this repo's `icon.png`/`favicon.ico` were
+simply never updated when the design-system logo work landed.
+
+**Fix:** regenerated both from `src/assets/aeicons/ae-logo.svg` (already vendored, no new
+cross-repo copy needed) rather than downscaling a raster source, for crisp results at each size:
+- No ImageMagick/sharp/Inkscape available on this machine — rendered each target size (16/24/32/
+  48/64px, matching the original `favicon.ico`'s exact size set) directly via headless Chrome
+  (`page.setViewport` to the exact pixel size + `page.screenshot({omitBackground: true})`), then
+  hand-packed the 5 PNGs into a valid multi-resolution `.ico` (PNG-per-entry ICONDIR format,
+  valid since Windows Vista — no BMP encoding needed). Verified structurally (`file`, and a check
+  that every entry's image data starts with the PNG magic bytes) before replacing the files.
+- `icon.png` replaced with the 64px render (same size as before).
+- Followed the design-system's own documented convention for `ae-icon.png` (a **manual**,
+  documented regen step, not part of its automated build script) rather than adding a permanent
+  script to this repo — same reasoning, this is a rare, visually-verified-by-hand operation, not
+  something to automate.
+
+**Verified:** confirmed `www/`'s copied assets are byte-identical to the new `src/` files after
+`npm run build`, confirmed the running dev server serves the new `favicon.ico` (`file` on the
+response body), `npm run test.unit` (3/3 pass), `npm run lint` (same 3 pre-existing issues).
+
+**Not committed as part of a release** — no version bump. Note: `src/index.html`'s `<link
+rel="manifest" href="/manifest.json">` points at a file that doesn't exist anywhere in this repo
+(pre-existing dead reference, found incidentally while checking for other icon-size references
+to update) — left alone, out of scope for this issue.
+
+---
+
+## 8. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
@@ -235,8 +277,12 @@ pre-existing, unrelated issues), and a live Puppeteer measurement of the final s
   (§4's origin), [GitHub issue #26](https://github.com/adaept/ae-icon5-component/issues/26)
   (§5's origin; that section also spun off
   [issue #27](https://github.com/adaept/ae-icon5-component/issues/27)), [GitHub issue
-  #28](https://github.com/adaept/ae-icon5-component/issues/28) (§6's origin).
+  #28](https://github.com/adaept/ae-icon5-component/issues/28) (§6's origin), [GitHub issue
+  #25](https://github.com/adaept/ae-icon5-component/issues/25) (§7's origin).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
   new em-scaling note; §5's source-link doc), `ae-icon5-component.css` (`:host` hover-ring custom
   properties, §4's `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub`
-  stacking and positioning — §3, §6), `scripts/gen-icon-line-map.mjs` (§5).
+  stacking and positioning — §3, §6), `scripts/gen-icon-line-map.mjs` (§5),
+  `src/assets/icon/{icon.png,favicon.ico}` (§7).
+- **Cross-repo:** `adaept5tudio/design-system/assets/ae-icon.png` (§7's source-of-truth
+  comparison).
