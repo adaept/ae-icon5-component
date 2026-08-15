@@ -84,8 +84,20 @@
         <img src="assets/aeicons/ae_512x512_adaept_tpeada_mirror_new_omg.svg" width="150" class="img" alt="" />
       </div> -->
     </ion-row>
-    <!-- version triple (ionicons/Stencil/component) — populated from the build stamp -->
-    <div id="aeVersionTriple" title="ionicons / Stencil / component"></div>
+    <!-- version triple (ionicons/Stencil/component) — populated from the build stamp — plus
+         the "alphabetic group list" outline/sharp filter (GitHub issue #29), beside it on the
+         same row. Filter default ON: hides the -outline/-sharp style variants in that one
+         section (#aeGroupList below), so the page renders ~1/3 fewer icons by default — each
+         is fetched individually at runtime by ionicons (only 34 icons are pre-bundled, see
+         src/icons/manifest.ts), so fewer rendered icons means fewer fetches. Wired up by the
+         script at the bottom of <body>. -->
+    <div id="aeVersionRow" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+      <div id="aeVersionTriple" title="ionicons / Stencil / component"></div>
+      <span>Filter</span>
+      <button id="aeIconFilterToggle" type="button" role="switch" aria-pressed="true"
+        title="Toggle outline/sharp icon variants in the alphabetic group list below">On</button>
+      <span id="aeIconFilterCount">… icons displayed</span>
+    </div>
     <script>aeSetTestId(document.getElementById('aeVersionTriple'), AE_TEST_IDS.buildStamp);</script>
 
     <ion-row>
@@ -460,7 +472,7 @@
       <div>
         <h1>Ionicons - alphabetic group list</h1>
       </div>
-      <div>
+      <div id="aeGroupList">
         <ae-icon5-component name="accessibility" aesize="ae32"></ae-icon5-component>
         <ae-icon5-component name="accessibility-outline" aesize="ae32"></ae-icon5-component>
         <ae-icon5-component name="accessibility-sharp" aesize="ae32"></ae-icon5-component>
@@ -1972,6 +1984,40 @@
       if (triple) triple.textContent = s.triple
       var stamp = document.getElementById('aeBuildStamp')
       if (stamp) stamp.textContent = s.triple + ' · ' + s.git + '@' + s.branch + ' · built ' + s.built
+    })()
+  </script>
+
+  <script>
+    // "Alphabetic group list" outline/sharp filter (GitHub issue #29). Counts are read from
+    // the live DOM, not hardcoded, so this can't go stale the way the group-list's own
+    // content once did (issue #19).
+    (function () {
+      var groupList = document.getElementById('aeGroupList')
+      var toggle = document.getElementById('aeIconFilterToggle')
+      var countEl = document.getElementById('aeIconFilterCount')
+      if (!groupList || !toggle || !countEl) return
+
+      var total = groupList.querySelectorAll('ae-icon5-component').length
+      var filteredOut = groupList.querySelectorAll(
+        'ae-icon5-component[name$="-outline"], ae-icon5-component[name$="-sharp"]'
+      ).length
+      var baseCount = total - filteredOut
+
+      var filterOn = true // matches the CSS default (aestyles.css) — no flash on load
+
+      function render() {
+        groupList.classList.toggle('ae-show-all', !filterOn)
+        toggle.setAttribute('aria-pressed', String(filterOn))
+        toggle.textContent = filterOn ? 'On' : 'Off' // the toggle button's own label IS the state
+        countEl.textContent = (filterOn ? baseCount : total) + ' of ' + total + ' icons displayed'
+      }
+
+      toggle.addEventListener('click', function () {
+        filterOn = !filterOn
+        render()
+      })
+
+      render()
     })()
   </script>
 

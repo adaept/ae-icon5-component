@@ -267,7 +267,64 @@ to update) — left alone, out of scope for this issue.
 
 ---
 
-## 8. References
+## 8. "Alphabetic group list" outline/sharp filter (GitHub issue #29)
+
+**Request:** [issue #29](https://github.com/adaept/ae-icon5-component/issues/29) — "Ionicons -
+alphabetic group list shows 3 variants by default" / "Ionicons have 3 variants for the main icons
+so loading time will be ~3x." Ask: default-filter that section to exclude `-outline`/`-sharp`,
+toggleable, with the actual situation documented in the resolution, and a status readout beside
+the version triple: "Filter On/Off — X of Y icons displayed."
+
+**The actual situation (measured, not assumed — this is the "description of the actual
+situation" the issue asked to be included here):** every one of the 421 non-logo icon concepts in
+`node_modules/ionicons` has **exactly** 3 style variants (plain/`-outline`/`-sharp`), no
+exceptions — confirmed programmatically, not eyeballed. `421 × 3 = 1263`, matching the group
+list's actual icon count exactly. So filtering to base-only is a clean **3.0x** fewer icons in
+that one section (not the ~2.6x I'd estimated in chat before landing this — that number wrongly
+blended in the 94 single-style logo icons, which live in a separate section entirely and were
+never part of this claim or this fix's scope).
+
+**Fix:**
+- `#aeGroupList` id added to scope the group list container (only that section — not logos, not
+  the curated color demo, not `adaeptZone`).
+- CSS hides `ae-icon5-component[name$="-outline"]`/`[name$="-sharp"]` inside it **by default**
+  (baked into the stylesheet, not toggled on after page load — no flash of the unfiltered set).
+- New toggle beside `#aeVersionTriple` (the actual page header, not the section's own `<h1>` —
+  confirmed with the user before implementing, after an initial ambiguity). Counts are read live
+  from the DOM (`querySelectorAll`), not hardcoded — the exact class of bug that made issue #19
+  necessary in the first place.
+- **Three follow-up bugs, all found by the user against the live dev server and fixed in the same
+  session, not after-the-fact:**
+  1. Adding the toggle grew `#aeHeader`'s height (152px → 180px) but `body`'s compensating
+     `padding-top` was still 152px — caught and fixed by the same live-measurement approach used
+     throughout this file, before the user even saw it.
+  2. **Bug 1/2 (reported together):** the toggle's own text held the *entire* sentence ("Filter
+     On — 421 of 1263 icons displayed"), and it rendered on its own line below the version
+     triple instead of beside it. Restructured into a flex row: `#aeVersionTriple`, a "Filter"
+     label, a real toggle button whose own text is just "On"/"Off" (green when on, gray when
+     off, `role="switch"`/`aria-pressed`), and the count as separate text — all on one row.
+     Re-measured `#aeHeader`'s height again after this layout change (158px, since the button no
+     longer needed its own line) and corrected `body`'s `padding-top` to match.
+  3. **Bug 3:** clicking `woman` with the filter on (or off — confirmed irrelevant, the line-map
+     is keyed by `name`, not visibility) showed source line 1736, reported as "should be 1724."
+     Not a generator bug — the exact same gap documented in §5: the panel correctly computes
+     against the **local** file (1736, correct — this session's header edits shifted everything
+     below down), but the source link is hardcoded to `blob/master/…`, the **already-pushed**
+     master, where `woman` was still at 1724 (confirmed via `git show origin/master:src/
+     index.html`) because none of this session's changes had been pushed yet. Resolves itself on
+     push, same as the `tennisball-outline` case in §5.
+
+**Verified:** `npm run build`, `npm run test.unit` (3/3 pass), `npm run lint` (same 3
+pre-existing issues), and live Puppeteer checks after each fix — initial state (421/1263,
+`aria-pressed="true"`), toggled state (1263/1263, `aria-pressed="false"`), toggle beside the
+triple on the same row (top-coordinates within 3px), no header/content overlap (8px gap), and the
+issue #23 scroll-visibility regression re-checked after every layout change in this section.
+
+**Not committed as part of a release** — no version bump.
+
+---
+
+## 9. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
@@ -278,11 +335,12 @@ to update) — left alone, out of scope for this issue.
   (§5's origin; that section also spun off
   [issue #27](https://github.com/adaept/ae-icon5-component/issues/27)), [GitHub issue
   #28](https://github.com/adaept/ae-icon5-component/issues/28) (§6's origin), [GitHub issue
-  #25](https://github.com/adaept/ae-icon5-component/issues/25) (§7's origin).
+  #25](https://github.com/adaept/ae-icon5-component/issues/25) (§7's origin), [GitHub issue
+  #29](https://github.com/adaept/ae-icon5-component/issues/29) (§8's origin).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
   new em-scaling note; §5's source-link doc), `ae-icon5-component.css` (`:host` hover-ring custom
   properties, §4's `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub`
-  stacking and positioning — §3, §6), `scripts/gen-icon-line-map.mjs` (§5),
-  `src/assets/icon/{icon.png,favicon.ico}` (§7).
+  stacking and positioning, `#aeIconFilterToggle` — §3, §6, §8), `scripts/gen-icon-line-map.mjs`
+  (§5), `src/assets/icon/{icon.png,favicon.ico}` (§7).
 - **Cross-repo:** `adaept5tudio/design-system/assets/ae-icon.png` (§7's source-of-truth
   comparison).

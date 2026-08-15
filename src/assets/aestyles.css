@@ -84,7 +84,46 @@ div.container {
 
 /* Reserves the space #aeHeader (position:fixed, out of flow) would otherwise occupy, so
    div.aeicon5-scroll's content doesn't start out hidden underneath it. Measured against
-   #aeHeader's actual rendered height (152px) via a live Puppeteer check, not guessed. */
+   #aeHeader's actual rendered height via a live Puppeteer check, not guessed — re-measure
+   and update this whenever #aeHeader's content changes (158px once the issue #29 filter
+   toggle moved onto the version-triple row instead of its own line below it). */
 body {
-  padding-top: 152px;
+  padding-top: 158px;
+}
+
+/* "Alphabetic group list" outline/sharp filter (issue #29). Default state (filter ON) is
+   this hidden rule — no JS-driven flash-of-unfiltered-content, since the default is already
+   correct before the toggle script even runs. #aeGroupList.ae-show-all (added by that script
+   when the toggle is switched off) restores them to their normal inline flow. */
+#aeGroupList ae-icon5-component[name$="-outline"],
+#aeGroupList ae-icon5-component[name$="-sharp"] {
+  display: none;
+}
+
+#aeGroupList.ae-show-all ae-icon5-component[name$="-outline"],
+#aeGroupList.ae-show-all ae-icon5-component[name$="-sharp"] {
+  display: inline;
+}
+
+#aeIconFilterToggle {
+  cursor: pointer;
+  font: inherit;
+  font-weight: bold;
+  min-width: 2.5em;
+  background: lightgray;
+  color: #333;
+  border: 1px solid darkgray;
+  border-radius: 10px;
+  padding: 2px 10px;
+}
+
+/* On/Off read at a glance, not just from the button's own text */
+#aeIconFilterToggle[aria-pressed="true"] {
+  background: mediumseagreen;
+  color: white;
+  border-color: seagreen;
+}
+
+#aeIconFilterToggle:hover {
+  filter: brightness(0.95);
 }
