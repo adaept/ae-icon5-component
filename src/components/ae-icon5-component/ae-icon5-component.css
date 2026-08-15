@@ -235,7 +235,9 @@ ion-icon.ae1024 {
  */
 :host {
   --ae-hover-ring-color: var(--ae-color, rebeccapurple); /* ring color (was hardcoded red, then currentColor) */
-  --ae-hover-ring-width: 2px;          /* ring width                        */
+  --ae-hover-ring-width: 0.0625em;     /* ring width — in em so it scales with aesize/aesw (was a
+                                           fixed 2px, same thin ring at any icon size, e.g. 1024px;
+                                           0.0625em == 2px at the demo's dominant aesize="ae32") */
   --ae-hover-radius: 50%;              /* shape: 50% = circle, 0 = square   */
   --ae-hover-scale: 1;                 /* effect: 1 = none, >1 zooms         */
   --ae-hover-bg: transparent;          /* fill (was rebeccapurple/contrast) */

@@ -106,7 +106,7 @@ Hovering an icon draws a ring. It is fully configurable through CSS custom prope
 ```css
 ae-icon5-component {
   --ae-hover-ring-color: var(--ae-color, rebeccapurple); /* ring color — see below */
-  --ae-hover-ring-width: 2px;          /* ring thickness                          */
+  --ae-hover-ring-width: 0.0625em;     /* ring thickness — in em, see below       */
   --ae-hover-radius: 50%;              /* shape: 50% = circle, 0 = square         */
   --ae-hover-scale: 1;                 /* zoom on hover: 1 = none, e.g. 1.5        */
   --ae-hover-bg: transparent;          /* fill behind the icon on hover           */
@@ -117,6 +117,12 @@ ae-icon5-component {
 attribute gets a ring in that same color; an icon with no color of its own (still the
 `pink` default) gets a **rebeccapurple** ring instead of pink-on-pink, so hover stays
 visible/distinct without you having to set anything.
+
+**Ring width scales with icon size:** the default is `em`, not a fixed pixel value, so the
+ring stays proportionally the same thickness whether the icon is `aesize="ae16"` or
+`aesize="ae1024"` (`em` resolves against the icon's own font-size, which is what `aesize`/
+`aesw*` set). `0.0625em` looks like a 2px ring at the demo's dominant `aesize="ae32"`. Override
+with a fixed `px` value instead if you want a constant ring width regardless of icon size.
 
 Example — a thick blue square that zooms slightly on hover:
 
