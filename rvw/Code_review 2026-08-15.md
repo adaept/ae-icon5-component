@@ -324,7 +324,58 @@ issue #23 scroll-visibility regression re-checked after every layout change in t
 
 ---
 
-## 9. References
+## 9. Iconify design finalized (planning, no code) — `docs/modernization-plan.md` §6
+
+**Request:** D3 (Iconify support, §6, deferred since 2026-06-05 with no actual design beyond "a
+`set` prop + adapter interface, target ≈v1.5.0") needed a concrete design — triggered by two
+follow-on questions from the day's issue #29 work: whether calling every source "ionicons" was
+wrong once other providers are in play, and whether that would force a v2.0.0 breaking bump
+instead of the planned v1.5.0 minor.
+
+**Resolved, documented in `docs/modernization-plan.md` §6 (5 subsections, no renumbering of
+existing §7–13 or the CF/roadmap cross-references that already cite them by number):**
+- **§6.1 Naming** — adopt Iconify's own `{prefix}:{name}` convention (already standardized;
+  Ionicons itself is hosted there under `ion`) inside a new opt-in `set="iconify"` mode, rather
+  than inventing a new scheme. `set="ionicons"` stays a permanent, unchanged default.
+- **§6.2 Versioning** — **confirmed v1.5.0, not v2.0.0.** Per semver, incompatible API changes
+  force MAJOR, not scope size — and with §6.1's design nothing about the existing default
+  changes. The one thing that *would* force v2.0.0 (renaming/dropping the `"ionicons"` identifier
+  itself) is explicitly ruled out as a non-negotiable.
+- **§6.3 Staged mdi pilot** — Material Design Icons (Apache-2.0, ~7,000 icons) as the first real
+  implementation, 5 stages (0 prep → 1 type-level seam → 2 component-level → 3 isolated demo pilot
+  → 4 expand), each with an explicit "how to prove the existing demo/component didn't regress"
+  check. Stages 1–2 touch zero lines of `src/index.html` by construction — the existing showcase
+  literally cannot regress until Stage 3. Stage 0 doubles as 1.4.x-line prep work: a real
+  `manifest.json` (currently a dead `<link>`, found incidentally during issue #25, now a hard
+  requirement for §6.5's Windows path), plus closing CF-13 (stale demo deploy) and CF-12
+  (`--ionicon-stroke-width` override — now more relevant once icon families with different stroke
+  conventions coexist).
+- **§6.4 Starter-kit gotchas** — Angular (`CUSTOM_ELEMENTS_SCHEMA`, extract from aedh's real
+  usage), React (attribute casing only, not a real blocker — every prop here is a plain string/
+  boolean), Ionic Framework (already integrates via the `color=` theme path, a selling point not
+  a gotcha), and the one real **correctness** issue: Capacitor/offline apps must use pre-bundled
+  `addIcons`/`registerIcons`, never a runtime network-fetch fallback (`file://`/`capacitor://`
+  pages don't resolve same-origin fetches the way `https://` does) — which is also why Stage 2
+  specifically requires Iconify's *offline* `@iconify-json/*` packages, not its on-demand API.
+- **§6.5 aetimeline as the real test case** — the user's own Capacitor app (`capacitor.config.ts`
+  already targets Android first, iOS "later reuses the same webDir"). Recommended **one iconset
+  uniformly** across Android/iOS/Windows rather than per-platform-native conventions — SF Symbols
+  specifically ruled out for iOS as licensing-incompatible with cross-platform reuse, not just a
+  style call. Microsoft Store given a pros/cons/suggestion table (no macOS/Xcode needed to attempt
+  it; reuses the existing `www` PWA build via PWABuilder; validates the pipeline but not
+  Capacitor-specific concerns; verify current MS-Store account terms directly rather than trust
+  memory) and a concrete staging: Android now (lowest friction, exercises the mdi pilot
+  end-to-end), Windows now-in-parallel (near-zero marginal cost, same `www` build), iOS later
+  (most new infrastructure, historically more App Store scrutiny of thin web wrappers).
+- `§12` roadmap bullet and `D3` in "Resolved decisions" both updated to point at §6 instead of the
+  old one-line placeholder.
+
+**Not implemented — planning only.** No code changed; `npm run build`/`test.unit`/`lint` untouched
+by this entry (verify via `git diff --stat` showing only `docs/modernization-plan.md`).
+
+---
+
+## 10. References
 
 - **Prior review:** `rvw/Code_review 2026-08-14.md` (CF table origin; §4/§5/§6 for issues
   #19/#21/#20, all closed in that session).
@@ -336,11 +387,13 @@ issue #23 scroll-visibility regression re-checked after every layout change in t
   [issue #27](https://github.com/adaept/ae-icon5-component/issues/27)), [GitHub issue
   #28](https://github.com/adaept/ae-icon5-component/issues/28) (§6's origin), [GitHub issue
   #25](https://github.com/adaept/ae-icon5-component/issues/25) (§7's origin), [GitHub issue
-  #29](https://github.com/adaept/ae-icon5-component/issues/29) (§8's origin).
+  #29](https://github.com/adaept/ae-icon5-component/issues/29) (§8's origin; also the direct
+  trigger for §9's Iconify design discussion, no separate issue filed for it).
 - **This repo:** `README.md` ("Themeable hover" section, `--ae-hover-ring-width` default and the
   new em-scaling note; §5's source-link doc), `ae-icon5-component.css` (`:host` hover-ring custom
   properties, §4's `iconClicked` fix), `aestyles.css` (`#aeHeader`, `#fixedGithub`/`#circleGithub`
   stacking and positioning, `#aeIconFilterToggle` — §3, §6, §8), `scripts/gen-icon-line-map.mjs`
-  (§5), `src/assets/icon/{icon.png,favicon.ico}` (§7).
+  (§5), `src/assets/icon/{icon.png,favicon.ico}` (§7), `docs/modernization-plan.md` §6/§12/D3
+  (§9).
 - **Cross-repo:** `adaept5tudio/design-system/assets/ae-icon.png` (§7's source-of-truth
   comparison).
