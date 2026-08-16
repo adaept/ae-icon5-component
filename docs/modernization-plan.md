@@ -280,6 +280,42 @@ Android/iOS/Windows** — same code path everywhere, no per-platform icon-select
   enrollment, TestFlight, code signing) and Apple has historically applied more scrutiny to
   "thin web-wrapper" apps than Google or Microsoft — worth attempting once the app itself is more
   fully baked, not as a pipeline smoke test.
+- **Even earlier than "now," ahead of aetimeline entirely — see §6.6:** this repo's own demo could
+  become the *first* Capacitor app of all, smaller and lower-stakes than aetimeline, and validate
+  a second thing (paid-tier/payment integration) at the same time.
+
+### 6.6 An even simpler first Capacitor app: this repo's own demo, free/paid-tier gated
+
+**Idea:** before (or instead of first attempting on) aetimeline, package **this repo's own demo**
+as the first Capacitor app — free tier = current state (ionicons only, D2's manifest), paid tier
+= Iconify unlocked (6.3's mdi pilot and beyond). This validates payment/entitlement integration in
+a **DRY** way: solve it once, on the smallest possible surface area, then reuse the same pattern
+in aetimeline and any future Capacitor app, instead of each app re-solving it independently.
+
+**Why this repo specifically is the better first test bed, not just a smaller one:**
+- It's *already* a Stencil `www` build with the exact same packaging path (Capacitor/PWABuilder)
+  §6.5 lays out for aetimeline — no new build infrastructure to stand up.
+- It has effectively **no app-specific business logic** — a feature-gate (Iconify on/off) is
+  close to the *only* thing a purchase would unlock, so the entitlement-check code path stays
+  small and easy to reason about while it's being gotten right.
+- It's a genuine two-birds test: proves the mdi pilot (6.3) end-to-end **and** the payment
+  integration, in one lower-stakes app, before either pattern gets carried into aetimeline where
+  they'd be tangled up with the app's own real functionality.
+
+**Gotcha worth surfacing now, not after building toward it:** Apple and Google **require using
+their own in-app-purchase APIs** (StoreKit / Google Play Billing) for unlocking digital features
+*within* an app — a plain external checkout (Stripe, PayPal, etc.) isn't allowed for this and is
+a common app-store rejection reason. Microsoft Store has its own equivalent. This means "payment
+processing integration" here isn't a single generic integration — it's at minimum one
+Capacitor IAP plugin per store (e.g. a community plugin wrapping StoreKit/Play Billing), each
+with its own entitlement-verification quirks. Confirming exactly which plugin(s) to use is a
+research step for whenever this stage is actually picked up, not a decision to make now — flagged
+here so it's not a surprise discovered mid-implementation.
+
+**Sequencing implication:** this doesn't have to precede aetimeline's Android target (6.5) — the
+two can run in parallel, since one is icon-source work (6.3) and the other is packaging +
+entitlement work. But if payment integration is wanted validated early and cheaply, this repo's
+demo is the place to do that first, not aetimeline.
 
 ## 7. git# stamp in the Firebase demo
 

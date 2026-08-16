@@ -370,6 +370,18 @@ existing §7–13 or the CF/roadmap cross-references that already cite them by n
 - `§12` roadmap bullet and `D3` in "Resolved decisions" both updated to point at §6 instead of the
   old one-line placeholder.
 
+**Addendum, same day:** added **§6.6** — this repo's own demo, not aetimeline, could be the
+*first* Capacitor app: free tier = current ionicons-only state, paid tier = Iconify unlocked
+(§6.3's mdi pilot). Rationale is DRY, not just "smaller" — it validates payment/entitlement
+integration once, on an app with essentially no business logic beyond the feature gate itself,
+before that pattern gets carried into aetimeline where it'd be tangled with real functionality.
+Flagged the gotcha up front rather than letting it surface mid-implementation: Apple/Google/
+Microsoft all require their own in-app-purchase APIs for unlocking digital features in-app (a
+plain external checkout isn't allowed and is a common rejection reason) — so this is at minimum
+one Capacitor IAP plugin per store, a research step for whenever the stage is actually picked up.
+Cross-referenced from §6.5's staging list; doesn't have to precede aetimeline's Android target,
+the two can run in parallel.
+
 **Not implemented — planning only.** No code changed; `npm run build`/`test.unit`/`lint` untouched
 by this entry (verify via `git diff --stat` showing only `docs/modernization-plan.md`).
 
