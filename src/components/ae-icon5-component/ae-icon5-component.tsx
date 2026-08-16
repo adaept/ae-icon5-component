@@ -325,6 +325,11 @@ export class AeIcon5 {
     const paraEl = document.getElementById('containerPara')
     if (!detailEl || !paraEl) return
 
+    // Icons rendered via `src` (the ae logo, adaeptZone marks) have no `name` — fall back to
+    // `src` so the panel shows which icon was clicked instead of the literal string
+    // "undefined" (issue #27, same root cause as #21's aetype fix).
+    const displayName = this.name || this.src || ''
+
     // Demo-only dev aid (issue #26): link to this icon's first code example in
     // src/index.html, via a build-time name -> line-number map (see
     // scripts/gen-icon-line-map.mjs). Undefined for icons rendered via `src` instead of
@@ -336,13 +341,13 @@ export class AeIcon5 {
         '" target="_blank" rel="noopener noreferrer">index.html:' + line + '</a>'
       : ''
 
-    detailEl.innerHTML = '<b>name:</b>' + this.name +
+    detailEl.innerHTML = '<b>name:</b>' + displayName +
       ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
       ' <b>arialabel:</b>' + arialabel + sourceLink
 
     paraEl.innerHTML =
       '<ae-icon5-component aesize="ae32" ' +
-      ' name=' + this.name +
+      ' name=' + displayName +
       ' color=' + this.color +
       ' arialabel=' + arialabel + '>'
   }
