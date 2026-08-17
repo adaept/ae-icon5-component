@@ -295,13 +295,14 @@ npm directly, so there is **no npm token to create, store, rotate, or expire**. 
 
 **On npm — register the trusted publisher** _(no token):_
 
-> **`@adaept` is an npm _user account_, not an organization.** The scope belongs to the npm user
-> **`adaept`** (email `noreply@example.com`) — confirm with `npm owner ls @adaept/ae-icon5`. **Do
-> not create an organization** (npm may nudge you to; you can't create an org named `adaept` because
-> your user already owns the scope).
+> **`@adaept` is an npm _organization_.** npm doesn't infer user-vs-org from the `@` prefix — it
+> checks the registry, and the scope's owner there can change over time (it did: this was
+> previously a personal-account scope before npm stopped letting a user account share a name with
+> a GitHub org). Confirm current ownership with `npm owner ls @adaept/ae-icon5` or
+> `npm org ls adaept`.
 
-1. Sign in at <https://www.npmjs.com> **as the user `adaept`**. Forgot the
-   password? Reset it via the `noreply@example.com` email.
+1. Sign in at <https://www.npmjs.com> with an account that's an **owner/admin member of the
+   `adaept` npm org**.
 
 > **2FA must be TOTP-first.** npm's save/publish flow requires an **authenticator-app (TOTP)
 > code** — a **security key / passkey alone (e.g. Windows Hello) won't satisfy it**, so saving the
