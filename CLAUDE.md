@@ -13,6 +13,10 @@ Stencil component published to npm as **@adaept/ae-icon5**; element tag
 - **Demo:** Firebase project `aeicon5` → **https://aeicon5.web.app** (canonical). NOT
   `aeicon5.adaept.com` (never configured — NXDOMAIN). Set `package.json` `homepage` =
   `https://aeicon5.web.app`.
+- **Maintainer release runbook** (npm org/2FA, Firebase/GitHub secrets, troubleshooting,
+  fallbacks) is **studio-internal** — kept private in adaept5tudio's
+  `docs/ae-icon5-release-runbook.md`, not in this public repo's `README.md`. The public README
+  only describes what the release pipeline does, not how to administer it (see issue #30).
 
 ## Modernization (planned — see aedh review §4.1)
 - Stencil 2.5.2 → 4; ionicons 5.5.1 → 8; add a `dist-custom-elements` output target.

@@ -280,116 +280,18 @@ npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
   **Trusted Publishing (OIDC, no token)** → deploy `www/` to the **aeicon5** Firebase site
   (needs `FIREBASE_SERVICE_ACCOUNT`) → smoke the deployed demo → GitHub Release.
 
-### Release runbook (maintainer — adaept)
+### Release runbook (maintainer)
 
-Step-by-step for publishing a new version. The tag does the work; the one-time setup below
-(an npm **trusted publisher** + one Firebase secret) is done **once**. _(This runbook is
-adaept-specific — scope `@adaept`, package `@adaept/ae-icon5`, Firebase project `aeicon5`. A
-generalized version for other authors is a TODO — see review CF-11.)_
+A `v*` tag triggers `.github/workflows/release.yml`: build + test → `npm publish` (Trusted
+Publishing, OIDC, no token) → deploy `www/` to Firebase → smoke test → GitHub Release. See
+[CI / Release](#ci--release) above for the high-level flow.
 
-#### One-time setup (do once, ~10 min)
-
-This package publishes with **npm Trusted Publishing (OIDC)** — GitHub Actions authenticates to
-npm directly, so there is **no npm token to create, store, rotate, or expire**. You configure it
-**once** on npm, plus one Firebase secret.
-
-**On npm — register the trusted publisher** _(no token):_
-
-> **`@adaept` is an npm _organization_.** npm doesn't infer user-vs-org from the `@` prefix — it
-> checks the registry, and the scope's owner there can change over time (it did: this was
-> previously a personal-account scope before npm stopped letting a user account share a name with
-> a GitHub org). Confirm current ownership with `npm owner ls @adaept/ae-icon5` or
-> `npm org ls adaept`.
-
-1. Sign in at <https://www.npmjs.com> with an account that's an **owner/admin member of the
-   `adaept` npm org**.
-
-> **2FA must be TOTP-first.** npm's save/publish flow requires an **authenticator-app (TOTP)
-> code** — a **security key / passkey alone (e.g. Windows Hello) won't satisfy it**, so saving the
-> trusted publisher below silently fails and the row vanishes on reload. If your account is
-> passkey-only, **disable 2FA → re-enable it → choose _Authenticator App_ first**, then re-add the
-> passkey. (Resetting 2FA regenerates recovery codes and drops the old passkey enrollment.)
-
-2. On the **`@adaept/ae-icon5` package settings** page, configure publishing (npm's current
-   wording — see [npm's trusted-publishing docs](https://docs.npmjs.com/trusted-publishers) if it
-   differs):
-   - **Trusted Publisher** → add a **GitHub Actions** publisher:
-     | Field | Value |
-     |---|---|
-     | Organization / owner | `adaept` _(the GitHub org that owns the repo)_ |
-     | Repository | `ae-icon5-component` |
-     | Workflow filename | `release.yml` |
-     | Environment | _(leave blank — the workflow uses none)_ |
-   - **Allowed actions** → check **"Allow npm publish"**.
-   - **Publishing access** → select **"Require two-factor authentication and disallow tokens
-     (recommended)"**. OIDC trusted publishing still works (it isn't a token) — but this **disables
-     the [token fallback](#token-fallback-only-if-oidc-cant-be-used)** unless you switch it back.
-   - Click **"Update Package Settings"** (this page has no "Save").
-3. Done — no token to store, rotate, or expire. _(Provenance is emitted automatically.)_
-
-**On Firebase — service-account key for the demo deploy:**
-
-4. <https://console.firebase.google.com> → project **`aeicon5`** → ⚙ **Project settings** →
-   **Service accounts** → **Generate new private key** → download the JSON file.
-
-**On the GitHub repo — store the one secret you still need:**
-
-5. Repo → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**:
-   - **`FIREBASE_SERVICE_ACCOUNT`** = the **entire contents** of the JSON from step 4 (open it, copy
-     everything, paste as the value). _(No `NPM_TOKEN` — trusted publishing replaces it.)_
-
-> **Baked into `release.yml`:** the job has `permissions: id-token: write` and upgrades CI to
-> **npm ≥ 11.5.1** (Node 22 ships npm 10, which predates OIDC publishing).
-
-#### Each release (repeat)
-
-1. Make sure `master` is green (the CI badge / Actions tab).
-2. Bump **`version`** in `package.json` (e.g. `1.4.0` → `1.4.1`); commit and push:
-   ```bash
-   git add package.json && git commit -m "chore: v1.4.1" && git push
-   ```
-   _(The demo's `ionicons/Stencil/component` triple + git# stamp update themselves on build.)_
-3. Tag it and push the tag — **this triggers the release**:
-   ```bash
-   git tag -a v1.4.1 -m "v1.4.1" && git push origin v1.4.1
-   ```
-4. Watch **Actions → Release**. It builds + tests, then `npm publish`, deploys the demo, smoke-tests
-   it, and creates a GitHub Release.
-
-#### Verify
-
-```bash
-npm view @adaept/ae-icon5 version     # → the new version
-```
-…and open <https://aeicon5.web.app> (footer shows the new triple) and the repo's **Releases** tab.
-
-#### If the Release run fails
-
-- **At "Publish to npm"** → the **trusted publisher** on npm must match this repo exactly: owner
-  `adaept`, repo `ae-icon5-component`, workflow `release.yml`. Also confirm the job kept
-  `permissions: id-token: write` and npm is **≥ 11.5.1**. Fix, then **Actions → the failed run →
-  "Re-run failed jobs"** (no need to re-tag).
-- **At "Deploy to Firebase"** → check `FIREBASE_SERVICE_ACCOUNT`, then re-run.
-- A re-run reuses the **workflow file as of the tagged commit**. If you changed the code **or
-  `release.yml` itself** (e.g. the OIDC switch), a re-run won't pick it up — **move the tag** to the
-  new commit: `git tag -d vX.Y.Z && git push origin :vX.Y.Z` then re-tag on the new commit and push.
-
-#### Token fallback (only if OIDC can't be used)
-
-Trusted publishing is preferred. If you must use a token instead: create a **Granular Access
-Token** on npm (Access Tokens → Generate New Token; **Read and write**, scoped to
-`@adaept/ae-icon5`) — note it **expires (≈90-day max)**, so you'll rotate it — store it as the
-**`NPM_TOKEN`** secret, and in `release.yml` give the publish step
-`env: { NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} }` and add `--provenance` back to the command.
-
-#### Manual fallback (no CI)
-
-```bash
-npm login                       # interactive; needs your npm 2FA
-npm publish --access public     # prepublishOnly builds dist first
-npm i -g firebase-tools && firebase login
-npm run build && firebase deploy   # → https://aeicon5.web.app  (project: aeicon5)
-```
+The step-by-step **studio-internal** setup (npm org membership, 2FA, Firebase/GitHub secrets,
+troubleshooting, fallbacks) is **adaept-specific operational detail**, not something an npm
+consumer or a third-party dev copying this pattern needs — it's maintained privately in
+adaept5tudio's `docs/ae-icon5-release-runbook.md`, not in this public repo. If you're building
+your own package from this one, the generic (non-adaept) version of "wire up trusted publishing"
+is in [`docs/THIRD-PARTY-GUIDE.md`](docs/THIRD-PARTY-GUIDE.md) §7.
 
 ## Build your own icon component package (recipe)
 
@@ -450,9 +352,9 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 - Release (on `v*` tag): publish to npm + deploy the demo + GitHub Release.
 - **Publish with npm Trusted Publishing (OIDC) — no token to store/rotate.** Register your
   repo+workflow as a trusted publisher on the npm package and give the job
-  `permissions: id-token: write` + npm ≥ 11.5.1 (see the maintainer runbook above). For the demo
-  deploy add a **`FIREBASE_SERVICE_ACCOUNT`** secret. _(Token fallback exists if OIDC isn't an
-  option — see the runbook.)_
+  `permissions: id-token: write` + npm ≥ 11.5.1 (see [`docs/THIRD-PARTY-GUIDE.md`](docs/THIRD-PARTY-GUIDE.md)
+  §7 for the generic step-by-step). For the demo deploy add a **`FIREBASE_SERVICE_ACCOUNT`**
+  secret. _(Token fallback exists if OIDC isn't an option — see the guide.)_
 
 **8. Package hygiene (don't ship the demo to consumers).** In `package.json`:
 - Entry fields: `main` (cjs), `module` (esm), `unpkg`, `types` → `dist/types/index.d.ts`,
