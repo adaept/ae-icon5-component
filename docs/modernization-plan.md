@@ -379,6 +379,16 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
   changes — there's no build-time or CI link between the two repos. Worth automating (e.g. a
   `check`-style guard comparing file hashes, mirroring `check.guide`'s pattern) if this drifts in
   practice; not done now since it's a two-file, low-churn asset.
+- **Issue #31 ("old logo used in top animation rotation") — done 2026-08-18.** The `#ambiZone`
+  demo row (`adaept="aelogos"`) was still cycling six flat-color recolors of the pre-issue-#20
+  logo shape (`ae-outline`/`ae-red-green`/`ae-yellow`/`ae-red`/`ae-green`/`ae-blue.svg`), missed
+  when #20 fixed the header logo. Now: copy 1 is the genuine two-tone `ae-logo.svg`
+  (`--ae-color-imperial`/`--ae-color-emerald`); copies 2-6 are single-color and use `ae.svg` (the
+  vendored `ae-logo-mono.svg`) colored via plain `--ae-color`, **not** `ae-logo.svg` with both
+  `<use>` tags set to the same color — that reintroduced the hairline-seam bug the design system
+  already fixed for single-color contexts (see `ae.svg`'s header comment). Each copy's
+  `--ae-hover-ring-color` is pinned to match its fill, since the `:host` default (rebeccapurple)
+  is only meant for genuinely uncolored icons.
 
 ## 13. Sequenced execution
 

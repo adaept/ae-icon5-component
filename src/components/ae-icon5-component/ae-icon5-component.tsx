@@ -190,19 +190,28 @@ export class AeIcon5 {
     //console.log('aesize=' + this.aesize + ' name=' + this.name + ' color=' + this.color)
     //console.log(this.el.shadowRoot);
     //console.log('aetype=' + this.aetype);
+    // The `aelogos` showcase cycles through six copies of the current ae logo mark,
+    // each recolored via nth-child overrides in ae-icon5-component.css. It used to
+    // recolor six copies of the pre-issue-#20 logo shape (ae-outline/red-green/
+    // yellow/red/green/blue.svg); that shape was retired when the header switched
+    // to the current mark (issue #20) but this rotation animation was missed — see
+    // issue #31.
+    //
+    // The first copy is genuinely two-tone, so it uses ae-logo.svg — two same-color
+    // <use> instances of one path, colored via --ae-color-imperial/--ae-color-emerald.
+    // The other five are single-color, so they use ae.svg instead — the
+    // design-system's ae-logo-mono.svg, a single boolean-unioned path colored via
+    // plain currentColor (--ae-color). ae-logo.svg's two <use> instances anti-alias
+    // independently; set to the same color they leave a faint hairline seam at the
+    // stem-meet line (the same bug already fixed in the design system for
+    // single-color contexts — see ae.svg's header comment).
     this.aelogos = [
-      'assets/aeicons/ae-outline.svg', //'one',
-      'assets/aeicons/ae-red-green.svg', //'two',
-      'assets/aeicons/ae-yellow.svg', //'three',
-      'assets/aeicons/ae-red.svg', //'four',
-      'assets/aeicons/ae-green.svg', //'five',
-      'assets/aeicons/ae-blue.svg' //'six',
-      //'seven',
-      //'eight',
-      //'nine',
-      //'ten',
-      //'eleven',
-      //'twelve'
+      'assets/aeicons/ae-logo.svg',
+      'assets/aeicons/ae.svg',
+      'assets/aeicons/ae.svg',
+      'assets/aeicons/ae.svg',
+      'assets/aeicons/ae.svg',
+      'assets/aeicons/ae.svg'
     ]
   }
 

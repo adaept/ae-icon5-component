@@ -53,6 +53,50 @@ ion-item {
   }
 }
 
+/**
+ * `aelogos` showcase (#ambiZone in the demo): six copies of the ae logo mark,
+ * recolored per nth-child. Custom properties pierce shadow DOM, same as
+ * --ae-color above, so these cascade into the inlined SVGs despite the
+ * nested shadow roots.
+ */
+/* Copy 1 is the genuinely two-tone ae-logo.svg — colored via the custom
+   properties its two <use> tags read (--ae-color-imperial / --ae-color-emerald,
+   see that file's header comment). */
+ion-item:nth-child(1) {
+  --ae-color-imperial: #ed2939; /* Imperial Red   */
+  --ae-color-emerald: #178061; /* Emerald Green  */
+}
+
+/* Copies 2-6 are the single-color ae.svg (design-system's ae-logo-mono.svg) —
+   plain currentColor, set via --ae-color same as any other icon. The hover
+   ring (--ae-hover-ring-color, see the `:host` rule below) otherwise falls
+   back to rebeccapurple because these icons carry no `color` attribute — pin
+   it to the same shade so hovering doesn't flash an unrelated color. */
+ion-item:nth-child(2) {
+  --ae-color: gold;
+  --ae-hover-ring-color: gold;
+}
+
+ion-item:nth-child(3) {
+  --ae-color: red;
+  --ae-hover-ring-color: red;
+}
+
+ion-item:nth-child(4) {
+  --ae-color: green;
+  --ae-hover-ring-color: green;
+}
+
+ion-item:nth-child(5) {
+  --ae-color: blue;
+  --ae-hover-ring-color: blue;
+}
+
+ion-item:nth-child(6) {
+  --ae-color: dimgray;
+  --ae-hover-ring-color: dimgray;
+}
+
 ion-icon.ae16 {
   color: var(--ae-color, var(--color));
   font-size: calc(var(--ae-icon-size) * 2);
