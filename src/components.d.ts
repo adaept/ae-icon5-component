@@ -12,6 +12,11 @@ export namespace Components {
          */
         "adaept": string;
         /**
+          * Rotation angle in degrees applied via `--ae-hover-rotate-deg`, used by `aetype="rotate"`'s hover effect. Ignored for every other `aetype`.
+          * @default 180
+         */
+        "aerotatedeg": number;
+        /**
           * Size of the icon
          */
         "aesize": string;
@@ -20,7 +25,7 @@ export namespace Components {
          */
         "aetitle": string;
         /**
-          * Type of the icon (WIP - identify round)
+          * Hover-effect preset: `round` (default ring shape, unchanged), `square`, `pentagon`, or `rotate` (rotates by `aerotatedeg` on hover — see the header ae logo demo). `pulse` is a planned fifth preset, not yet implemented (modernization plan §4.1).
          */
         "aetype": string;
         /**
@@ -73,6 +78,11 @@ declare namespace LocalJSX {
          */
         "adaept"?: string;
         /**
+          * Rotation angle in degrees applied via `--ae-hover-rotate-deg`, used by `aetype="rotate"`'s hover effect. Ignored for every other `aetype`.
+          * @default 180
+         */
+        "aerotatedeg"?: number;
+        /**
           * Size of the icon
          */
         "aesize"?: string;
@@ -81,7 +91,7 @@ declare namespace LocalJSX {
          */
         "aetitle"?: string;
         /**
-          * Type of the icon (WIP - identify round)
+          * Hover-effect preset: `round` (default ring shape, unchanged), `square`, `pentagon`, or `rotate` (rotates by `aerotatedeg` on hover — see the header ae logo demo). `pulse` is a planned fifth preset, not yet implemented (modernization plan §4.1).
          */
         "aetype"?: string;
         /**
@@ -117,6 +127,7 @@ declare namespace LocalJSX {
         "set": string;
         "aesize": string;
         "aetype": string;
+        "aerotatedeg": number;
         "arialabel": string;
         "decorative": boolean;
         "color": string;

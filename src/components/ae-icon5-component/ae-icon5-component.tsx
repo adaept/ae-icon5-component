@@ -62,9 +62,22 @@ export class AeIcon5 {
   @Prop() aesize: string;
 
   /**
-   * Type of the icon (WIP - identify round)
+   * Hover-effect preset: `round` (default ring shape, unchanged), `square`, `pentagon`,
+   * or `rotate` (rotates by `aerotatedeg` on hover — see the header ae logo demo). `pulse`
+   * is a planned fifth preset, not yet implemented (modernization plan §4.1).
    */
   @Prop() aetype: string
+
+  /**
+   * Rotation angle in degrees applied via `--ae-hover-rotate-deg`, used by
+   * `aetype="rotate"`'s hover effect. Ignored for every other `aetype`.
+   */
+  @Prop() aerotatedeg: number = 180
+
+  @Watch('aerotatedeg')
+  applyRotateDeg() {
+    this.el.style.setProperty('--ae-hover-rotate-deg', `${this.aerotatedeg}deg`)
+  }
 
   /**
    * Accessible label for the icon, applied to the inner `<ion-icon>`'s
@@ -163,6 +176,7 @@ export class AeIcon5 {
    * an uncleared interval here previously kept Jest/Node alive after tests.)
    */
   connectedCallback() {
+    this.applyRotateDeg()
     // the update can be triggered anytime
     this.updateTimer = setInterval(() => this.aeUpdateMethod(), 4000)
   }

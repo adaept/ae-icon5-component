@@ -108,10 +108,15 @@ ae-icon5-component {
   --ae-hover-ring-color: var(--ae-color, rebeccapurple); /* ring color — see below */
   --ae-hover-ring-width: 0.0625em;     /* ring thickness — in em, see below       */
   --ae-hover-radius: 50%;              /* shape: 50% = circle, 0 = square         */
+  --ae-hover-clip-path: none;          /* non-round/square shapes, e.g. a pentagon */
+  --ae-hover-inset: 0;                 /* pulls the ring in from the icon's box edge */
   --ae-hover-scale: 1;                 /* zoom on hover: 1 = none, e.g. 1.5        */
   --ae-hover-bg: transparent;          /* fill behind the icon on hover           */
 }
 ```
+
+The ring/shape renders on a layer behind the icon (not on the icon itself), so it never clips the
+icon's own artwork regardless of shape.
 
 **Ring color defaults:** an icon colored via `--ae-color` or an Ionic `color="…"` theme
 attribute gets a ring in that same color; an icon with no color of its own (still the
@@ -135,6 +140,31 @@ ae-icon5-component.fancy {
 }
 ```
 
+### Hover-effect presets — `aetype`
+
+> **New in v1.5.0:** `aetype` was a documented but inert (WIP, no-op) prop in earlier versions —
+> it now actually drives the hover effect described below, plus the new `aerotatedeg` prop.
+
+`aetype` selects a named preset on top of the CSS custom properties above, so most consumers don't
+need to hand-write `--ae-hover-*` at all (modernization plan §4.1):
+
+| `aetype` | Hover effect | Demo `id` | Status |
+|---|---|---|---|
+| `round` | circular ring (default, unchanged) | `1` | implemented |
+| `square` | square ring | `2` | implemented |
+| `pentagon` | true regular pentagon ring — a filled donut shape (`clip-path: polygon(evenodd, …)`, an outer + inner pentagon), not a `box-shadow` ring like the others, so it stays a complete outline instead of clipping into disconnected points | `3` | implemented |
+| `rotate` | rotates by `--ae-hover-rotate-deg` (`aerotatedeg` prop, default `180`) — no ring, pure rotation | `0` (header ae logo) | implemented |
+| `pulse` | pulsing scale animation | `4` | **not implemented — follow-up cycle** |
+
+```html
+<ae-icon5-component name="add-circle" aetype="square" aesize="ae48"></ae-icon5-component>
+<ae-icon5-component name="refresh-circle" aetype="pentagon" aesize="ae48"></ae-icon5-component>
+<ae-icon5-component src="assets/aeicons/ae-logo.svg" adaept="adaept" aetype="rotate" aerotatedeg="180"></ae-icon5-component>
+```
+
+The `--ae-hover-*` custom properties stay the escape hatch — setting them directly always works,
+with or without `aetype`.
+
 ### Props (current)
 
 | Prop | Type | Notes |
@@ -146,7 +176,8 @@ ae-icon5-component.fancy {
 | `adaept` | string | render mode: `aelogos`, `namigram`, `mydataform`/`mydatapanel`, `adaept` |
 | `arialabel` | string | accessibility label, applied as `aria-label` on the inner `<ion-icon>`; defaults to `name` if not set (see below) |
 | `decorative` | boolean | when `true`, the inner `<ion-icon>` gets `aria-hidden="true"` and no `aria-label` instead — for icons that are fragments of a larger decorative group whose *container* carries the meaningful label (see the `adaeptZone` demo row) |
-| `aetype` | string | WIP (round) |
+| `aetype` | string | hover-effect preset: `round` / `square` / `pentagon` / `rotate` (see [Hover-effect presets](#hover-effect-presets--aetype) above); `pulse` is planned but not yet implemented |
+| `aerotatedeg` | number | rotation angle in degrees for `aetype="rotate"`'s hover effect (default `180`); ignored for other `aetype` values |
 
 **`arialabel` defaults to `name`** — every icon gets a sensible accessible name out of the box.
 Set `arialabel` explicitly only when you want something other than the icon name, e.g.
@@ -199,7 +230,7 @@ default); it is the seam for adding providers such as Iconify later **without** 
 <ae-icon5-component name="football" set="ionicons"></ae-icon5-component>
 ```
 
-> **Roadmap:** Iconify (`set="iconify:mdi"`, …) is planned for ≈ v1.5.0 (modernization plan
+> **Roadmap:** Iconify (`set="iconify:mdi"`, …) is planned for ≈ v1.6.0 (modernization plan
 > §6 / D3). Unknown sets fall back to `ionicons`.
 
 ---

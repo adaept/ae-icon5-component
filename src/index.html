@@ -74,7 +74,7 @@
              outdated assets/logo.gif. See src/assets/aeicons/ae-logo.svg's header
              comment for provenance; GitHub issue #20. -->
         <a href="https://adaept.com/" aria-label="adaept™" style="display: inline-flex; align-items: flex-start; color: inherit; text-decoration: none;">
-          <ae-icon5-component aesize="ae40" src="assets/aeicons/ae-logo.svg" adaept="adaept" decorative></ae-icon5-component>
+          <ae-icon5-component id="0" aetype="rotate" aesize="ae40" src="assets/aeicons/ae-logo.svg" adaept="adaept" decorative></ae-icon5-component>
           <span aria-hidden="true" style="font-size: 16px; line-height: 1;">™</span>
         </a>
       </div>
@@ -118,6 +118,16 @@
     <div id="ambiZone">
       <div class="aelogos">
         <div>
+          <!-- A single host renders all six recolored copies (componentWillLoad's `aelogos`
+               array) inside one shadow root. Only copy 1 (the two-tone mark) rotates on hover —
+               copies 2-6 keep their original plain ring, unchanged color, no rotation. Because
+               all six share one shadow root, that per-copy split can't be done via the `aetype`
+               prop (host-wide, would rotate/silence-the-ring for all six at once — tried and
+               reverted, see ae-icon5-component.css's ion-item:nth-child(1) rule for the actual
+               scoped CSS). No numeric id here: ids must be unique per document, and this is a
+               second, separate demo of the header logo's `rotate` effect (id="0"), not another
+               entry in the id-0-4/aetype single-representative-icon table (modernization plan
+               §4.1). -->
           <ae-icon5-component aesize="ae56" src="src-dummy-place-holder" adaept="aelogos"></ae-icon5-component>
 
           <!-- <ae-icon5-component aesize="ae56" src='[{1:"at"},{2:"dp"},{3:"ae"},{4:"pd"},{5:"ta"}]' adaept="mydata" /> -->
@@ -146,14 +156,17 @@
           arialabel="ae-remove-circle">
         </ae-icon5-component>
         <span style="font-size:24px"><b>SIZE</b></span>
-        <ae-icon5-component id="2" aetype="round" aesize="ae48" name="add-circle" color="success"
+        <ae-icon5-component id="2" aetype="square" aesize="ae48" name="add-circle" color="success"
           arialabel="ae-add-circle">
         </ae-icon5-component>
         <span style="font-size:24px"><b>RESET</b></span>
-        <ae-icon5-component id="3" aetype="round" aesize="ae48" name="refresh-circle" color="danger"
+        <ae-icon5-component id="3" aetype="pentagon" aesize="ae48" name="refresh-circle" color="danger"
           arialabel="ae-refresh-circle">
         </ae-icon5-component>
-        <!--<ae-icon5-component id="4" aetype="round" aesize="ae48" name="globe" color="success" arialabel="ae-globe"></ae-icon5-component>-->
+        <!-- id="4" aetype="pulse" (globe) is intentionally still commented out — pulse isn't
+             implemented yet (modernization plan §4.1); uncomment once it lands.
+        <ae-icon5-component id="4" aetype="pulse" aesize="ae48" name="globe" color="success" arialabel="ae-globe"></ae-icon5-component>
+        -->
       </ion-row>
     </div>
 

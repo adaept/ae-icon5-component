@@ -34,6 +34,7 @@ ion-icon {
   color: var(--ae-color, var(--color));
   font-size: var(--ae-icon-size);
   --ionicon-stroke-width: 16px;
+  position: relative; /* positioning context for the ::before hover-ring layer below */
 }
 
 ion-item {
@@ -61,17 +62,32 @@ ion-item {
  */
 /* Copy 1 is the genuinely two-tone ae-logo.svg — colored via the custom
    properties its two <use> tags read (--ae-color-imperial / --ae-color-emerald,
-   see that file's header comment). */
+   see that file's header comment). It rotates 180° on hover instead of showing a ring — its
+   two-tone coloring makes the rotation itself visibly swap the color layout, so that's the
+   hover feedback (bug found in review: this needs to be scoped to just copy 1 via nth-child,
+   NOT the group's single shared host's `aetype` attribute — `aetype="rotate"` applies to the
+   whole shadow root at once, so setting it on the host rotated *and* silenced the ring for all
+   six copies, not just this one; copies 2-6 are meant to keep their original plain ring, see
+   below). `--ae-hover-rotate-deg` is always set on the host from the `aerotatedeg` prop
+   (default `180`, see `connectedCallback`/`applyRotateDeg` in the .tsx) regardless of `aetype`,
+   so it's available here even though this host never sets `aetype="rotate"`. */
 ion-item:nth-child(1) {
   --ae-color-imperial: #ed2939; /* Imperial Red   */
   --ae-color-emerald: #178061; /* Emerald Green  */
+  --ae-hover-ring-width: 0;
 }
 
-/* Copies 2-6 are the single-color ae.svg (design-system's ae-logo-mono.svg) —
-   plain currentColor, set via --ae-color same as any other icon. The hover
-   ring (--ae-hover-ring-color, see the `:host` rule below) otherwise falls
-   back to rebeccapurple because these icons carry no `color` attribute — pin
-   it to the same shade so hovering doesn't flash an unrelated color. */
+ion-item:nth-child(1) ion-icon:hover {
+  transform: rotate(var(--ae-hover-rotate-deg, 180deg));
+}
+
+/* Copies 2-6 are the single-color ae.svg (design-system's ae-logo-mono.svg) — plain currentColor,
+   set via --ae-color same as any other icon. Unlike copy 1, these keep the original, unmodified
+   hover ring (own color, no rotation, no color change) — an earlier attempt made them rotate +
+   swap to a shared hover color too, but that wasn't what was asked for; reverted (bug found in
+   review). --ae-hover-ring-color is pinned to the same shade as --ae-color so the ring doesn't
+   fall back to the rebeccapurple default (these icons carry no `color` attribute for the
+   `:host([color])` rule to key off). */
 ion-item:nth-child(2) {
   --ae-color: gold;
   --ae-hover-ring-color: gold;
@@ -285,6 +301,66 @@ ion-icon.ae1024 {
   --ae-hover-radius: 50%;              /* shape: 50% = circle, 0 = square   */
   --ae-hover-scale: 1;                 /* effect: 1 = none, >1 zooms         */
   --ae-hover-bg: transparent;          /* fill (was rebeccapurple/contrast) */
+  --ae-hover-clip-path: none;          /* aetype="pentagon" shape (see below) */
+  --ae-hover-inset: 0;                 /* pulls the ring inward — see aetype="pentagon" below */
+}
+
+/**
+ * `aetype` hover-effect presets (modernization plan §4.1) — named shortcuts on top of the
+ * `--ae-hover-*` custom properties above. Each is a `:host([aetype="…"])` attribute selector,
+ * same pattern as `:host([color])` below. `round` needs no override — it's already the default
+ * shape (`--ae-hover-radius: 50%`). `pulse` (a planned fifth preset) is intentionally not here yet.
+ */
+:host([aetype="square"]) {
+  --ae-hover-radius: 0;
+}
+
+/* `box-shadow` (how round/square/the base ring mechanism draws) only ever paints a thin band
+   hugging the ::before box's own RECTANGULAR edge — clip-path then just erases whatever of that
+   band falls outside the polygon. For a shape whose boundary stays close to the box edge all the
+   way around (a circle inscribed in the box, or the box's own square edge) that reads fine, but a
+   pentagon's edges dip well inside the box between vertices (a regular pentagon's apothem is only
+   ~81% of its circumradius) — well inside `ion-icon`'s own glyph silhouette (measured ~81% of the
+   box's half-width too), so there was *no ring band left to clip* along most of each edge: only
+   the 5 vertices (which do reach the box edge) showed anything, as disconnected points with no
+   visible edge between them, not a pentagon (bug found in review — confirmed by pixel-sampling a
+   screenshot: the "waist" between two vertices showed zero ring pixels at any inset tried,
+   including well beyond the box edge, while the vertices scaled outward as expected).
+   Fix: build the pentagon ring directly as a filled donut — an *outer* pentagon and a smaller
+   *inner* pentagon in one `clip-path: polygon(evenodd, …)` (points inside both loops are
+   excluded, leaving just the band between them) — instead of clipping a box-shadow band that was
+   never pentagon-shaped to begin with. `--ae-hover-bg` becomes the fill (not `box-shadow`), and
+   the polygon's own coordinates (not `--ae-hover-inset`) size the ring: the outer loop's apothem
+   (~0.87 of the box half-width) clears the glyph's own ~0.81 radius with a small gap, matching
+   round/square's gap-then-ring look instead of overlapping the glyph. */
+:host([aetype="pentagon"]) {
+  --ae-hover-ring-width: 0;                     /* box-shadow ring disabled — the donut clip-path
+                                                    below is the ring, see comment above */
+  --ae-hover-bg: var(--ae-hover-ring-color);    /* donut fill color (was box-shadow's job) */
+  --ae-hover-clip-path: polygon(
+    evenodd,
+    /* outer pentagon, circumradius ~1.075x the box half-width — vertex_k = 50% + 50%*R*(cos/sin
+       of 90-72k deg), R=1.075, clears the glyph's own edge at every angle, not just at vertices */
+    50% -3.77%, 101.13% 33.39%, 81.61% 93.48%, 18.39% 93.48%, -1.13% 33.39%,
+    /* inner pentagon, R=0.89 (same angles) — the "hole"; ring thickness = outer minus inner */
+    50% 5.51%, 92.32% 36.25%, 76.16% 86%, 23.84% 86%, 7.68% 36.25%
+  );
+}
+
+/* rotate preset: pure rotation, no ring — without this the default rebeccapurple/color ring
+   still showed underneath the spin (bug found in review). Note this is invisible on a
+   rotationally-symmetric single-color mark (rotating a flat-color ambigram 180° looks identical
+   to not hovering) — the ambiZone demo below only uses this preset's underlying rotate mechanics
+   scoped to its one genuinely two-tone copy, not via this host-wide `aetype` attribute, precisely
+   because it needs to leave its other, single-color copies with their original plain ring
+   untouched (bug found in review: an earlier attempt applied `aetype="rotate"` to the whole
+   group, which rotated *and* silenced the ring for all six copies at once). */
+:host([aetype="rotate"]) {
+  --ae-hover-ring-width: 0;
+}
+
+:host([aetype="rotate"]) ion-icon:hover {
+  transform: rotate(var(--ae-hover-rotate-deg, 0deg));
 }
 
 /* Ionic THEME color (color="primary" … "dark") isn't visible through --ae-color
@@ -299,10 +375,24 @@ ion-icon.ae1024 {
   --ae-hover-ring-color: currentColor;
 }
 
-ion-icon:hover {
+/* The ring/shape lives on a ::before layer behind the icon, not on ion-icon itself — applying
+   clip-path (needed for aetype="pentagon") directly to ion-icon clipped the icon's own rendered
+   glyph, cutting its edges off (bug found in review: refresh-circle's filled circle got visibly
+   chopped to the pentagon outline). border-radius/box-shadow never had this problem (they don't
+   clip content), but the ::before layer keeps all three shape mechanisms consistent and inert to
+   the actual icon artwork. */
+ion-icon:hover::before {
+  content: '';
+  position: absolute;
+  inset: var(--ae-hover-inset);
   background-color: var(--ae-hover-bg);
   box-shadow: inset 0 0 0 var(--ae-hover-ring-width) var(--ae-hover-ring-color);
   border-radius: var(--ae-hover-radius);
+  clip-path: var(--ae-hover-clip-path);
+  pointer-events: none;
+}
+
+ion-icon:hover {
   transform: scale(var(--ae-hover-scale));
   z-index: 10;
 }
