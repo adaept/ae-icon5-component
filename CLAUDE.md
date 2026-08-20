@@ -16,7 +16,11 @@ Stencil component published to npm as **@adaept/ae-icon5**; element tag
 - **Maintainer release runbook** (npm org/2FA, Firebase/GitHub secrets, troubleshooting,
   fallbacks) is **studio-internal** — kept private in adaept5tudio's
   `docs/ae-icon5-release-runbook.md`, not in this public repo's `README.md`. The public README
-  only describes what the release pipeline does, not how to administer it (see issue #30).
+  only describes what the release pipeline does, not how to administer it (see issue #30). This
+  project's `.github/workflows/release.yml` is the **reference implementation** other adaept
+  projects copy from — the tool-agnostic version of the pattern (why OIDC over an npm token, the
+  tag-triggers-everything flow, cross-project rollout status) lives in adaept5tudio's
+  `docs/release-process-npm-firebase.md`, added 2026-08-19.
 
 ## Modernization (planned — see aedh review §4.1)
 - Stencil 2.5.2 → 4; ionicons 5.5.1 → 8; add a `dist-custom-elements` output target.

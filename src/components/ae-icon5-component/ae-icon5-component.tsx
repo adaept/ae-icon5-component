@@ -398,8 +398,8 @@ export class AeIcon5 {
             // Reset the SIZE row's +/- icons (demo ids "1"/"2") back to the initial default size.
             currsizeminus = initsize
             currsizeplus = initsize
-            const removeIcon = document.getElementById('1') as HTMLAeIcon5ComponentElement
-            const addIcon = document.getElementById('2') as HTMLAeIcon5ComponentElement
+            const removeIcon = document.getElementById('1') as unknown as HTMLAeIcon5ComponentElement
+            const addIcon = document.getElementById('2') as unknown as HTMLAeIcon5ComponentElement
             if (removeIcon) removeIcon.aesize = 'ae' + initsize
             if (addIcon) addIcon.aesize = 'ae' + initsize
             this.renderInfoPanel(this.arialabel)
