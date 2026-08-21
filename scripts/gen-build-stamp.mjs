@@ -25,11 +25,18 @@ const ionicons = pkgVersion('node_modules/ionicons/package.json')
 const stencil = pkgVersion('node_modules/@stencil/core/package.json')
 const component = pkgVersion('package.json')
 
+const now = new Date()
+const utcStamp = now.toISOString().slice(0, 16).replace('T', ' ') + ' UTC'
+// America/Denver via Intl handles the MST/MDT switch automatically; label stays 'MT' either way.
+const mtTime = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Denver', hour12: false, hour: '2-digit', minute: '2-digit',
+}).format(now)
+
 const stamp = {
   triple: `${ionicons}/${stencil}/${component}`, // ionicons / Stencil / component
   git: git('rev-parse --short HEAD', 'unknown'),
   branch: git('rev-parse --abbrev-ref HEAD', 'unknown'),
-  built: new Date().toISOString()
+  built: `${utcStamp} (${mtTime} MT)`
 }
 
 const out = join(root, 'src/assets')
