@@ -25,6 +25,19 @@ function stepSize(current: number, delta: number): number {
     : (next > maxsize ? SIZE_STEP : next)
 }
 
+/**
+ * Appends `<b>label:</b>value` to container as real DOM nodes (renderInfoPanel below),
+ * not an HTML string -- value is placed via a text node, so it can never be parsed as
+ * markup no matter what a consumer's public @Prop happens to contain.
+ */
+function appendLabeledValue(container: Element, label: string, value: string, leadingSpace = true) {
+  if (leadingSpace) container.appendChild(document.createTextNode(' '))
+  const b = document.createElement('b')
+  b.textContent = `${label}:`
+  container.appendChild(b)
+  container.appendChild(document.createTextNode(value))
+}
+
 @Component({
   tag: 'ae-icon5-component',
   styleUrl: 'ae-icon5-component.css',
@@ -270,6 +283,11 @@ export class AeIcon5 {
    * Pulled out of iconClicked's per-case bodies (issue #24 was this exact block missing from
    * one case; issue #26 needs it extended in all of them) so there's one place to keep in
    * sync instead of N copy-pasted blocks.
+   *
+   * Built via DOM APIs (appendLabeledValue, setAttribute), not innerHTML string
+   * concatenation -- displayName/resolvedColor/aesize/aetype/arialabel all come from
+   * public @Props a host page sets, and the previous innerHTML version had no
+   * HTML-escaping, a stored-XSS-shaped sink in a published component.
    */
   private renderInfoPanel(arialabel: string) {
     const detailEl = document.getElementById('containerDetail')
@@ -287,20 +305,34 @@ export class AeIcon5 {
     // `name` (e.g. the ae logo), and gracefully absent if the map script hasn't loaded.
     const lineMap = (window as unknown as { AE_ICON_LINE_MAP?: Record<string, number> }).AE_ICON_LINE_MAP
     const line = this.name ? lineMap?.[this.name] : undefined
-    const sourceLink = line
-      ? ' <b>source:</b> <a href="https://github.com/adaept/ae-icon5-component/blob/master/src/index.html#L' + line +
-        '" target="_blank" rel="noopener noreferrer">index.html:' + line + '</a>'
-      : ''
 
-    detailEl.innerHTML = '<b>name:</b>' + displayName +
-      ' <b>color:</b>' + this.resolvedColor + ' <b>aesize:</b>' + this.aesize + ' <b>aetype:</b>' + (this.aetype || '') +
-      ' <b>arialabel:</b>' + arialabel + sourceLink
+    detailEl.replaceChildren()
+    appendLabeledValue(detailEl, 'name', displayName, false)
+    appendLabeledValue(detailEl, 'color', this.resolvedColor)
+    appendLabeledValue(detailEl, 'aesize', this.aesize)
+    appendLabeledValue(detailEl, 'aetype', this.aetype || '')
+    appendLabeledValue(detailEl, 'arialabel', arialabel)
+    if (line) {
+      detailEl.appendChild(document.createTextNode(' '))
+      const sourceLabel = document.createElement('b')
+      sourceLabel.textContent = 'source:'
+      detailEl.appendChild(sourceLabel)
+      detailEl.appendChild(document.createTextNode(' '))
+      const sourceLink = document.createElement('a')
+      sourceLink.href = `https://github.com/adaept/ae-icon5-component/blob/master/src/index.html#L${line}`
+      sourceLink.target = '_blank'
+      sourceLink.rel = 'noopener noreferrer'
+      sourceLink.textContent = `index.html:${line}`
+      detailEl.appendChild(sourceLink)
+    }
 
-    paraEl.innerHTML =
-      '<ae-icon5-component aesize="ae32" ' +
-      ' name=' + displayName +
-      ' color=' + this.resolvedColor +
-      ' arialabel=' + arialabel + '>'
+    paraEl.replaceChildren()
+    const preview = document.createElement('ae-icon5-component')
+    preview.setAttribute('aesize', 'ae32')
+    preview.setAttribute('name', displayName)
+    preview.setAttribute('color', this.resolvedColor)
+    preview.setAttribute('arialabel', arialabel)
+    paraEl.appendChild(preview)
   }
 
   iconClicked(evt) {
