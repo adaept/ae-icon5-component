@@ -33,7 +33,10 @@
 ion-icon {
   color: var(--ae-color, var(--color));
   font-size: var(--ae-icon-size);
-  --ionicon-stroke-width: 16px;
+  /* --ae-icon-stroke-width pierces shadow DOM (same convention as --ae-color above) --
+     a host page can override the outline-icon stroke width without needing to know
+     ionicons' own --ionicon-stroke-width property name or reach into the shadow root. */
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 16px);
   position: relative; /* positioning context for the ::before hover-ring layer below */
 }
 
@@ -135,7 +138,7 @@ ion-icon.aesw32 {
   font-size: calc(var(--ae-icon-size) * 4);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 16px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 16px);
 }
 
 ion-icon.ae40 {
@@ -148,7 +151,7 @@ ion-icon.aesw40 {
   font-size: calc(var(--ae-icon-size) * 5);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 24px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 24px);
 }
 
 ion-icon.ae48 {
@@ -161,7 +164,7 @@ ion-icon.aesw48 {
   font-size: calc(var(--ae-icon-size) * 6);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 32px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 32px);
 }
 
 ion-icon.ae56 {
@@ -174,7 +177,7 @@ ion-icon.aesw56 {
   font-size: calc(var(--ae-icon-size) * 7);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 40px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 40px);
 }
 
 ion-icon.ae64 {
@@ -187,7 +190,7 @@ ion-icon.aesw64 {
   font-size: calc(var(--ae-icon-size) * 8);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 40px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 40px);
 }
 
 ion-icon.ae72 {
@@ -200,7 +203,7 @@ ion-icon.aesw72 {
   font-size: calc(var(--ae-icon-size) * 9);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 48px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 48px);
 }
 
 ion-icon.ae80 {
@@ -213,7 +216,7 @@ ion-icon.aesw80 {
   font-size: calc(var(--ae-icon-size) * 10);
   position: relative;
   z-index: 2;
-  --ionicon-stroke-width: 56px;
+  --ionicon-stroke-width: var(--ae-icon-stroke-width, 56px);
 }
 
 ion-icon.ae88 {
