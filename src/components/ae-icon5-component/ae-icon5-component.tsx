@@ -5,10 +5,25 @@ import { registerDefaultIcons } from '../../icons' // scoped-icon manifest (D2)
 
 const maxsize: number = 128
 const initsize: number = 48
-// let prevsizeplus: number = 8;
-// let prevsizeminus: number = 8;
-let currsizeplus: number = 8
-let currsizeminus: number = 8
+// The +/- step for the SIZE demo row's aesize adjustment (getIconSize below).
+const SIZE_STEP: number = 8
+// Cadence of the periodic force-re-render tick (connectedCallback below) -- no
+// specific significance to 4s, just a slow poll to pick up external DOM/CSS
+// changes affecting resolvedColor's getComputedStyle read.
+const UPDATE_INTERVAL_MS: number = 4000
+
+// Shared step/bounds-check logic for the SIZE demo row's +/- buttons (was duplicated
+// across getIconSizeMinus/getIconSizePlus, each stashing its result in a module-level
+// var the caller immediately read back). The two directions reset differently on
+// their own overflow (minus wraps to initsize, plus wraps to SIZE_STEP) -- that
+// asymmetry is existing behavior, preserved here rather than "fixed" into a
+// symmetric wrap.
+function stepSize(current: number, delta: number): number {
+  const next = current + delta
+  return delta < 0
+    ? (next < SIZE_STEP ? initsize : next)
+    : (next > maxsize ? SIZE_STEP : next)
+}
 
 @Component({
   tag: 'ae-icon5-component',
@@ -161,7 +176,7 @@ export class AeIcon5 {
   connectedCallback() {
     this.applyRotateDeg()
     // the update can be triggered anytime
-    this.updateTimer = setInterval(() => this.aeUpdateMethod(), 4000)
+    this.updateTimer = setInterval(() => this.aeUpdateMethod(), UPDATE_INTERVAL_MS)
   }
 
   disconnectedCallback() {
@@ -240,20 +255,14 @@ export class AeIcon5 {
     console.log('this.name = ' + this.name)
   }
 
-  getIconSizeMinus() {
-    //console.log('getIconSizeMinus prevsizeminus = ' + prevsizeminus);
-    //console.log('getIconSizeMinus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
-    currsizeminus = +this.aesize.substr(2) - 8
-    if (currsizeminus < 8) currsizeminus = initsize
-    //console.log(currsizeminus);
-  }
-
-  getIconSizePlus() {
-    //console.log('getIconSizePlus prevsizeplus = ' + prevsizeplus);
-    //console.log('getIconSizePlus this.aesize = ' + this.aesize + ' ' + this.aesize.substr(2));
-    currsizeplus = +this.aesize.substr(2) + 8
-    if (currsizeplus > maxsize) currsizeplus = 8
-    //console.log(currsizeplus);
+  /**
+   * Steps the SIZE demo row's aesize by one SIZE_STEP in the given direction.
+   * Per-instance (reads this.aesize, not shared module state) -- was previously
+   * two near-mirror functions that each stashed their result in a module-level
+   * `let`, meaning every <ae-icon5-component> on a page shared one +/- counter.
+   */
+  getIconSize(direction: 1 | -1): number {
+    return stepSize(+this.aesize.substr(2), direction * SIZE_STEP)
   }
 
   /**
@@ -302,21 +311,17 @@ export class AeIcon5 {
       if (this.arialabel) {
         switch (this.arialabel) {
           case 'ae-remove-circle': {
-            this.getIconSizeMinus()
-            this.aesize = 'ae' + currsizeminus
+            this.aesize = 'ae' + this.getIconSize(-1)
             this.renderInfoPanel(this.arialabel)
             break
           }
           case 'ae-add-circle': {
-            this.getIconSizePlus()
-            this.aesize = 'ae' + currsizeplus
+            this.aesize = 'ae' + this.getIconSize(1)
             this.renderInfoPanel(this.arialabel)
             break
           }
           case 'ae-refresh-circle': {
             // Reset the SIZE row's +/- icons (demo ids "1"/"2") back to the initial default size.
-            currsizeminus = initsize
-            currsizeplus = initsize
             const removeIcon = document.getElementById('1') as unknown as HTMLAeIcon5ComponentElement
             const addIcon = document.getElementById('2') as unknown as HTMLAeIcon5ComponentElement
             if (removeIcon) removeIcon.aesize = 'ae' + initsize
