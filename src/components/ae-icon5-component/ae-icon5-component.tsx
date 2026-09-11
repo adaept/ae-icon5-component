@@ -3,23 +3,6 @@ import { Component, Element, h, Method, Prop, State, Watch } from '@stencil/core
 import 'ionicons' // defines the <ion-icon> element
 import { registerDefaultIcons } from '../../icons' // scoped-icon manifest (D2)
 
-/*
-import { createAnimation } from "@ionic/core";
-
-const animation = createAnimation()
-  .addElement(document.querySelector(".img"))
-  .easing("ease-in-out")
-  .duration(1000)
-  .direction("alternate")
-  .iterations(2)
-  .keyframes([
-    { offset: 0, transform: "scale(.5)", opacity: "1" },
-    { offset: 1, transform: "scale(.75)", opacity: "0.5" }
-  ]);
-
-animation.play();
-*/
-
 const maxsize: number = 128
 const initsize: number = 48
 // let prevsizeplus: number = 8;
@@ -255,70 +238,6 @@ export class AeIcon5 {
 
     this.aeUpdateMethod()
     console.log('this.name = ' + this.name)
-
-    /*
-    console.log('namigram test')
-    console.log(this.src)
-
-    const iconarray = (
-      [
-        { 1: 'one' },
-        { 2: 'two' },
-        { 3: 'three' },
-        { 4: 'four' },
-        { 5: 'five' },
-        { 6: 'six' },
-        { 7: 'seven' },
-        { 8: 'eight' },
-        { 9: 'nine' },
-        { 10: 'ten' },
-        { 11: 'eleven' },
-        { 12: 'twelve' }
-      ])
-
-    console.log(iconarray[0])
-    console.log(iconarray[1])
-    console.log(iconarray[2])
-    console.log(iconarray[3])
-    console.log(iconarray[4])
-    console.log(iconarray[5])
-    console.log(iconarray[6])
-    console.log(iconarray[7])
-    console.log(iconarray[8])
-    console.log(iconarray[9])
-    console.log(iconarray[10])
-    console.log(iconarray[11])
-    console.log(iconarray[12])
-    */
-  }
-
-  resetMinusPlusSize() {
-    console.log('resetMinusPlusSize')
-  }
-
-  getMyComputedStyle(cssVarName: string, propValue: string) {
-    if (propValue) {
-      document.documentElement.style.setProperty(cssVarName, propValue)
-      console.log('A. getMyComputedStyle ' + cssVarName + ' = ' + propValue)
-    }
-    console.log('B. getMyComputedStyle DONE')
-    return getComputedStyle(document.documentElement).getPropertyValue(cssVarName)
-  }
-
-  getElementStyleProps(myElement: string) {
-    // Ref: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style
-    const element = document.getElementById(myElement)
-    let out = ''
-    const elementStyle = element.style
-    const computedStyle = window.getComputedStyle(element, null)
-
-    for (const prop in elementStyle) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (elementStyle.hasOwnProperty(prop)) {
-        out += '  ' + prop + " = '" + elementStyle[prop] + "' > '" + computedStyle[prop] + "'\n"
-      }
-    }
-    console.log(out)
   }
 
   getIconSizeMinus() {
@@ -371,7 +290,7 @@ export class AeIcon5 {
     paraEl.innerHTML =
       '<ae-icon5-component aesize="ae32" ' +
       ' name=' + displayName +
-      ' color=' + this.color +
+      ' color=' + this.resolvedColor +
       ' arialabel=' + arialabel + '>'
   }
 
@@ -415,26 +334,6 @@ export class AeIcon5 {
       }
     }
   }
-
-  /* Render Label Test example
-  [
-    <div>
-      <ion-content>
-        <ion-list>
-          <ion-label>Label Test</ion-label>
-  { / * {this.aelogos.map((aelogo, index) => ( * / }
-            <ion-item>
-              <ion-label>{index}</ion-label>
-              <ion-icon class={this.aesize} src={this.src} color={this.color} onClick={this.iconClicked}>
-              </ion-icon>
-            </ion-item>
-          ))}
-
-          </ion-list>
-          </ion-content>
-        </div>
-      ]
-*/
 
   // Ref: https://fettblog.eu/boolean-in-javascript-and-typescript/
   render() {
