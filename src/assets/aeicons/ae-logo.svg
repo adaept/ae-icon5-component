@@ -9,9 +9,17 @@
   the "a" (Imperial Red) and the "e" = the SAME path rotated 180deg about (512,512)
   (Emerald Green). True ambigram by construction, no separate "e" geometry to drift.
   Colors resolve from this repo's vendored assets/design-tokens.css custom properties
-  (--ae-color-imperial/--ae-color-emerald), with brand-hex fallbacks for standalone use.
+  (ae-color-imperial / ae-color-emerald), with brand-hex fallbacks for standalone use.
 
   GENERATED (design-system.build, from ae-base-a.svg) — do not hand-edit its path data.
+
+  NOTE: never write two consecutive hyphens in this comment (hence the custom property
+  names above being spaced out, not written as literal CSS var names). XML forbids that
+  sequence inside a comment body. It fails silently in a lenient HTML-injection context
+  (e.g. this component's own ae-icon5-component src=... fetch+inject rendering) but
+  breaks a strict XML parse (this file loaded directly, or referenced via a plain img
+  src="...svg"). Confirmed the hard way in aeBibleAddin's vendored copy of this exact
+  file, 2026-09-12.
 -->
 <svg width="1024" height="1024" viewBox="0 0 1024 1024" version="1.1"
      xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
