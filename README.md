@@ -212,6 +212,16 @@ ionicons' ES modules via `addIcons` — bundled, no fetch.
   `registerIcons` is a thin wrapper over ionicons' `addIcons` (also re-exported), so
   `import { addIcons } from 'ionicons'` works identically if you prefer.
 
+- **Register before you define.** Call `registerIcons` / `addIcons` **before** the element is
+  defined (before `defineCustomElement()` or the import that auto-defines it). A plain
+  `<ion-icon name="…">` that is already in the page looks its name up synchronously when the
+  element is defined; if the icon is not registered yet it misses, falls back to a runtime URL
+  fetch, and logs `[Ionicons Warning]: Could not load icon …` (plus `Invalid base URL` in a
+  webview). The icon usually still appears (the component retries after load), so this is
+  console noise, not a blank button. Found in aeBibleAddin (`taskpane/src/icons.ts`, 2026-11-04),
+  which pins the order with a test. `<ae-icon5-component>` itself is not affected: it registers
+  its defaults in `componentWillLoad`, before it renders the inner icon.
+
 - **Why ES imports?** Named imports from `ionicons/icons` are tree-shaken to just what you
   register, and if ionicons **renames or removes** an icon, your build fails on the missing
   export instead of silently rendering a blank (a runtime 404). The bundled manifest is
