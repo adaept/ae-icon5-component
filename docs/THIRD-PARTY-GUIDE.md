@@ -37,7 +37,7 @@ hand without matching `package.json`** (and vice-versa) — `npm run check.guide
 - typescript: ~5.9.3
 - eslint: ^9.39.4
 - typescript-eslint: ^8.60.1
-- jest: ^29.7.0
+- @stencil/vitest: ^1.16.2
 - puppeteer: ^25.6.0
 - vitest: ^4.1.8
 <!-- toolchain-pins:end -->
@@ -56,15 +56,15 @@ toolchain above:
 
 - In `package.json`, set the engine and replace the dependency blocks with the pinned versions
   (copy from this repo's [`package.json`](../package.json) — `dependencies` has just `ionicons`;
-  `devDependencies` has Stencil, TypeScript, the ESLint 9 stack, Jest, Puppeteer, Vitest, jsdom):
+  `devDependencies` has Stencil, TypeScript, the ESLint 9 stack, `@stencil/vitest`, Puppeteer, Vitest, jsdom):
 
   ```jsonc
   "engines": { "node": ">=22" },
   "dependencies": { "ionicons": "^8.1.0" },
   "devDependencies": {
-    "@eslint/js": "^9.39.4", "@stencil/core": "^4.43.5", "@types/jest": "^29.5.14",
-    "eslint": "^9.39.4", "globals": "^16.5.0", "jest": "^29.7.0", "jest-cli": "^29.7.0",
-    "jsdom": "^26.1.0", "puppeteer": "^24.1.0", "typescript": "~5.9.3",
+    "@eslint/js": "^9.39.4", "@stencil/core": "^4.44.0", "@stencil/vitest": "^1.16.2",
+    "eslint": "^9.39.4", "globals": "^16.5.0", "jsdom": "^26.1.0",
+    "puppeteer": "^25.6.0", "typescript": "~5.9.3",
     "typescript-eslint": "^8.60.1", "vitest": "^4.1.8"
   }
   ```
@@ -230,10 +230,12 @@ Copy [`scripts/gen-build-stamp.mjs`](../scripts/gen-build-stamp.mjs). It writes
 
 ## 6. Tests + a rename guard
 
-- **Spec tests (Stencil/Jest)** — `*.spec.ts` next to the component, using `newSpecPage`. See
-  [`…/ae-icon5-component.spec.ts`](../src/components/ae-icon5-component/ae-icon5-component.spec.ts)
-  and [`src/icons/icons.spec.ts`](../src/icons/icons.spec.ts). Run with `npm test`
-  (`stencil test --spec --e2e`).
+- **Spec tests (Vitest via `@stencil/vitest`)** — `*.spec.tsx` next to the component, using `render`/`h`
+  against the *built* lazy loader (`vitest-setup.ts`). See
+  [`…/ae-icon5-component.spec.tsx`](../src/components/ae-icon5-component/ae-icon5-component.spec.tsx),
+  [`src/icons/icons.spec.ts`](../src/icons/icons.spec.ts) and [`vitest.config.ts`](../vitest.config.ts)
+  (two projects: `unit`, `spec`). Run with `npm test` (`stencil-test`: builds, then runs Vitest).
+  Stencil's old integrated Jest runner is deprecated (removed in v5), so don't start new work on it.
 - **Vitest POC** — copy [`vitest.config.ts`](../vitest.config.ts) (scoped to `test/**/*.vitest.ts`,
   `environment: 'jsdom'`, `globals: true`) and a [`test/*.vitest.ts`](../test/vitest-poc.vitest.ts).
   Run with `npm run test.unit`.
@@ -252,9 +254,10 @@ Copy [`scripts/gen-build-stamp.mjs`](../scripts/gen-build-stamp.mjs). It writes
 }
 ```
 
-> **Pitfall — runner collision.** Keep Vitest files **out of `src/`** and named `*.vitest.ts`.
-> `stencil test` runs Jest over `*.spec.ts` / `*.e2e.ts`; the naming + `test/` location keep the
-> two runners from picking up each other's files. The full Jest→Vitest migration can come later.
+> **Pitfalls.** Specs run against `dist/`, so build first (`npm test` does; a bare `vitest` doesn't).
+> Specs containing JSX must be `.tsx`, and Stencil's build type-checks them, so import
+> `describe`/`it`/`expect` explicitly (no Jest globals). `new Component()` direct-class tests don't work
+> under plain Vitest (decorators aren't compiled) — test through `render`.
 
 ## 7. CI + release
 
@@ -262,7 +265,7 @@ Copy [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) and
 [`release.yml`](../.github/workflows/release.yml).
 
 - **CI** (push/PR): `npm ci` → `lint` → `check.icons` (→ `check.guide` if you keep a guide) →
-  `build` → `npm test` (Jest) → `test.unit` (Vitest) → `smoke`. Puppeteer needs
+  `build` → `npm test` (Vitest specs) → `test.unit` → `smoke`. Puppeteer needs
   `--no-sandbox` on the runner — `smoke.mjs` adds it when `CI` is set.
 - **Release** (on a `v*` tag): build + test → `npm publish --provenance` → deploy `www/` to
   Firebase → smoke the deployed URL → GitHub Release.

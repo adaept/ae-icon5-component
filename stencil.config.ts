@@ -1,15 +1,4 @@
 import type { Config } from '@stencil/core'
-import { execFileSync } from 'node:child_process'
-
-// puppeteer >=25 made executablePath() async (returns a Promise); Stencil 4.44's test runner
-// still calls it synchronously and gets "[object Promise]". Stencil loads this config via
-// require(), so top-level await is unavailable: resolve the path in a child process and pass
-// it via PUPPETEER_EXECUTABLE_PATH, which Stencil's launcher checks first. Drop this once Stencil awaits executablePath().
-process.env.PUPPETEER_EXECUTABLE_PATH ||= execFileSync(
-  process.execPath,
-  ['--input-type=module', '-e', "import p from 'puppeteer'; console.log(await p.executablePath())"],
-  { encoding: 'utf8' }
-).trim()
 
 export const config: Config = {
   namespace: 'aeicon5',

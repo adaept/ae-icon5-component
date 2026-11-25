@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest'
 import { defaultIcons } from './manifest'
 import { registerDefaultIcons, registerIcons, getIconSource, DEFAULT_ICON_SET } from './index'
 

@@ -1,13 +1,30 @@
-import { defineConfig } from 'vitest/config'
+import { defineVitestConfig } from '@stencil/vitest/config'
 
-// Vitest POC (modernization-plan D4): stands up the Vitest harness alongside the
-// Stencil-Jest spec baseline. Scoped to test/**/*.vitest.ts so it never collides
-// with `stencil test` (which runs *.spec.ts / *.e2e.ts under Jest). The full
-// Jest → Vitest crossover of the component specs is deferred to the aedh-A22 sync.
-export default defineConfig({
+// Component specs + unit tests on Vitest via @stencil/vitest (modernization-plan §10.1).
+//   unit — pure logic, no Stencil renderer: icon registry/manifest specs + the harness POC.
+//   spec — renders the *built* lazy loader (dist/aeicon5) in Stencil's mock DOM; `npm test`
+//          (`stencil-test`) builds first, a bare `vitest` run does not.
+export default defineVitestConfig({
+  stencilConfig: './stencil.config.ts',
   test: {
-    include: ['test/**/*.vitest.ts'],
-    environment: 'jsdom',
-    globals: true
+    projects: [
+      {
+        test: {
+          name: 'unit',
+          include: ['src/icons/**/*.spec.ts', 'test/**/*.vitest.ts'],
+          environment: 'jsdom',
+          globals: true
+        }
+      },
+      {
+        test: {
+          name: 'spec',
+          include: ['src/components/**/*.spec.{ts,tsx}'],
+          environment: 'stencil',
+          setupFiles: ['./vitest-setup.ts'],
+          globals: true
+        }
+      }
+    ]
   }
 })
