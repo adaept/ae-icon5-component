@@ -25,6 +25,14 @@ export default tseslint.config(
     }
   },
   {
+    // Classic <script> files served to the browser (e.g. src/assets/test-ids.browser.js).
+    files: ['src/assets/**/*.browser.js'],
+    languageOptions: {
+      sourceType: 'script',
+      globals: { ...globals.browser }
+    }
+  },
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,

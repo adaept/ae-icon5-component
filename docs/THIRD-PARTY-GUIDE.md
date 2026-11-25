@@ -32,13 +32,13 @@ hand without matching `package.json`** (and vice-versa) — `npm run check.guide
 
 <!-- toolchain-pins:start -->
 - node: >=22
-- @stencil/core: ^4.43.5
+- @stencil/core: ^4.44.0
 - ionicons: ^8.1.0
 - typescript: ~5.9.3
 - eslint: ^9.39.4
 - typescript-eslint: ^8.60.1
 - jest: ^29.7.0
-- puppeteer: ^24.1.0
+- puppeteer: ^25.6.0
 - vitest: ^4.1.8
 <!-- toolchain-pins:end -->
 
