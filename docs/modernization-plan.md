@@ -1,14 +1,34 @@
 # ae-icon5-component — Modernization Plan
 
-**Started:** 2026-06-05 · **Repo:** `adaept/ae-icon5-component` (`master`) · **Status:** DRAFT for review
+**Started:** 2026-06-05 · **Repo:** `adaept/ae-icon5-component` (`master`) · **Status:** EXECUTED through v1.5.0 (phases 1-4 done; Iconify and Jest→Vitest remain, §12). Last refreshed 2026-11-25
 **Cross-ref:** aedh `rvw/Code_review 2026-06-04.md` §4.1 / §4.3 (master integration plan).
 
-> First task of the modernization (per `CLAUDE.md`). This is the **plan**, not the code —
-> review/iterate, then execute in phases (§13).
+> First task of the modernization (per `CLAUDE.md`). Written as the plan before any code; it has since
+> been executed in phases (§13) and is now maintained as the living design + roadmap record. §0 keeps
+> the original 2026-06-04 starting state for context; **§0.1 is the current state**.
 
 ---
 
-## 0. Current state (from source review, 2026-06-04)
+## 0.1 Current state (2026-11-25)
+
+- **Package:** `@adaept/ae-icon5@1.5.0` (npm, public, MIT). Stencil component, element
+  `<ae-icon5-component>`, namespace `aeicon5`, `shadow: true` — unchanged.
+- **Output targets:** `dist-custom-elements` (primary, tree-shakable, auto-defines the tag) + `dist`
+  (lazy loader, kept one transition cycle — D1) + `www` (demo, `https://aeicon5.web.app`).
+- **Tooling:** Stencil 4.44, ionicons 8.1, Node >=22 (`engines`), TypeScript ~5.9, ESLint 9 flat config +
+  typescript-eslint 8.74, Jest 29 (Stencil runner), Vitest 4.1 (POC + unit), Puppeteer 25.
+  `homepage` = `https://aeicon5.web.app`.
+- **Hover:** the hardcoded red square ring is gone; the ring is themeable via CSS custom properties
+  (`--ae-hover-ring-*`) and `aetype` presets `round`/`square`/`pentagon`/`rotate` (§4.1, v1.5.0).
+- **CI/CD:** `ci.yml` (lint, icon-manifest + guide-pin guards, build, Jest, Vitest, Puppeteer smoke),
+  `codeql-analysis.yml`, and tag-triggered `release.yml` (npm Trusted Publishing + Firebase). **Caveat:**
+  GitHub Actions does not appear to run on PRs for this repo, so changes are currently verified by
+  running the `ci.yml` steps locally. Dependabot alerts: none open (2026-11-25).
+- **Known workaround:** `stencil.config.ts` sets `PUPPETEER_EXECUTABLE_PATH` because Stencil 4.44's
+  test runner calls puppeteer 25's now-async `executablePath()` synchronously (§12).
+- **Not started:** Iconify / other icon sources (§6, D3); Jest→Vitest crossover (§12, D4).
+
+## 0. Starting state (historical — from source review, 2026-06-04)
 
 - **Package:** `@adaept/ae-icon5@1.3.4` (npm, public, MIT). **Stencil** component.
 - **Element:** tag `<ae-icon5-component>`, namespace `aeicon5`, **`shadow: true`**.
