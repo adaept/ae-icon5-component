@@ -601,6 +601,48 @@ surface.
   stack). **Plus a minimal Vitest POC** (pure unit test) this cycle to stand up the Vitest harness.
   Full **Jest → Vitest** crossover is planned to land with **aedh's A22** (D4).
 
+### 10.1 Jest → Vitest migration plan (`@stencil/vitest`; evaluated + spiked 2026-11-25)
+
+**Why now:** Stencil's integrated test runner (`stencil test --spec --e2e`) is deprecated and removed
+in Stencil v5; aedh is on Angular 22 with a working `ng test` (D4's sync point is met).
+
+**Evaluation:** `@stencil/vitest` is v1.16.2 (first-party, `stenciljs/vitest`), peers `vitest ^2–^5` and
+`@stencil/core ^4 || ^5`, requires Node `^22.12 || ^24 || >=26` (this repo: `>=22`). Mature enough to adopt.
+
+**Scope is tiny:** 2 spec files, 8 tests. Only 3 use `newSpecPage`; `src/icons/icons.spec.ts` (5 tests) is a
+pure unit test that needs no Stencil renderer. No `*.e2e.ts` files exist (Puppeteer smoke is separate).
+
+**Spike result (throwaway, not committed):** installed `@stencil/vitest`, a `vitest.config.ts` with two
+projects — `unit` (`node`, `src/icons/**`) and `spec` (`environment: 'stencil'`, `setupFiles` doing
+`await import('./dist/aeicon5/aeicon5.esm.js')`, include `src/**/*.spec.{ts,tsx}`) — and rewrote the
+component spec with `render(<ae-icon5-component name="football" />)`. **7/7 tests passed in ~1.3 s**
+(vs. the Jest run, which also rebuilds). Findings:
+- Specs run against the **built** lazy loader (`dist/aeicon5/aeicon5.esm.js`), so `npm run build` (or the
+  dev build the CLI triggers) must precede tests; `npx stencil-test` does the build, `npx vitest` alone doesn't.
+- Component specs that contain JSX must be **`.tsx`**; include globs must cover `.tsx`.
+- The `builds / is defined` test (`new AeIcon5()`) **cannot** run under plain Vitest: decorators aren't
+  compiled (`TypeError: Element is not a function`). It's low value (the render tests cover it) — drop it, or
+  use the experimental `stencilVitestPlugin` if direct-class tests are wanted later.
+- `vi.mock()` of component imports needs the same plugin; not needed today.
+
+**Steps:**
+1. Add `@stencil/vitest`; extend/replace `vitest.config.ts` with `unit` + `spec` projects (keep the existing
+   `test/**/*.vitest.ts` POC in `unit`); add `vitest-setup.ts` loading the `dist` loader.
+2. Convert `ae-icon5-component.spec.ts` → `.spec.tsx` using `render`/`h` (drop the `new AeIcon5()` test);
+   `icons.spec.ts` moves to the `unit` project unchanged.
+3. Scripts: `test` → `stencil-test` (build + vitest); keep `test.unit` for the fast unit project; update
+   `ci.yml` (and `README`/CLAUDE.md test notes) accordingly.
+4. Remove the Jest stack: `jest`, `jest-cli`, `@types/jest`, the `testing` block / Jest config in
+   `stencil.config.ts`, **and the `PUPPETEER_EXECUTABLE_PATH` workaround** (§12) — verify smoke/e2e scripts
+   still get Chrome via `puppeteer` directly.
+5. Verify the full `ci.yml` sequence locally (lint, `check.icons`, `check.guide`, build, test, smoke).
+6. Add component specs worth having now that the runner is cheap (hover-ring CSS vars, `aetype` presets,
+   scoped-icon registration) — the original reason §10 listed them.
+
+**Risks / open:** `globals: true` vs explicit imports (the package re-exports `describe/it/expect`); coverage
+needs `sourceMap: true` against built dist; TypeScript types for `h` in `.tsx` specs (check `tsconfig`
+`jsxFactory`); Stencil v5 loader path differs (`dist/loader-bundle/...`) — revisit at the v5 upgrade.
+
 ## 11. README docs
 
 Install; register-loader vs `dist-custom-elements` import; **props table**; **CSS custom props** for
