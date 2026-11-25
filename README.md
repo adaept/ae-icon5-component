@@ -294,16 +294,16 @@ npm i ../ae-icon5-component/adaept-ae-icon5-<version>.tgz
 ## Test
 
 ```bash
-npm test           # component specs — Stencil/Jest (newSpecPage)
-npm run test.unit  # Vitest POC (pure unit, jsdom) — the Vitest baseline
+npm test           # builds, then Vitest: component specs (@stencil/vitest) + unit tests
+npm run test.unit  # Vitest `unit` project only (icons registry + harness POC; no build needed)
 npm run smoke      # Puppeteer smoke: self-serves ./www, asserts it renders
 npm run e2e.testids # Puppeteer, typed data-testid selectors (testing/test-ids.mjs)
 npm run check.icons # validate the scoped-icon manifest vs installed ionicons
 npm run check.guide # validate docs/THIRD-PARTY-GUIDE.md pins vs package.json
 ```
 
-- **Specs** stay on Stencil's built-in **Jest** (`*.spec.ts`); the full Jest → Vitest
-  crossover is deferred to sync with aedh (plan §12 / D4).
+- **Specs** run on **Vitest** via `@stencil/vitest` (`*.spec.tsx`, against the built `dist/`); Stencil's
+  integrated Jest runner was removed from this repo (plan §10.1 / D4).
 - **Smoke** runs against the local `www` by default; set `BASE_URL` to hit the deployed
   demo: `BASE_URL=https://aeicon5.web.app npm run smoke`.
 - **`e2e.testids`** is a separate, typed-selector test (dev plan A22) — it sets
@@ -345,7 +345,7 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 
 > **Pinned toolchain** (keep these in sync): Node **22**, `@stencil/core` **^4.43**,
 > `ionicons` **^8**, `typescript` **~5.9**, `eslint` **9** flat + `typescript-eslint` **8**,
-> `jest` **29**, `puppeteer` **25**, `vitest` **4** + `jsdom`.
+> `@stencil/vitest` **^1.16**, `puppeteer` **25**, `vitest` **4** + `jsdom`.
 
 **1. Scaffold + pin the toolchain.**
 - `npm init stencil@latest component my-icons` (choose the *component* starter), then `cd my-icons`.
@@ -380,7 +380,7 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 
 **6. Tests + a rename guard** — copy [`scripts/check-icon-manifest.mjs`](scripts/check-icon-manifest.mjs),
 [`testing/smoke.mjs`](testing/smoke.mjs), [`vitest.config.ts`](vitest.config.ts):
-- Spec tests on Stencil/Jest (`*.spec.ts`); a Vitest POC under `test/**/*.vitest.ts`; a
+- Spec tests on Vitest via `@stencil/vitest` (`*.spec.tsx`); unit tests + a harness POC under `test/**/*.vitest.ts`; a
   Puppeteer smoke that self-serves `./www`; optionally, typed `data-testid` selectors
   ([`testing/test-ids.mjs`](testing/test-ids.mjs) + [`testing/e2e.testids.mjs`](testing/e2e.testids.mjs))
   if the demo needs finer-grained E2E coverage than smoke's generic checks.
@@ -389,7 +389,7 @@ this repo** to copy from. A fuller, version-pinned procedural guide lives at
 
 **7. CI + release** — copy [`.github/workflows/ci.yml`](.github/workflows/ci.yml) and
 [`release.yml`](.github/workflows/release.yml):
-- CI: install → lint → `check.icons` → build → Jest → Vitest → smoke.
+- CI: install → lint → `check.icons` → build → Vitest specs → Vitest unit → smoke.
 - Release (on `v*` tag): publish to npm + deploy the demo + GitHub Release.
 - **Publish with npm Trusted Publishing (OIDC) — no token to store/rotate.** Register your
   repo+workflow as a trusted publisher on the npm package and give the job

@@ -35,10 +35,10 @@ jobs:
       - name: Build (dist + dist-custom-elements + www)
         run: npm run build
 
-      - name: Spec tests (Stencil/Jest)
+      - name: Spec + unit tests (Vitest via @stencil/vitest)
         run: npm test
 
-      - name: Unit tests (Vitest POC)
+      - name: Unit tests (Vitest `unit` project)
         run: npm run test.unit
 
       - name: Smoke the built demo (local www)

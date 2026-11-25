@@ -16,17 +16,15 @@
 - **Output targets:** `dist-custom-elements` (primary, tree-shakable, auto-defines the tag) + `dist`
   (lazy loader, kept one transition cycle — D1) + `www` (demo, `https://aeicon5.web.app`).
 - **Tooling:** Stencil 4.44, ionicons 8.1, Node >=22 (`engines`), TypeScript ~5.9, ESLint 9 flat config +
-  typescript-eslint 8.74, Jest 29 (Stencil runner), Vitest 4.1 (POC + unit), Puppeteer 25.
+  typescript-eslint 8.74, Vitest 4.1 + `@stencil/vitest` 1.16 (component specs, unit, POC), Puppeteer 25.
   `homepage` = `https://aeicon5.web.app`.
 - **Hover:** the hardcoded red square ring is gone; the ring is themeable via CSS custom properties
   (`--ae-hover-ring-*`) and `aetype` presets `round`/`square`/`pentagon`/`rotate` (§4.1, v1.5.0).
-- **CI/CD:** `ci.yml` (lint, icon-manifest + guide-pin guards, build, Jest, Vitest, Puppeteer smoke),
+- **CI/CD:** `ci.yml` (lint, icon-manifest + guide-pin guards, build, Vitest specs + unit, Puppeteer smoke),
   `codeql-analysis.yml`, and tag-triggered `release.yml` (npm Trusted Publishing + Firebase). **Caveat:**
   GitHub Actions does not appear to run on PRs for this repo, so changes are currently verified by
   running the `ci.yml` steps locally. Dependabot alerts: none open (2026-11-25).
-- **Known workaround:** `stencil.config.ts` sets `PUPPETEER_EXECUTABLE_PATH` because Stencil 4.44's
-  test runner calls puppeteer 25's now-async `executablePath()` synchronously (§12).
-- **Not started:** Iconify / other icon sources (§6, D3); Jest→Vitest crossover (§12, D4).
+- **Not started:** Iconify / other icon sources (§6, D3). **Done 2026-11-25:** Jest→Vitest crossover (§10.1).
 
 ## 0. Starting state (historical — from source review, 2026-06-04)
 
@@ -603,6 +601,10 @@ surface.
 
 ### 10.1 Jest → Vitest migration plan (`@stencil/vitest`; evaluated + spiked 2026-11-25)
 
+> **DONE 2026-11-25** (steps 1-5; step 6 — new component specs — remains open). `npm test` = `stencil-test`
+> (build + Vitest, 10 tests); Jest, `jest-cli`, `@types/jest` and the `PUPPETEER_EXECUTABLE_PATH` workaround
+> are gone; `check.guide` now tracks `@stencil/vitest` instead of `jest`.
+
 **Why now:** Stencil's integrated test runner (`stencil test --spec --e2e`) is deprecated and removed
 in Stencil v5; aedh is on Angular 22 with a working `ng test` (D4's sync point is met).
 
@@ -655,14 +657,10 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
   still open. Released as v1.5.0** (see §8's versioning note for why this is MINOR, not PATCH).
   See §4.1: ids `0`-`3` (header logo + SIZE/RESET row) now each demo a distinct preset. `pulse`/
   `id="4"` (the commented-out `globe` row) remains a follow-up cycle.
-- **Jest → Vitest** component-spec crossover — **unblocked 2026-11-25** (D4). aedh is already on Angular 22
-  (22.2.7) and its `ng test` now works (aedh PR #2, task E: `@angular/build` migration + static
-  `zone.js/testing`), so the original "wait for aedh A22" trigger is met. Stencil's integrated testing
-  (`stencil test --spec --e2e`) is deprecated and slated for removal in Stencil v5 (its own CLI
-  warning points to `@stencil/vitest` / `@stencil/playwright`), which makes this time-sensitive.
-  Next: evaluate `@stencil/vitest` maturity, then migrate `src/**/*.spec.ts`. Also note: Stencil 4.44's
-  test runner needs the `PUPPETEER_EXECUTABLE_PATH` workaround in `stencil.config.ts` for puppeteer 25
-  (async `executablePath()`); remove it with the Jest runner.
+- **Jest → Vitest** component-spec crossover — **done 2026-11-25** (D4, §10.1): specs run on Vitest via
+  `@stencil/vitest`; Jest and the puppeteer-25 `PUPPETEER_EXECUTABLE_PATH` workaround removed. Open follow-up:
+  add real component specs (hover-ring vars, `aetype` presets, scoped-icon registration — §10.1 step 6);
+  revisit the loader path (`dist/loader-bundle/...`) at the Stencil v5 upgrade.
 - **Iconify** + other icon sources (D3) — ≈ **v1.6.0** (renumbered from "v1.5.0" — §4.1's `aetype`
   presets claimed that slot first), now a concrete staged design, not a placeholder — see §6
   (naming, versioning confirmation, mdi pilot stages, starter-kit gotchas, aetimeline platform
@@ -751,6 +749,7 @@ POC; full crossover lands with aedh's A22.**
   **Update 2026-11-25:** the sync point has arrived — aedh is on Angular 22.2.7 and `ng test` runs
   (aedh PR #2). The remaining gate is Stencil-side (`@stencil/vitest` maturity); Stencil's built-in
   Jest test runner is deprecated and will be removed in Stencil v5.
+  **Done 2026-11-25:** migrated (§10.1).
 - **Smoke** stays **Puppeteer** (mirrors aedh `testing/smoke.mjs`; framework-neutral) regardless.
 
 *(All four were the prior open questions; resolved for execution. Revisit only if a phase surfaces a

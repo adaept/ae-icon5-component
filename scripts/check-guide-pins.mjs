@@ -14,7 +14,7 @@ const guide = readFileSync(join(root, 'docs/THIRD-PARTY-GUIDE.md'), 'utf8')
 // dependencies/devDependencies.
 const TRACKED = [
   '@stencil/core', 'ionicons', 'typescript', 'eslint',
-  'typescript-eslint', 'jest', 'puppeteer', 'vitest'
+  'typescript-eslint', '@stencil/vitest', 'puppeteer', 'vitest'
 ]
 const deps = { ...pkg.dependencies, ...pkg.devDependencies }
 const expected = { node: pkg.engines?.node }
