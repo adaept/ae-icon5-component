@@ -601,8 +601,8 @@ surface.
 
 ### 10.1 Jest → Vitest migration plan (`@stencil/vitest`; evaluated + spiked 2026-11-25)
 
-> **DONE 2026-11-25** (steps 1-5; step 6 — new component specs — remains open). `npm test` = `stencil-test`
-> (build + Vitest, 10 tests); Jest, `jest-cli`, `@types/jest` and the `PUPPETEER_EXECUTABLE_PATH` workaround
+> **DONE 2026-11-25** (steps 1-6). `npm test` = `stencil-test` (build + Vitest, 33 tests: component
+> render/a11y/`aerotatedeg` specs, icons, POC, and a CSS-contract guard); Jest, `jest-cli`, `@types/jest` and the `PUPPETEER_EXECUTABLE_PATH` workaround
 > are gone; `check.guide` now tracks `@stencil/vitest` instead of `jest`.
 
 **Why now:** Stencil's integrated test runner (`stencil test --spec --e2e`) is deprecated and removed
@@ -658,9 +658,9 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
   See §4.1: ids `0`-`3` (header logo + SIZE/RESET row) now each demo a distinct preset. `pulse`/
   `id="4"` (the commented-out `globe` row) remains a follow-up cycle.
 - **Jest → Vitest** component-spec crossover — **done 2026-11-25** (D4, §10.1): specs run on Vitest via
-  `@stencil/vitest`; Jest and the puppeteer-25 `PUPPETEER_EXECUTABLE_PATH` workaround removed. Open follow-up:
-  add real component specs (hover-ring vars, `aetype` presets, scoped-icon registration — §10.1 step 6);
-  revisit the loader path (`dist/loader-bundle/...`) at the Stencil v5 upgrade.
+  `@stencil/vitest`; Jest and the puppeteer-25 `PUPPETEER_EXECUTABLE_PATH` workaround removed. Component specs added (a11y, render modes, `aerotatedeg`)
+  plus `test/css-contract.vitest.ts`, a stylesheet-source guard for the `aetype` presets and `--ae-hover-*`
+  hooks (the mock DOM can't evaluate CSS, so rendering of those stays with the smoke/demo). Open: revisit the loader path (`dist/loader-bundle/...`) at the Stencil v5 upgrade.
 - **Iconify** + other icon sources (D3) — ≈ **v1.6.0** (renumbered from "v1.5.0" — §4.1's `aetype`
   presets claimed that slot first), now a concrete staged design, not a placeholder — see §6
   (naming, versioning confirmation, mdi pilot stages, starter-kit gotchas, aetimeline platform
