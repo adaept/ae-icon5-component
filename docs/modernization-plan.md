@@ -593,8 +593,14 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
   still open. Released as v1.5.0** (see §8's versioning note for why this is MINOR, not PATCH).
   See §4.1: ids `0`-`3` (header logo + SIZE/RESET row) now each demo a distinct preset. `pulse`/
   `id="4"` (the commented-out `globe` row) remains a follow-up cycle.
-- **Jest → Vitest** component-spec crossover — **sync with aedh A22** (D4); reassess Stencil's Vitest
-  support then.
+- **Jest → Vitest** component-spec crossover — **unblocked 2026-11-25** (D4). aedh is already on Angular 22
+  (22.2.7) and its `ng test` now works (aedh PR #2, task E: `@angular/build` migration + static
+  `zone.js/testing`), so the original "wait for aedh A22" trigger is met. Stencil's integrated testing
+  (`stencil test --spec --e2e`) is deprecated and slated for removal in Stencil v5 (its own CLI
+  warning points to `@stencil/vitest` / `@stencil/playwright`), which makes this time-sensitive.
+  Next: evaluate `@stencil/vitest` maturity, then migrate `src/**/*.spec.ts`. Also note: Stencil 4.44's
+  test runner needs the `PUPPETEER_EXECUTABLE_PATH` workaround in `stencil.config.ts` for puppeteer 25
+  (async `executablePath()`); remove it with the Jest runner.
 - **Iconify** + other icon sources (D3) — ≈ **v1.6.0** (renumbered from "v1.5.0" — §4.1's `aetype`
   presets claimed that slot first), now a concrete staged design, not a placeholder — see §6
   (naming, versioning confirmation, mdi pilot stages, starter-kit gotchas, aetimeline platform
@@ -680,6 +686,9 @@ POC; full crossover lands with aedh's A22.**
 - **Crossover:** plan the full **Jest → Vitest** migration of the component specs to **coincide with
   aedh being on Angular 22** (the natural sync point). Reassess Stencil's Vitest-support maturity at
   that time. Tracked in §12 roadmap.
+  **Update 2026-11-25:** the sync point has arrived — aedh is on Angular 22.2.7 and `ng test` runs
+  (aedh PR #2). The remaining gate is Stencil-side (`@stencil/vitest` maturity); Stencil's built-in
+  Jest test runner is deprecated and will be removed in Stencil v5.
 - **Smoke** stays **Puppeteer** (mirrors aedh `testing/smoke.mjs`; framework-neutral) regardless.
 
 *(All four were the prior open questions; resolved for execution. Revisit only if a phase surfaces a
