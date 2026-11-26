@@ -15,7 +15,7 @@
   `<ae-icon5-component>`, namespace `aeicon5`, `shadow: true` — unchanged.
 - **Output targets:** `dist-custom-elements` (primary, tree-shakable, auto-defines the tag) + `dist`
   (lazy loader, kept one transition cycle — D1) + `www` (demo, `https://aeicon5.web.app`).
-- **Tooling:** Stencil 4.44, ionicons 8.1, Node >=22 (`engines`), TypeScript ~5.9, ESLint 9 flat config +
+- **Tooling:** Stencil 4.45.5, ionicons 8.1, Node >=22 (`engines`), TypeScript ~5.9, ESLint 9 flat config +
   typescript-eslint 8.74, Vitest 4.1 + `@stencil/vitest` 1.16 (component specs, unit, POC), Puppeteer 25.
   `homepage` = `https://aeicon5.web.app`.
 - **Hover:** the hardcoded red square ring is gone; the ring is themeable via CSS custom properties
@@ -660,12 +660,26 @@ hover/theming; icon sources; examples; demo link (`aeicon5.web.app`); versioning
 - **Jest → Vitest** component-spec crossover — **done 2026-11-25** (D4, §10.1): specs run on Vitest via
   `@stencil/vitest`; Jest and the puppeteer-25 `PUPPETEER_EXECUTABLE_PATH` workaround removed. Component specs added (a11y, render modes, `aerotatedeg`)
   plus `test/css-contract.vitest.ts`, a stylesheet-source guard for the `aetype` presets and `--ae-hover-*`
-  hooks (the mock DOM can't evaluate CSS, so rendering of those stays with the smoke/demo). Open: revisit the loader path (`dist/loader-bundle/...`) at the Stencil v5 upgrade.
+  hooks (the mock DOM can't evaluate CSS, so rendering of those stays with the smoke/demo). Open: revisit the loader path (`dist/loader-bundle/...`) at the Stencil v5 upgrade (see the v5 notes below).
 - **Iconify** + other icon sources (D3) — ≈ **v1.6.0** (renumbered from "v1.5.0" — §4.1's `aetype`
   presets claimed that slot first), now a concrete staged design, not a placeholder — see §6
   (naming, versioning confirmation, mdi pilot stages, starter-kit gotchas, aetimeline platform
   staging). Stage 0 there lists 1.4.x prep items (real `manifest.json`, close CF-13/CF-12) to do
   before any Iconify code lands.
+- **Stencil v5 upgrade — DEFERRED until a stable release (spiked 2026-11-25 against `5.0.0-rc.12`; npm `latest`
+  is still 4.45.x).** Do not move the published package onto an RC (the build itself warns: prerelease,
+  undocumented changes, no support). Findings for the real attempt:
+  - `stencil migrate` renames outputs: `dist-custom-elements` → `standalone`, `dist` → `loader-bundle`;
+    `shadow: true` → `encapsulation: { type: 'shadow' }`; `generateTypeDeclarations` removed; the
+    `serviceWorker: null` www default is dropped; `tsconfig` `target` must be `es2022`+.
+  - **Breaking for consumers:** `package.json` `main`/`module`/`unpkg`/`types`/`collection` and the paths aedh's
+    `main.ts` registers (the `dist` loader) all move — plan it as a version bump with an aedh update (D1).
+  - **Typing break:** v5's generated `HTMLAeIcon5ComponentElement` no longer type-checks as an `HTMLElement`
+    (`renderInfoPanel`'s `document.createElement('ae-icon5-component')` → `setAttribute`/`appendChild` fail,
+    `ae-icon5-component.tsx` ~L331/335) — cast or restructure.
+  - Test side: `vitest-setup.ts` must import the `loader-bundle` build; `@stencil/vitest` docs give
+    `dist/loader-bundle/<ns>/<ns>.js` (unverified here — the spike build failed before emitting output).
+  - Re-check `@stencil/vitest` (peers `@stencil/core ^4 || ^5.0.0-alpha`) and the `check.guide` pins.
 - Remove the legacy **`dist` loader** once all consumers are on `dist-custom-elements` (D1) — a future major.
 - Standalone/no-Ionic icon rendering; SSR/hydration; a11y audit (aria, labels); animation presets;
   typed icon-name unions; tree-shaking/bundle-size metrics; theming tokens. *(append as discovered.)*

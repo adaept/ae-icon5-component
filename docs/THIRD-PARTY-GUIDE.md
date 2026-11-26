@@ -32,7 +32,7 @@ hand without matching `package.json`** (and vice-versa) — `npm run check.guide
 
 <!-- toolchain-pins:start -->
 - node: >=22
-- @stencil/core: ^4.44.0
+- @stencil/core: ^4.45.5
 - ionicons: ^8.1.0
 - typescript: ~5.9.3
 - eslint: ^9.39.4
@@ -62,7 +62,7 @@ toolchain above:
   "engines": { "node": ">=22" },
   "dependencies": { "ionicons": "^8.1.0" },
   "devDependencies": {
-    "@eslint/js": "^9.39.4", "@stencil/core": "^4.44.0", "@stencil/vitest": "^1.16.2",
+    "@eslint/js": "^9.39.4", "@stencil/core": "^4.45.5", "@stencil/vitest": "^1.16.2",
     "eslint": "^9.39.4", "globals": "^16.5.0", "jsdom": "^26.1.0",
     "puppeteer": "^25.6.0", "typescript": "~5.9.3",
     "typescript-eslint": "^8.60.1", "vitest": "^4.1.8"
