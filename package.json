@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
-    "@stencil/core": "^4.44.0",
+    "@stencil/core": "^4.45.5",
     "@stencil/vitest": "^1.16.2",
     "eslint": "^9.39.4",
     "globals": "^16.5.0",
